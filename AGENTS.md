@@ -1,0 +1,30 @@
+# Workspace Agent Instructions
+
+This workspace keeps local agent skills and long-term context in `AGENTS/`.
+
+## Local Skills
+
+At the start of work in this workspace, be aware that local skills may exist under:
+
+- `AGENTS/memory/SKILL.md`
+- `AGENTS/physics-solver/SKILL.md`
+- `AGENTS/superpowers/skills/*/SKILL.md`
+
+If a task might match one of these local skills, read and follow the relevant `SKILL.md` before acting.
+
+## Memory Ritual
+
+Use `AGENTS/memory/SKILL.md` whenever the task involves persistent context, user preferences, workspace rules, project history, or saving/updating what was learned.
+
+For tasks that may depend on prior context:
+
+1. Read `AGENTS/memory/SKILL.md`.
+2. Read `AGENTS/About_me.md` when user profile, preferences, goals, or communication style matter.
+3. Read `AGENTS/memory/lessons-learned.md` when project history, previous decisions, or follow-up items may matter.
+
+Before finishing a task that changes durable context, update the relevant memory file and mention that memory was updated.
+
+## Skill Visibility
+
+Workspace-local skills are a fallback source. Personal Codex skills in `~/.codex/skills` are the preferred always-visible source and require restarting Codex after installation or changes.
+
