@@ -3,7 +3,7 @@ filters:
     - type == "curriculum_topic"
     - subject == "physics"
     - student_visible == true
-    - file.inFolder("репетиторство/шизончик/теория")
+    - file.inFolder("Репетиторство/Шизончик/Теория")
     - or:
         - section == "mechanics"
         - and:
@@ -46,3 +46,8 @@ views:
       - order
       - status
       - materials_ready
+    sort:
+      - property: file.name
+        direction: DESC
+      - property: topic_id
+        direction: DESC
