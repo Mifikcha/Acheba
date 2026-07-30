@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "stone-armor-502307-j1",
+  "private_key_id": "576c7933be2dddc28bc9f393016c8c86f5097163",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDnpALsHVL6PEg4\n95Fjl35UA7jpzUxFoPYACW0lMs6Rwe4nBAtz4wjoCNhZeYOLyLX3s6aIanGlsu4f\nu7d5DpsaW9lU3ZiRTS9bcz47azX+0C2VS41TS4mElDjUb3Pfv1aWrkJlXFaLay52\neqQo2rtH86Wj+nsUCOXTQnhhCMgQ6Lni3+fiUufhccPuxl4bEh7MDUSrRM6TxAKO\n303Z2JBvcN5Up5yBci01YIR2Kqh8xAF8gDYIl9psOWPQgQq9EkPt6yKVrW/2rs0J\nFZ2TPAX64VVH3aW0xpM334oFYN9J7Ltw5rcX9STEy+GH8zWr38G5LGXmIHMtAcxN\neFrijSitAgMBAAECggEAKal80hFTIYkylzZlyqMOeFdkDH8dev+Ah1CqthBNiXc3\nGYLXeXwp16vxl6QslflfSyIfb3UvpBUK0Z/OV8JaALNo4yPpAyc9/4V6ea7mewJf\n1HSOgl75aKRNFV5HWcSc8wR8EiV5tmEsbehQer2ehgorLlNIjDmudmED7DXrX+jY\nHnbJ08t21VbO6BzYBQxaXmlpPZwbPL8BVvN6Ex4E+9/m6xQ7vcvvmcozOBRgiQz5\nZPk7xdQDiKCSnmTbTugFQHjaeb3gS+WXIsa34sir8PKBZLR9lWvX/HgCYadwJNQh\nhsrZ1ymIvxr2LdJcR4N8+nn6jAgdpUTMB5f6Wl3DAQKBgQD1htMaRx/vEbmm+9e4\n0yHfkzFL1IK11tVfAb8HxQoBPSOlMTbuZX0TF2Ce7YEB+YV9OerDwozhLX6tDnJy\nPCV/pG8hcKEz5RX9DSCEOdnuZ2a/0soAr180hUG52t95JA69zomaZZpIYuW5XaCG\nFTklHTgNsNLEI1JpAiJ+hsUfrQKBgQDxhYzoex7Cm0m2lMGAR9lTM+P6NOqHWlpE\nk+aYN9jxqLk+e0hEH3NCynKoBtgrMRxKJ1ic/2y8igIlT42E2+rxw/fl6y1M0CgO\nKVHF9Lj/rYf8zhu73uo7COdYD1FmfVfDcQWv8nFzMRwPqSx8isrOPIki/hYbpKLa\n9aJuGmVNAQKBgQCACU8M5QpCIXwvGCXmvDNt49RRNwDy0pVydfaolpghDUEJZCDB\nMSuISSiZuEEORpDWPN2wOEQ/KPpmRKJp7/OeHKHXTmTCKzTMQYwzZ/e92y452jJ9\nKPb87IDZ6sme4q7NTGd1nIZYOTqS78BGK8shD5uriAphPgo7uGFEmgMyAQKBgHhj\nBGChdiy0sOKEdYtWxPoXJG0EUV7UZ6hFPKzlMYsLegKt+tCSCKbjOJGOj9O/sAU6\nZY4kN3QnKniklbsCz7Jg50FAn5zpKP4eFHeiy1AOlHkr12Em9QQmJQKc6As5MTTn\nMlmIdIphkUYxIk6V9A8m14iMtEJlJxQTWjqdh58BAoGBAIe0nQOn3FZ4zyQ85IGp\nYehiJ3iDdH4MYC8+8erEQsSI5DibRLBN0Q1OWstZGYr/bhlNT+DtDbP+Y6y15QUo\nqSGFEgu/YZk5P5bNg3xufaUHtxy69RgzuYmDA6cOgkUXJZEFs7WXq9lHEb3S9zKa\ns+26S+/5SclgHzj6uyHOtg1h\n-----END PRIVATE KEY-----\n",
+  "client_email": "obsidian-sheets-sync@stone-armor-502307-j1.iam.gserviceaccount.com",
+  "client_id": "113516567464273198389",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/obsidian-sheets-sync%40stone-armor-502307-j1.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

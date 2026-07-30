@@ -49,4 +49,4 @@ Lido — Платформа для стейкинга ETH в stETH.
 Debank — Сервис для отслеживания DeFi-позиций.
 DefiLlama — Сервис для анализа статистики DeFi-протоколов.
 
-![[Pasted image 20251110162939.png]]
+![[_Resours/Pasted image 20251110162939.png]]
