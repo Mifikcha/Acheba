@@ -166,19 +166,21 @@ plugins:
     enabled: true
     options:
       localGraph:
-        scale: 1.15
-        repelForce: 0.85
-        centerForce: 0.25
-        linkDistance: 42
+        scale: 1.05
+        repelForce: 0.45
+        centerForce: 0.48
+        linkDistance: 24
         fontSize: 0.7
-        opacityScale: 1.2
+        opacityScale: 1.25
+        focusOnHover: false
       globalGraph:
-        scale: 0.72
-        repelForce: 1.15
-        centerForce: 0.12
-        linkDistance: 72
+        scale: 0.9
+        repelForce: 0.42
+        centerForce: 0.36
+        linkDistance: 24
         fontSize: 0.42
-        opacityScale: 0.55
+        opacityScale: 0.75
+        focusOnHover: false
         enableRadial: false
     layout:
       position: right
@@ -192,7 +194,7 @@ plugins:
       groupOptions:
         grow: true
   - source: "@quartz-community/backlinks"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 50
