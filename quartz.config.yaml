@@ -16,9 +16,27 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      title:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 700
+      header:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 700
+      body:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 600
+        includeItalic: true
+      code:
+        name: JetBrains Mono
+        weights:
+          - 400
+          - 600
     colors:
       lightMode:
         light: "#faf8f8"
@@ -110,6 +128,35 @@ plugins:
     order: 92
   - source: "@quartz-community/quartz-fonts"
     enabled: true
+    options:
+      useThemeFonts: false
+      fontOrigin: googleFonts
+      title:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 700
+      header:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 700
+      body:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 600
+        includeItalic: true
+      code:
+        name: JetBrains Mono
+        weights:
+          - 400
+          - 600
+      interface:
+        name: Libertinus Serif
+        weights:
+          - 400
+          - 600
   - source: "@quartz-themes/core"
     enabled: true
     options:
@@ -248,7 +295,7 @@ plugins:
     enabled: true
     options:
       links:
-        Telegram: https://t.me/
+        Telegram: https://t.me/Skifcha
     layout:
       position: footer
       priority: 50
