@@ -2,16 +2,15 @@ const sidebarStorageKey = "quartz-sidebar-collapse"
 
 type SidebarState = {
   left: boolean
-  right: boolean
 }
 
 const readState = (): SidebarState => {
   try {
     const saved = localStorage.getItem(sidebarStorageKey)
-    if (saved) return { left: false, right: false, ...JSON.parse(saved) }
+    if (saved) return { left: false, ...JSON.parse(saved) }
   } catch {}
 
-  return { left: false, right: false }
+  return { left: true }
 }
 
 const writeState = (state: SidebarState) => {
@@ -22,11 +21,9 @@ const writeState = (state: SidebarState) => {
 
 const applyState = (state: SidebarState) => {
   document.documentElement.dataset.sidebarLeft = state.left ? "collapsed" : "open"
-  document.documentElement.dataset.sidebarRight = state.right ? "collapsed" : "open"
 
   const readerButtons = document.querySelectorAll<HTMLButtonElement>("button.readermode")
   const leftButtons = document.querySelectorAll<HTMLButtonElement>(".sidebar-collapse-left")
-  const rightButtons = document.querySelectorAll<HTMLButtonElement>(".sidebar-collapse-right")
 
   for (const button of readerButtons) {
     button.setAttribute("aria-hidden", "true")
@@ -38,13 +35,6 @@ const applyState = (state: SidebarState) => {
     button.setAttribute("aria-expanded", String(!state.left))
     button.setAttribute("aria-label", state.left ? "Show explorer" : "Hide explorer")
     button.title = state.left ? "Show explorer" : "Hide explorer"
-  }
-
-  for (const button of rightButtons) {
-    button.textContent = state.right ? "<" : ">"
-    button.setAttribute("aria-expanded", String(!state.right))
-    button.setAttribute("aria-label", state.right ? "Show graph panel" : "Hide graph panel")
-    button.title = state.right ? "Show graph panel" : "Hide graph panel"
   }
 }
 
@@ -87,13 +77,7 @@ const setupSidebarCollapse = () => {
     toggleSide("left")
   })
 
-  const rightFloating = makeButton("floating-sidebar-toggle floating-sidebar-toggle-right sidebar-collapse-right", (event) => {
-    event.preventDefault()
-    event.stopImmediatePropagation()
-    toggleSide("right")
-  })
-
-  document.body.append(leftFloating, rightFloating)
+  document.body.append(leftFloating)
   applyState(readState())
 }
 

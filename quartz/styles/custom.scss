@@ -2,6 +2,49 @@
 
 // put your custom CSS here!
 
+:root {
+  --tn-bg-dark2: #121218;
+  --tn-bg-dark: #16161e;
+  --tn-bg: #1a1b26;
+  --tn-bg-highlight: #292e42;
+  --tn-fg: #c0caf5;
+  --tn-fg-dark: #a9b1d6;
+  --tn-comment: #565f89;
+  --tn-blue: #7aa2f7;
+  --tn-cyan: #7dcfff;
+  --tn-magenta: #bb9af7;
+  --tn-green: #9ece6a;
+  --tn-orange: #ff9e64;
+  --tn-red: #ff757f;
+}
+
+:root,
+:root[saved-theme="dark"],
+:root[saved-theme="light"] {
+  --light: var(--tn-bg) !important;
+  --lightgray: var(--tn-bg-highlight) !important;
+  --gray: var(--tn-comment) !important;
+  --darkgray: var(--tn-fg-dark) !important;
+  --dark: var(--tn-fg) !important;
+  --secondary: var(--tn-magenta) !important;
+  --tertiary: var(--tn-cyan) !important;
+  --highlight: color-mix(in srgb, var(--tn-blue) 18%, transparent) !important;
+  --textHighlight: color-mix(in srgb, var(--tn-magenta) 34%, transparent) !important;
+}
+
+html,
+body,
+.page,
+.page > #quartz-body,
+.center,
+article {
+  background: var(--light) !important;
+}
+
+a {
+  text-underline-offset: 0.18em;
+}
+
 .toc {
   min-height: 3rem;
   padding: 0.4rem;
@@ -275,12 +318,12 @@ button.readermode {
 
 .graph {
   padding: 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--secondary) 34%, var(--lightgray));
+  border: 1px solid color-mix(in srgb, var(--secondary) 42%, var(--lightgray));
   border-radius: 8px;
-  background: color-mix(in srgb, var(--light) 90%, var(--secondary));
+  background: color-mix(in srgb, var(--light) 88%, var(--secondary));
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--dark) 6%, transparent),
-    0 10px 28px color-mix(in srgb, var(--dark) 10%, transparent);
+    0 14px 32px color-mix(in srgb, var(--tn-bg-dark2) 28%, transparent);
 }
 
 .graph > h3 {
@@ -304,11 +347,11 @@ button.readermode {
 .graph > .graph-outer {
   height: 310px;
   margin: 0;
-  border-color: color-mix(in srgb, var(--secondary) 44%, var(--lightgray));
+  border-color: color-mix(in srgb, var(--secondary) 50%, var(--lightgray));
   border-radius: 8px;
   background:
-    radial-gradient(circle at center, color-mix(in srgb, var(--secondary) 11%, transparent), transparent 58%),
-    color-mix(in srgb, var(--light) 96%, var(--dark));
+    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--secondary) 13%, transparent), transparent 58%),
+    color-mix(in srgb, var(--light) 94%, var(--tn-bg-dark2));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dark) 5%, transparent);
 }
 
@@ -316,7 +359,7 @@ button.readermode {
   top: 0.35rem;
   right: 0.35rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 38%, transparent);
-  background: color-mix(in srgb, var(--light) 82%, var(--secondary));
+  background: color-mix(in srgb, var(--light) 78%, var(--secondary));
   color: var(--secondary);
   opacity: 1;
 }
@@ -331,121 +374,195 @@ button.readermode {
 }
 
 .graph > .global-graph-outer > .global-graph-container {
-  border: 1px solid color-mix(in srgb, var(--secondary) 48%, var(--lightgray));
+  border: 1px solid color-mix(in srgb, var(--secondary) 54%, var(--lightgray));
   border-radius: 10px;
   background:
     radial-gradient(circle at center, color-mix(in srgb, var(--secondary) 8%, transparent), transparent 62%),
     var(--light);
-  box-shadow: 0 24px 70px color-mix(in srgb, var(--dark) 24%, transparent);
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--tn-bg-dark2) 50%, transparent);
 }
 
 .home-entry {
-  max-width: 58rem;
-  padding: 0.6rem 0 1rem;
+  max-width: 76rem;
+  padding: 4.8rem 0 2rem;
 }
 
-.home-lead {
-  max-width: 42rem;
-  margin: 0 0 2rem;
-  color: var(--darkgray);
-  font-size: 1.12rem;
-  line-height: 1.55;
+.home-hero {
+  max-width: 62rem;
 }
 
-.home-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-  gap: 1rem;
-}
-
-.home-card {
-  position: relative;
-  display: flex;
-  min-height: 14.5rem;
-  flex-direction: column;
-  padding: 1.25rem;
-  overflow: hidden;
-  border: 1px solid var(--lightgray);
-  border-radius: 8px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--light) 96%, var(--secondary)), var(--light)),
-    var(--light);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--lightgray) 65%, transparent);
-  color: var(--dark);
-  text-decoration: none;
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    background 180ms ease;
-}
-
-.home-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 4px;
-  background: var(--secondary);
-  opacity: 0.7;
-}
-
-.home-card:hover,
-.home-card:focus-visible {
-  border-color: var(--secondary);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--light) 90%, var(--secondary)), var(--light)),
-    var(--light);
-  box-shadow: 0 0.7rem 1.6rem color-mix(in srgb, var(--dark) 14%, transparent);
-  transform: translateY(-3px);
-}
-
-.home-card-label {
-  margin: 0.6rem 0 1.1rem;
+.home-kicker,
+.home-section-head p {
+  margin: 0 0 0.75rem;
   color: var(--secondary);
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-family: var(--codeFont);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
-.home-card strong {
-  display: block;
-  margin-bottom: 0.75rem;
+.home-hero h1 {
+  margin: 0;
   color: var(--dark);
-  font-size: 1.45rem;
-  line-height: 1.15;
+  font-size: clamp(3.35rem, 9vw, 7.4rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.9;
 }
 
-.home-card-text {
+.home-lead {
+  max-width: 48rem;
+  margin: 1.35rem 0 2.4rem;
   color: var(--darkgray);
+  font-size: clamp(1.15rem, 2.1vw, 1.55rem);
   line-height: 1.45;
 }
 
-.home-card-link {
-  margin-top: auto;
-  padding-top: 1.25rem;
-  color: var(--secondary);
+.home-link-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 2.2rem;
+}
+
+.home-topic {
+  position: relative;
+  display: grid;
+  min-height: 7rem;
+  align-content: end;
+  gap: 0.45rem;
+  padding: 1rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--secondary) 26%, var(--lightgray));
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--tn-bg-dark) 82%, var(--secondary)) !important;
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--secondary) 24%, transparent), transparent 62%) !important;
+  color: var(--dark);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.home-topic::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--secondary);
+}
+
+.home-topic:hover,
+.home-topic:focus-visible {
+  border-color: color-mix(in srgb, var(--secondary) 78%, var(--lightgray));
+  box-shadow: 0 0.85rem 1.8rem color-mix(in srgb, var(--tn-bg-dark2) 30%, transparent);
+  transform: translateY(-3px);
+}
+
+.home-topic span {
+  color: var(--gray);
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.home-topic strong {
+  color: var(--dark);
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.home-graph-band,
+.home-resources,
+.home-proof,
+.home-contact {
+  max-width: 76rem;
+  margin-top: 3.1rem;
+}
+
+.home-section-head {
+  max-width: 42rem;
+  margin-bottom: 1rem;
+}
+
+.home-section-head h2 {
+  margin: 0;
+  color: var(--dark);
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.home-graph {
+  padding: 0;
+  overflow: hidden;
+}
+
+.home-graph > .graph-outer {
+  height: min(58vh, 34rem);
+  min-height: 26rem;
+  border: 0;
+  border-radius: 8px;
+}
+
+.home-graph .graph-container canvas {
+  display: block;
+}
+
+.home-resources {
+  min-height: 9rem;
+  padding: 2rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+}
+
+.home-testimonials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.home-testimonials blockquote {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--light) 91%, var(--tn-bg-dark));
+  color: var(--darkgray);
+}
+
+.home-contact {
+  padding-bottom: 2rem;
+}
+
+.home-contact a {
+  display: inline-flex;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 40%, var(--lightgray));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--light) 86%, var(--secondary));
+  color: var(--dark);
   font-weight: 700;
-}
-
-.home-card-physics::before {
-  background: #8f6adf;
-}
-
-.home-card-math::before {
-  background: #2f8f83;
-}
-
-.home-card-info::before {
-  background: #c97935;
+  text-decoration: none;
 }
 
 @media all and (max-width: 900px) {
-  .home-grid {
+  .home-entry {
+    padding-top: 2.4rem;
+  }
+
+  .home-link-strip,
+  .home-testimonials {
     grid-template-columns: 1fr;
   }
 
-  .home-card {
-    min-height: 11rem;
+  .home-topic {
+    min-height: 5.7rem;
+  }
+
+  .home-graph > .graph-outer {
+    height: 26rem;
+    min-height: 22rem;
   }
 }
 
@@ -501,41 +618,38 @@ button.readermode {
     transform: translateX(0);
   }
 
-  .floating-sidebar-toggle-right {
-    top: 7.2rem;
-    right: 0;
-    border-right: 0;
-    border-radius: 8px 0 0 8px;
+  :root[data-sidebar-left="collapsed"] .floating-sidebar-toggle-left {
     transform: translateX(0);
   }
 
-  :root[data-sidebar-left="collapsed"] .floating-sidebar-toggle-left,
-  :root[data-sidebar-right="collapsed"] .floating-sidebar-toggle-right {
-    transform: translateX(0);
-  }
-
-  :root[data-sidebar-right="collapsed"] .floating-sidebar-toggle-right {
-    right: 0;
-  }
-
-  :root[data-sidebar-left="collapsed"] body[data-slug] .page,
-  :root[data-sidebar-right="collapsed"] body[data-slug] .page {
+  body[data-slug] .page {
+    width: 100vw !important;
     max-width: 100vw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
-  :root[data-sidebar-left="collapsed"][data-sidebar-right="collapsed"] body[data-slug] .page > #quartz-body {
-    grid-template-columns: 0 minmax(0, 1fr) 0 !important;
-    column-gap: 0 !important;
+  body[data-slug] div#quartz-root.page:not([data-frame="canvas"]):not([data-frame="excalidraw"]) {
+    background-color: var(--light) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
-  :root[data-sidebar-left="collapsed"][data-sidebar-right="open"] body[data-slug] .page > #quartz-body {
-    grid-template-columns: 0 minmax(0, 1fr) 320px !important;
-    column-gap: 0.5rem !important;
-  }
-
-  :root[data-sidebar-left="open"][data-sidebar-right="collapsed"] body[data-slug] .page > #quartz-body {
+  body[data-slug] .page > #quartz-body {
+    width: 100vw !important;
     grid-template-columns: 320px minmax(0, 1fr) 0 !important;
     column-gap: 0.5rem !important;
+  }
+
+  body[data-slug] .page > #quartz-body .right.sidebar:empty {
+    display: none !important;
+  }
+
+  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body {
+    grid-template-columns: 0 minmax(0, 1fr) 0 !important;
+    column-gap: 0 !important;
   }
 
   :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body .left.sidebar {
@@ -549,21 +663,8 @@ button.readermode {
     transform: translateX(-2rem);
   }
 
-  :root[data-sidebar-right="collapsed"] body[data-slug] .page > #quartz-body .right.sidebar {
-    width: 0 !important;
-    min-width: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    overflow: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transform: translateX(2rem);
-  }
-
   :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body .center,
-  :root[data-sidebar-right="collapsed"] body[data-slug] .page > #quartz-body .center,
-  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body footer,
-  :root[data-sidebar-right="collapsed"] body[data-slug] .page > #quartz-body footer {
+  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body footer {
     max-width: min(100%, 82rem) !important;
     min-width: 0 !important;
     width: 100% !important;

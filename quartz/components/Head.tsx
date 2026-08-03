@@ -104,6 +104,45 @@ export default (() => {
             return resource
           }
         })}
+        <style
+          data-hopes-layout-fix
+          dangerouslySetInnerHTML={{
+            __html: `
+@media (min-width: 1200px) {
+  html body[data-slug] #quartz-root.page:not([data-frame="canvas"]):not([data-frame="excalidraw"]) {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transform: none !important;
+  }
+
+  html body[data-slug] #quartz-root.page > #quartz-body {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    grid-template-columns: 320px minmax(0, 1fr) 0 !important;
+    column-gap: 0.5rem !important;
+  }
+
+  html:root[data-sidebar-left="collapsed"] body[data-slug] #quartz-root.page > #quartz-body {
+    grid-template-columns: 0 minmax(0, 1fr) 0 !important;
+    column-gap: 0 !important;
+  }
+
+  html body[data-slug] #quartz-root.page > #quartz-body > .left.sidebar {
+    margin-left: 0 !important;
+    transform: none !important;
+  }
+}
+`,
+          }}
+        />
       </head>
     )
   }
