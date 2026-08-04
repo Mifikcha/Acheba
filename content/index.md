@@ -9,15 +9,15 @@ title: Hopes and Dreams
   </div>
 
   <nav class="home-link-strip" aria-label="Ключевые разделы">
-    <a class="home-topic home-topic-physics" href="./репетиторство-1/шизончик/">
+    <a class="home-topic home-topic-physics" href="./Предметы/шизончик/">
       <span>Физика</span>
       <strong>Шизончик</strong>
     </a>
-    <a class="home-topic home-topic-info" href="./репетиторство-1/инфушечка/">
+    <a class="home-topic home-topic-info" href="./Предметы/инфушечка/">
       <span>Информатика</span>
       <strong>Инфушечка</strong>
     </a>
-    <a class="home-topic home-topic-math" href="./репетиторство-1/матанчик/">
+    <a class="home-topic home-topic-math" href="./Предметы/матанчик/">
       <span>Математика</span>
       <strong>Матанчик</strong>
     </a>
@@ -31,7 +31,7 @@ title: Hopes and Dreams
   </div>
   <div class="graph home-graph">
     <div class="graph-outer">
-      <div class="graph-container" data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.22,"repelForce":0.18,"centerForce":0.95,"linkDistance":84,"fontSize":0.42,"opacityScale":1.35,"removeTags":[],"showTags":false,"focusOnHover":false,"enableRadial":false}'></div>
+      <div class="graph-container" data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.9,"repelForce":0.5,"centerForce":0.3,"linkDistance":30,"fontSize":0.6,"opacityScale":1,"removeTags":[],"showTags":true,"focusOnHover":true,"enableRadial":true}'></div>
       <button class="global-graph-icon" aria-label="Открыть большой граф">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24">
           <path fill="currentColor" d="M5 5h6v2H8.41l3.3 3.29-1.42 1.42L7 8.41V11H5V5Zm8 0h6v6h-2V8.41l-3.29 3.3-1.42-1.42 3.3-3.29H13V5ZM5 13h2v2.59l3.29-3.3 1.42 1.42-3.3 3.29H11v2H5v-6Zm12 2.59V13h2v6h-6v-2h2.59l-3.3-3.29 1.42-1.42 3.29 3.3Z"></path>
@@ -39,7 +39,7 @@ title: Hopes and Dreams
       </button>
     </div>
     <div class="global-graph-outer">
-      <div class="global-graph-container" data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.225,"repelForce":0.18,"centerForce":0.95,"linkDistance":84,"fontSize":0.42,"opacityScale":1.35,"removeTags":[],"showTags":false,"focusOnHover":false,"enableRadial":false}'></div>
+      <div class="global-graph-container" data-cfg='{"drag":true,"zoom":true,"depth":-1,"scale":0.9,"repelForce":0.5,"centerForce":0.3,"linkDistance":30,"fontSize":0.6,"opacityScale":1,"removeTags":[],"showTags":true,"focusOnHover":true,"enableRadial":true}'></div>
     </div>
   </div>
 </section>

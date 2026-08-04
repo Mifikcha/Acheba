@@ -130,11 +130,6 @@ export default (() => {
     column-gap: 0.5rem !important;
   }
 
-  html:root[data-sidebar-left="collapsed"] body[data-slug] #quartz-root.page > #quartz-body {
-    grid-template-columns: 0 minmax(0, 1fr) 0 !important;
-    column-gap: 0 !important;
-  }
-
   html body[data-slug] #quartz-root.page > #quartz-body > .left.sidebar {
     margin-left: 0 !important;
     transform: none !important;

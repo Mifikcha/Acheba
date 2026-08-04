@@ -27,14 +27,19 @@ const replacements = [
   ["return 2+Math.sqrt(l)}", "return 3.2+Math.sqrt(l)*1.2}"],
   ["l.color=l.active?ee:te", "l.color=l.active?Ie:ee"],
   ["width:1,color:v.color", "width:1.35,color:v.color"],
-  ["alphaTarget(1).restart()", "alphaTarget(0.03).restart()"],
+  ["alphaTarget(0.18).restart()", "alphaTarget(1).restart()"],
+  ["alphaTarget(0.03).restart()", "alphaTarget(1).restart()"],
   [
     "oe=Date.now(),Eu=!0,_u=i.subject.id",
-    "i.active||au.alphaTarget(0.03).restart(),oe=Date.now(),Eu=!0,_u=i.subject.id",
+    "i.active||au.alphaTarget(1).restart(),oe=Date.now(),Eu=!0,_u=i.subject.id",
   ],
   [
-    "i.active||au.alphaTarget(0.03).restart(),i.active||au.alphaTarget(0.03).restart(),",
-    "i.active||au.alphaTarget(0.03).restart(),",
+    "i.active||au.alphaTarget(1).restart(),i.active||au.alphaTarget(1).restart(),",
+    "i.active||au.alphaTarget(1).restart(),",
+  ],
+  [
+    "i.active||au.alphaTarget(1).restart(),i.subject.fx=l-i.subject.__dragOffset.x,i.subject.fy=F-i.subject.__dragOffset.y",
+    "i.subject.fx=l-i.subject.__dragOffset.x,i.subject.fy=F-i.subject.__dragOffset.y",
   ],
   [
     "P=a.zoomIdentity;",
@@ -43,6 +48,27 @@ const replacements = [
   [
     "a.select(Z.canvas).call(et)}",
     "a.select(Z.canvas).call(et).call(et.transform,P)}",
+  ],
+  [
+    "F=Math.max((l-1)/3.75,0)",
+    "F=Math.min(Math.max((l-.55)/1.15,0),1)",
+  ],
+  [
+    "style:{fontSize:We*15,fill:ze,fontFamily:Ne}",
+    'style:{fontSize:We*60,fill:ze,fontFamily:Ne,fontWeight:"600"},resolution:window.devicePixelRatio*4',
+  ],
+  [
+    'style:{fontSize:We*15,fill:ze,fontFamily:Ne,fontWeight:"600"}',
+    'style:{fontSize:We*60,fill:ze,fontFamily:Ne,fontWeight:"600"},resolution:window.devicePixelRatio*4',
+  ],
+  [
+    'style:{fontSize:We*60,fill:ze,fontFamily:Ne,fontWeight:"600"}});',
+    'style:{fontSize:We*60,fill:ze,fontFamily:Ne,fontWeight:"600"},resolution:window.devicePixelRatio*4});',
+  ],
+  ["lu.scale.set(1/qu)", "lu.scale.set(1/qu/4)"],
+  [
+    "A.label.alpha=1,A.label.scale.set(l)):A.label.scale.set(i)",
+    "A.label.alpha=1,A.label.scale.set(l/4)):A.label.scale.set(i/4)",
   ],
 ]
 

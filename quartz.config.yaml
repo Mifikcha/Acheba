@@ -99,8 +99,8 @@ plugins:
     enabled: true
     order: 50
     layout:
-      position: right
-      priority: 30
+      position: left
+      priority: 70
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
@@ -161,7 +161,7 @@ plugins:
     enabled: true
     options:
       theme: default
-      mode: both
+      mode: dark
   - source: "@quartz-community/remove-draft"
     enabled: true
   - source: "@quartz-community/explicit-publish"
@@ -206,6 +206,10 @@ plugins:
     enabled: true
   - source: "@quartz-community/explorer"
     enabled: true
+    options:
+      folderDefaultState: open
+      folderClickBehavior: link
+      useSavedState: false
     layout:
       position: left
       priority: 50
@@ -213,25 +217,36 @@ plugins:
     enabled: true
     options:
       localGraph:
-        scale: 0.26
-        repelForce: 0.2
-        centerForce: 0.95
-        linkDistance: 84
-        fontSize: 0.7
-        opacityScale: 2.05
-        focusOnHover: false
+        drag: true
+        zoom: true
+        depth: -1
+        scale: 0.9
+        repelForce: 0.5
+        centerForce: 0.3
+        linkDistance: 30
+        fontSize: 0.6
+        opacityScale: 1
+        removeTags: []
+        showTags: true
+        focusOnHover: true
+        enableRadial: true
       globalGraph:
-        scale: 0.225
-        repelForce: 0.18
-        centerForce: 0.95
-        linkDistance: 84
-        fontSize: 0.42
-        opacityScale: 1.35
-        focusOnHover: false
-        enableRadial: false
+        drag: true
+        zoom: true
+        depth: -1
+        scale: 0.9
+        repelForce: 0.5
+        centerForce: 0.3
+        linkDistance: 30
+        fontSize: 0.6
+        opacityScale: 1
+        removeTags: []
+        showTags: true
+        focusOnHover: true
+        enableRadial: true
     layout:
-      position: right
-      priority: 10
+      position: left
+      priority: 60
   - source: "@quartz-community/search"
     enabled: true
     layout:
@@ -266,13 +281,13 @@ plugins:
       position: left
       priority: 10
   - source: "@quartz-community/darkmode"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 30
       group: toolbar
   - source: "@quartz-community/reader-mode"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 35

@@ -312,8 +312,48 @@ body[data-slug$="/index"]:not([data-slug="index"]) .page-listing .section > .tag
   text-decoration: none;
 }
 
-button.readermode {
+button.readermode,
+button.darkmode,
+.floating-sidebar-toggle {
   display: none !important;
+}
+
+.left.sidebar {
+  max-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.left.sidebar .explorer {
+  flex: 0 0 auto;
+  min-height: auto;
+  overflow: visible;
+}
+
+.left.sidebar .explorer.collapsed {
+  flex: 0 0 auto;
+}
+
+.left.sidebar .explorer-toggle {
+  display: none !important;
+}
+
+.left.sidebar .explorer-content {
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.left.sidebar div:has(> .explorer-content),
+.left.sidebar div:has(> .overflow),
+.left.sidebar .explorer-content > .explorer-ul,
+.left.sidebar .overflow {
+  max-height: none !important;
+  overflow: visible !important;
+  overscroll-behavior: auto !important;
 }
 
 .graph {
@@ -380,6 +420,42 @@ button.readermode {
     radial-gradient(circle at center, color-mix(in srgb, var(--secondary) 8%, transparent), transparent 62%),
     var(--light);
   box-shadow: 0 24px 70px color-mix(in srgb, var(--tn-bg-dark2) 50%, transparent);
+}
+
+.left.sidebar .graph,
+.left.sidebar .toc {
+  flex: 0 0 auto;
+}
+
+.left.sidebar .graph {
+  padding: 0.45rem;
+}
+
+.left.sidebar .graph > h3 {
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.left.sidebar .graph > .graph-outer {
+  height: 11rem;
+  min-height: 11rem;
+}
+
+.left.sidebar .graph > .graph-outer > .global-graph-icon {
+  top: 0.25rem;
+  right: 0.25rem;
+}
+
+.left.sidebar button.toc-header {
+  pointer-events: none;
+}
+
+.left.sidebar button.toc-header .fold {
+  display: none;
+}
+
+.left.sidebar ul.toc-content.collapsed {
+  display: block;
 }
 
 .home-entry {
@@ -581,47 +657,6 @@ button.readermode {
       transform 220ms ease;
   }
 
-  .floating-sidebar-toggle {
-    position: fixed;
-    z-index: 20;
-    display: grid;
-    width: 2rem;
-    height: 2.8rem;
-    place-items: center;
-    border: 1px solid var(--lightgray);
-    background: color-mix(in srgb, var(--light) 88%, var(--secondary));
-    color: var(--secondary);
-    font-size: 1.35rem;
-    font-weight: 700;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0.92;
-    transition:
-      transform 180ms ease,
-      opacity 160ms ease,
-      background 160ms ease,
-      border-color 160ms ease;
-  }
-
-  .floating-sidebar-toggle:hover,
-  .floating-sidebar-toggle:focus-visible {
-    border-color: var(--secondary);
-    background: color-mix(in srgb, var(--light) 76%, var(--secondary));
-    opacity: 1;
-  }
-
-  .floating-sidebar-toggle-left {
-    top: 7.2rem;
-    left: 0;
-    border-left: 0;
-    border-radius: 0 8px 8px 0;
-    transform: translateX(0);
-  }
-
-  :root[data-sidebar-left="collapsed"] .floating-sidebar-toggle-left {
-    transform: translateX(0);
-  }
-
   body[data-slug] .page {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -647,29 +682,12 @@ button.readermode {
     display: none !important;
   }
 
-  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body {
-    grid-template-columns: 0 minmax(0, 1fr) 0 !important;
-    column-gap: 0 !important;
-  }
-
-  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body .left.sidebar {
-    width: 0 !important;
-    min-width: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    overflow: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transform: translateX(-2rem);
-  }
-
-  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body .center,
-  :root[data-sidebar-left="collapsed"] body[data-slug] .page > #quartz-body footer {
-    max-width: min(100%, 82rem) !important;
-    min-width: 0 !important;
-    width: 100% !important;
-    padding-left: 4rem;
-    padding-right: 4rem;
-    box-sizing: border-box;
+  body[data-slug] .page > #quartz-body .left.sidebar {
+    max-height: 100dvh;
+    overflow-y: auto !important;
+    padding-bottom: 2rem;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
   }
 }
