@@ -24,6 +24,10 @@ const themeCoreFile = path.join(
 )
 
 const replacements = [
+  [
+    'function Fu(u){let e=_t(ft(u,"index"),!0);return e.length===0?"/":e}',
+    'function Fu(u){try{u=decodeURIComponent(u)}catch{}let e=_t(ft(u,"index"),!0);return e.length===0?"/":e}',
+  ],
   ["return 2+Math.sqrt(l)}", "return 3.2+Math.sqrt(l)*1.2}"],
   ["l.color=l.active?ee:te", "l.color=l.active?Ie:ee"],
   ["width:1,color:v.color", "width:1.35,color:v.color"],

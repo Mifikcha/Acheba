@@ -126,7 +126,7 @@ export default (() => {
     margin-right: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
-    grid-template-columns: 320px minmax(0, 1fr) 0 !important;
+    grid-template-columns: 320px minmax(0, 1fr) 320px !important;
     column-gap: 0.5rem !important;
   }
 

@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: ru-RU
-  baseUrl: localhost:8080
+  baseUrl: mifikcha.github.io/Acheba
   ignorePatterns:
     - private
     - templates
@@ -39,15 +39,15 @@ configuration:
           - 600
     colors:
       lightMode:
-        light: "#1a1b26"
-        lightgray: "#292e42"
-        gray: "#565f89"
-        darkgray: "#a9b1d6"
-        dark: "#c0caf5"
-        secondary: "#bb9af7"
-        tertiary: "#7dcfff"
-        highlight: rgba(122, 162, 247, 0.18)
-        textHighlight: rgba(187, 154, 247, 0.34)
+        light: "#f9f5d7"
+        lightgray: "#f2e5bc"
+        gray: "#665c54"
+        darkgray: "#504945"
+        dark: "#282828"
+        secondary: "#b57614"
+        tertiary: "#458588"
+        highlight: rgba(181, 118, 20, 0.16)
+        textHighlight: rgba(181, 118, 20, 0.26)
       darkMode:
         light: "#1a1b26"
         lightgray: "#292e42"
@@ -97,10 +97,15 @@ plugins:
     order: 40
   - source: "@quartz-community/table-of-contents"
     enabled: true
+    options:
+      maxDepth: 6
+      minEntries: 0
+      showByDefault: true
+      collapseByDefault: false
     order: 50
     layout:
-      position: left
-      priority: 70
+      position: right
+      priority: 60
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
@@ -219,17 +224,18 @@ plugins:
       localGraph:
         drag: true
         zoom: true
-        depth: -1
-        scale: 0.9
+        depth: 1
+        scale: 1.1
         repelForce: 0.5
         centerForce: 0.3
         linkDistance: 30
-        fontSize: 0.6
+        fontSize: 0.45
         opacityScale: 1
-        removeTags: []
+        removeTags:
+          - публичный-сайт
         showTags: true
-        focusOnHover: true
-        enableRadial: true
+        focusOnHover: false
+        enableRadial: false
       globalGraph:
         drag: true
         zoom: true
@@ -238,15 +244,16 @@ plugins:
         repelForce: 0.5
         centerForce: 0.3
         linkDistance: 30
-        fontSize: 0.6
+        fontSize: 0.45
         opacityScale: 1
-        removeTags: []
+        removeTags:
+          - публичный-сайт
         showTags: true
         focusOnHover: true
         enableRadial: true
     layout:
-      position: left
-      priority: 60
+      position: right
+      priority: 50
   - source: "@quartz-community/search"
     enabled: true
     layout:
@@ -365,17 +372,12 @@ layout:
         left: []
         right: []
     content:
-      positions:
-        right: []
+      exclude: []
     folder:
       exclude:
         - reader-mode
-      positions:
-        right: []
     tag:
       exclude:
         - reader-mode
-      positions:
-        right: []
     canvas: {}
     bases: {}
