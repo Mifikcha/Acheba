@@ -48,6 +48,9 @@ jobs:
         working-directory: _quartz
         run: npm run quartz -- build
 
+      - name: Remove custom domain marker
+        run: rm -f _quartz/public/CNAME
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
