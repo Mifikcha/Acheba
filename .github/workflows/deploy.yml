@@ -49,7 +49,9 @@ jobs:
         run: npm run quartz -- build
 
       - name: Remove custom domain marker
-        run: rm -f _quartz/public/CNAME
+        run: |
+          rm -f _quartz/public/CNAME
+          touch _quartz/public/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
