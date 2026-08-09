@@ -100,6 +100,21 @@ article {
     color 180ms ease;
 }
 
+:root[data-theme-changing="true"] {
+  body,
+  .page,
+  .page > #quartz-body,
+  .center,
+  article,
+  a {
+    transition: none !important;
+  }
+
+  .graph-container canvas {
+    visibility: hidden;
+  }
+}
+
 a {
   text-underline-offset: 0.18em;
 }

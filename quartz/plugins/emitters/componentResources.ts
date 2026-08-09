@@ -25,6 +25,19 @@ import { Features, transform } from "lightningcss"
 import { transform as transpile } from "esbuild"
 import { write } from "./helpers"
 
+const themeBootstrapScript = `
+  let theme = "dark"
+
+  try {
+    theme = localStorage.getItem("hopes-color-theme") ?? localStorage.getItem("theme") ?? "dark"
+  } catch {}
+
+  if (theme !== "light") theme = "dark"
+
+  document.documentElement.setAttribute("saved-theme", theme)
+  document.documentElement.style.colorScheme = theme
+`
+
 function hashContent(content: string | Buffer): string {
   return createHash("sha256").update(content).digest("hex").slice(0, 8)
 }
@@ -85,6 +98,9 @@ async function joinScripts(scripts: string[]): Promise<string> {
 
 function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentResources) {
   const cfg = ctx.cfg.configuration
+
+  // Set the persisted theme before components and canvas renderers read CSS variables.
+  componentResources.beforeDOMLoaded.unshift(themeBootstrapScript)
 
   // popovers
   if (cfg.enablePopovers) {

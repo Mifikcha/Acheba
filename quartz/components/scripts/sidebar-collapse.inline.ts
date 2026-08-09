@@ -1,17 +1,23 @@
 const sidebarQuery = window.matchMedia("(max-width: 800px)")
+type Theme = "dark" | "light"
 
-const applyStoredTheme = () => {
-  let theme = "dark"
+const readStoredTheme = (): Theme => {
+  let theme: string = "dark"
 
   try {
-    theme = localStorage.getItem("hopes-color-theme") ?? "dark"
+    theme = localStorage.getItem("hopes-color-theme") ?? localStorage.getItem("theme") ?? "dark"
   } catch {}
 
-  if (theme !== "light") {
-    theme = "dark"
-  }
+  return theme === "light" ? "light" : "dark"
+}
 
-  document.documentElement.setAttribute("saved-theme", theme)
+const applyTheme = (theme: Theme) => {
+  const root = document.documentElement
+
+  root.setAttribute("saved-theme", theme)
+  root.style.colorScheme = theme
+  document.body?.classList.toggle("theme-light", theme === "light")
+  document.body?.classList.toggle("theme-dark", theme === "dark")
   document.querySelectorAll<HTMLButtonElement>(".hopes-theme-toggle").forEach((button) => {
     button.setAttribute("aria-label", theme === "light" ? "Включить тёмную тему" : "Включить светлую тему")
     button.setAttribute("title", theme === "light" ? "Тёмная тема" : "Светлая тема")
@@ -23,21 +29,32 @@ const applyStoredTheme = () => {
   })
 }
 
+const applyStoredTheme = () => applyTheme(readStoredTheme())
+
 const notifyThemeChange = (theme: "dark" | "light") => {
   document.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }))
 }
 
 const toggleTheme = () => {
-  const nextTheme = document.documentElement.getAttribute("saved-theme") === "light" ? "dark" : "light"
+  const nextTheme =
+    document.documentElement.getAttribute("saved-theme") === "light" ? "dark" : "light"
 
-  document.documentElement.setAttribute("saved-theme", nextTheme)
+  document.documentElement.dataset.themeChanging = "true"
 
   try {
     localStorage.setItem("hopes-color-theme", nextTheme)
+    localStorage.setItem("theme", nextTheme)
   } catch {}
 
-  applyStoredTheme()
-  requestAnimationFrame(() => notifyThemeChange(nextTheme))
+  applyTheme(nextTheme)
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => {
+      if (document.documentElement.getAttribute("saved-theme") !== nextTheme) return
+
+      notifyThemeChange(nextTheme)
+      document.documentElement.removeAttribute("data-theme-changing")
+    }),
+  )
 }
 
 const setSidebarState = (open: boolean) => {
