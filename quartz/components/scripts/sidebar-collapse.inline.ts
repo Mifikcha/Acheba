@@ -23,6 +23,10 @@ const applyStoredTheme = () => {
   })
 }
 
+const notifyThemeChange = (theme: "dark" | "light") => {
+  document.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }))
+}
+
 const toggleTheme = () => {
   const nextTheme = document.documentElement.getAttribute("saved-theme") === "light" ? "dark" : "light"
 
@@ -33,6 +37,7 @@ const toggleTheme = () => {
   } catch {}
 
   applyStoredTheme()
+  requestAnimationFrame(() => notifyThemeChange(nextTheme))
 }
 
 const setSidebarState = (open: boolean) => {

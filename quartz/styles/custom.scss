@@ -40,6 +40,17 @@
   --dark: var(--tn-fg) !important;
   --secondary: var(--tn-magenta) !important;
   --tertiary: var(--tn-cyan) !important;
+  --text-accent: var(--secondary) !important;
+  --text-accent-hover: var(--tertiary) !important;
+  --link-color: var(--secondary) !important;
+  --link-color-hover: var(--tertiary) !important;
+  --link-external-color: var(--secondary) !important;
+  --link-external-color-hover: var(--tertiary) !important;
+  --interactive-accent: var(--secondary) !important;
+  --interactive-accent-hover: var(--tertiary) !important;
+  --tag-color: var(--secondary) !important;
+  --icon-color-active: var(--secondary) !important;
+  --nav-item-color-active: var(--secondary) !important;
   --highlight: color-mix(in srgb, var(--tn-blue) 18%, transparent) !important;
   --textHighlight: color-mix(in srgb, var(--tn-magenta) 34%, transparent) !important;
   --site-bg-deep: var(--tn-bg-dark2);
@@ -57,6 +68,17 @@
   --dark: var(--ap-light-text) !important;
   --secondary: var(--ap-light-accent) !important;
   --tertiary: var(--ap-light-accent-2) !important;
+  --text-accent: var(--secondary) !important;
+  --text-accent-hover: var(--tertiary) !important;
+  --link-color: var(--secondary) !important;
+  --link-color-hover: var(--tertiary) !important;
+  --link-external-color: var(--secondary) !important;
+  --link-external-color-hover: var(--tertiary) !important;
+  --interactive-accent: var(--secondary) !important;
+  --interactive-accent-hover: var(--tertiary) !important;
+  --tag-color: var(--secondary) !important;
+  --icon-color-active: var(--secondary) !important;
+  --nav-item-color-active: var(--secondary) !important;
   --highlight: rgba(181, 118, 20, 0.16) !important;
   --textHighlight: rgba(181, 118, 20, 0.26) !important;
   --site-bg-deep: var(--ap-light-crust);
@@ -80,6 +102,20 @@ article {
 
 a {
   text-underline-offset: 0.18em;
+}
+
+a.external-link,
+a.internal-link,
+.breadcrumb-container .breadcrumb-element > a,
+footer a {
+  color: var(--secondary) !important;
+}
+
+a.external-link:hover,
+a.internal-link:hover,
+.breadcrumb-container .breadcrumb-element > a:hover,
+footer a:hover {
+  color: var(--tertiary) !important;
 }
 
 .toc {
