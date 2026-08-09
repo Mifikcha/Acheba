@@ -23,6 +23,15 @@ const themeCoreFile = path.join(
   "index.js",
 )
 
+const excalidrawPluginFile = path.join(
+  process.cwd(),
+  ".quartz",
+  "plugins",
+  "obsidian-plugin-excalidraw",
+  "dist",
+  "index.js",
+)
+
 const replacements = [
   [
     'function Fu(u){let e=_t(ft(u,"index"),!0);return e.length===0?"/":e}',
@@ -119,8 +128,43 @@ if (fs.existsSync(themeCoreFile)) {
   }
 }
 
+if (fs.existsSync(excalidrawPluginFile)) {
+  const original = fs.readFileSync(excalidrawPluginFile, "utf8")
+  let source = original
+
+  const excalidrawReplacements = [
+    ["let a=1,u=0,d=0,c=!1,m=0,M=0;", "let a=4,u=0,d=0,c=!1,m=0,M=0;"],
+    ["let a=2.4,u=0,d=0,c=!1,m=0,M=0;", "let a=4,u=0,d=0,c=!1,m=0,M=0;"],
+    [
+      'function s(){v.style.transform="translate("+u+"px, "+d+"px) scale("+a+")",O()}function y',
+      'function s(){v.style.transform="translate("+u+"px, "+d+"px) scale("+a+")",O()}s();function y',
+    ],
+    ["var o=e.deltaY>0?-.15:.15;", "var o=e.deltaY>0?-.5:.5;"],
+    ["var o=e.deltaY>0?-.35:.35;", "var o=e.deltaY>0?-.5:.5;"],
+    ["a=Math.max(.1,Math.min(5,a+o)),s()", "a=Math.max(.1,Math.min(16,a+o)),s()"],
+    ["a=Math.max(.1,Math.min(12,a+o)),s()", "a=Math.max(.1,Math.min(16,a+o)),s()"],
+    ["a=Math.min(5,a+.15),s()", "a=Math.min(16,a+.5),s()"],
+    ["a=Math.min(12,a+.35),s()", "a=Math.min(16,a+.5),s()"],
+    ["a=Math.max(.1,a-.15),s()", "a=Math.max(.1,a-.5),s()"],
+    ["a=Math.max(.1,a-.35),s()", "a=Math.max(.1,a-.5),s()"],
+    ["a=1,u=0,d=0,s()", "a=4,u=0,d=0,s()"],
+    ["a=2.4,u=0,d=0,s()", "a=4,u=0,d=0,s()"],
+    ["a=Math.max(.1,Math.min(5,a*g)),f=r,s()", "a=Math.max(.1,Math.min(16,a*g)),f=r,s()"],
+    ["a=Math.max(.1,Math.min(12,a*g)),f=r,s()", "a=Math.max(.1,Math.min(16,a*g)),f=r,s()"],
+  ]
+
+  for (const [from, to] of excalidrawReplacements) {
+    source = source.split(from).join(to)
+  }
+
+  if (source !== original) {
+    fs.writeFileSync(excalidrawPluginFile, source)
+    patched += 1
+  }
+}
+
 if (patched === 0) {
-  console.log("[patch-graph] Graph and theme patches already applied or upstream code changed.")
+  console.log("[patch-graph] Graph, theme, and Excalidraw patches already applied or upstream code changed.")
 } else {
-  console.log(`[patch-graph] Graph/theme patches applied in ${patched} file(s).`)
+  console.log(`[patch-graph] Graph/theme/Excalidraw patches applied in ${patched} file(s).`)
 }

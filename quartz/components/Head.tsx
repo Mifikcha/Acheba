@@ -135,6 +135,58 @@ export default (() => {
     transform: none !important;
   }
 }
+
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: var(--excalidraw-bg, var(--light)) !important;
+}
+
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] > #quartz-body {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  grid-template-areas: "grid-center" !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .center.excalidraw-frame,
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-stage,
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-page,
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-container {
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-container svg {
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-controls {
+  right: 1rem !important;
+  bottom: 1rem !important;
+}
 `,
           }}
         />
