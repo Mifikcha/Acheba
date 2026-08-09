@@ -19,8 +19,12 @@ const applyTheme = (theme: Theme) => {
   document.body?.classList.toggle("theme-light", theme === "light")
   document.body?.classList.toggle("theme-dark", theme === "dark")
   document.querySelectorAll<HTMLButtonElement>(".hopes-theme-toggle").forEach((button) => {
-    button.setAttribute("aria-label", theme === "light" ? "Включить тёмную тему" : "Включить светлую тему")
+    button.setAttribute(
+      "aria-label",
+      theme === "light" ? "Включить тёмную тему" : "Включить светлую тему",
+    )
     button.setAttribute("title", theme === "light" ? "Тёмная тема" : "Светлая тема")
+    button.setAttribute("aria-pressed", theme === "light" ? "false" : "true")
     button.dataset.theme = theme
     button.innerHTML =
       theme === "light"
@@ -88,10 +92,12 @@ const ensureMobileToggle = () => {
   button.type = "button"
   button.setAttribute("aria-label", "Открыть проводник")
   button.setAttribute("title", "Проводник")
+  button.setAttribute("aria-expanded", "false")
   button.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M4 5h16v2H4V5Zm0 6h16v2H4v-2Zm0 6h16v2H4v-2Z"/></svg>`
   button.addEventListener("click", () => {
     const open = document.documentElement.dataset.sidebarLeft !== "open"
     setSidebarState(open)
+    button.setAttribute("aria-expanded", String(open))
     button.setAttribute("aria-label", open ? "Закрыть проводник" : "Открыть проводник")
   })
 
@@ -145,8 +151,12 @@ const prepareSidebar = () => {
   setSidebarState(!sidebarQuery.matches)
 
   document.querySelectorAll(".floating-sidebar-toggle").forEach((button) => button.remove())
-  document.querySelectorAll<HTMLButtonElement>("button.readermode").forEach((button) => button.remove())
-  document.querySelectorAll<HTMLButtonElement>("button.darkmode").forEach((button) => button.remove())
+  document
+    .querySelectorAll<HTMLButtonElement>("button.readermode")
+    .forEach((button) => button.remove())
+  document
+    .querySelectorAll<HTMLButtonElement>("button.darkmode")
+    .forEach((button) => button.remove())
 
   document.querySelectorAll<HTMLElement>(".explorer").forEach((explorer) => {
     explorer.classList.remove("collapsed")

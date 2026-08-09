@@ -29,6 +29,7 @@
   --ap-light-muted: #665c54;
   --ap-light-accent: #b57614;
   --ap-light-accent-2: #458588;
+  --site-focus-ring: 0 0 0 3px color-mix(in srgb, var(--secondary) 34%, transparent);
 }
 
 :root,
@@ -117,6 +118,7 @@ article {
 
 a {
   text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
 }
 
 a.external-link,
@@ -126,11 +128,79 @@ footer a {
   color: var(--secondary) !important;
 }
 
+a.external-link:focus-visible,
+a.internal-link:focus-visible,
+.breadcrumb-container .breadcrumb-element > a:focus-visible,
+footer a:focus-visible {
+  outline: none;
+  box-shadow: var(--site-focus-ring);
+}
+
 a.external-link:hover,
 a.internal-link:hover,
 .breadcrumb-container .breadcrumb-element > a:hover,
 footer a:hover {
   color: var(--tertiary) !important;
+  text-decoration: underline;
+}
+
+::selection {
+  background: var(--textHighlight);
+  color: var(--dark);
+}
+
+:where(button, summary, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: none;
+  box-shadow: var(--site-focus-ring);
+}
+
+.breadcrumb-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.18rem 0.34rem;
+  max-width: 100%;
+  min-width: 0;
+  line-height: 1.45;
+}
+
+.breadcrumb-container .breadcrumb-element {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.breadcrumb-container .breadcrumb-element > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  overflow-wrap: anywhere;
+}
+
+ul.tags,
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-left: 0;
+}
+
+ul.tags > li,
+.tag-list > li {
+  margin: 0;
+  list-style: none;
+}
+
+a.tag-link,
+ul.tags a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.12rem 0.48rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--light) 78%, var(--secondary));
+  color: var(--secondary) !important;
+  line-height: 1.2;
 }
 
 .toc {
@@ -148,10 +218,10 @@ footer a:hover {
 
 button.toc-header {
   width: 100%;
-  min-height: 2.2rem;
+  min-height: 2.75rem;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.35rem 0.5rem;
+  padding: 0.48rem 0.62rem;
   border: 1px solid transparent;
   border-radius: 6px;
   background: color-mix(in srgb, var(--light) 82%, var(--secondary));
@@ -161,8 +231,16 @@ button.toc-header {
 .left.sidebar,
 .right.sidebar {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--site-panel) 88%, var(--secondary)) 0%, transparent 22rem),
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel) 82%, var(--light)) 0%, var(--light) 118%) !important;
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--site-panel) 88%, var(--secondary)) 0%,
+      transparent 22rem
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel) 82%, var(--light)) 0%,
+      var(--light) 118%
+    ) !important;
   border-color: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
 }
 
@@ -258,7 +336,8 @@ body[data-slug]:not([data-slug="index"]) .page-listing {
   font-size: 1.08rem;
 }
 
-body[data-slug]:not([data-slug="index"]):has(.markdown-preview-view > h1:first-child) .article-title {
+body[data-slug]:not([data-slug="index"]):has(.markdown-preview-view > h1:first-child)
+  .article-title {
   display: none;
 }
 
@@ -439,7 +518,9 @@ body[data-slug$="/index"]:not([data-slug="index"]) .page-listing .section > .tag
 
 body[data-slug$="/index"]:not([data-slug="index"]) .page-listing .section > .tags a {
   display: inline-flex;
-  padding: 0.12rem 0.45rem;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.12rem 0.48rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--light) 82%, var(--secondary));
   color: var(--secondary);
@@ -474,15 +555,19 @@ button.darkmode,
 .search > .search-button {
   box-sizing: border-box;
   width: 100%;
-  height: 2.1rem;
-  min-height: 2.1rem;
+  height: 2.65rem;
+  min-height: 2.65rem;
   margin: 0 !important;
 }
 
 .search > .search-button {
   border-color: color-mix(in srgb, var(--secondary) 18%, var(--lightgray)) !important;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel-glass) 88%, var(--secondary)), transparent 150%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel-glass) 88%, var(--secondary)),
+      transparent 150%
+    ),
     var(--site-panel-glass) !important;
   color: var(--darkgray);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--dark) 5%, transparent);
@@ -492,14 +577,22 @@ button.darkmode,
 .search > .search-button:focus-visible {
   border-color: color-mix(in srgb, var(--secondary) 42%, var(--lightgray)) !important;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel-glass) 78%, var(--secondary)), transparent 150%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel-glass) 78%, var(--secondary)),
+      transparent 150%
+    ),
     var(--site-panel-glass) !important;
 }
 
 .search > .search-container > .search-space > *:not(.ghost-text):not(.tag-suggestions),
 .search > .search-container > .search-space > .tag-suggestions {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel-glass) 92%, var(--secondary)), var(--light) 140%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel-glass) 92%, var(--secondary)),
+      var(--light) 140%
+    ),
     var(--site-panel-glass) !important;
   border-color: color-mix(in srgb, var(--secondary) 34%, var(--lightgray)) !important;
   box-shadow: 0 18px 52px var(--site-shadow) !important;
@@ -522,17 +615,25 @@ button.darkmode,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem !important;
-  height: 2rem;
-  flex: 0 0 2rem;
+  width: 2.65rem !important;
+  height: 2.65rem;
+  flex: 0 0 2.65rem;
   align-self: flex-start;
   margin: 0 !important;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--secondary) 30%, var(--lightgray));
   border-radius: 999px;
   background:
-    radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--tertiary) 28%, transparent), transparent 58%),
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel) 82%, var(--secondary)), var(--light) 130%);
+    radial-gradient(
+      circle at 35% 30%,
+      color-mix(in srgb, var(--tertiary) 28%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel) 82%, var(--secondary)),
+      var(--light) 130%
+    );
   color: var(--dark);
   box-shadow: 0 8px 24px var(--site-shadow);
   cursor: pointer;
@@ -550,6 +651,9 @@ button.darkmode,
 .hopes-theme-toggle:focus-visible {
   border-color: color-mix(in srgb, var(--secondary) 62%, var(--lightgray));
   outline: none;
+  box-shadow:
+    var(--site-focus-ring),
+    0 10px 28px var(--site-shadow);
 }
 
 .mobile-sidebar-toggle {
@@ -571,7 +675,11 @@ button.darkmode,
   border: 1px solid color-mix(in srgb, var(--secondary) 14%, var(--lightgray));
   border-radius: 8px;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel-glass) 82%, var(--secondary)), transparent 128%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel-glass) 82%, var(--secondary)),
+      transparent 128%
+    ),
     var(--site-panel-glass);
   overflow: visible;
 }
@@ -627,8 +735,11 @@ button.darkmode,
   padding: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 42%, var(--lightgray));
   border-radius: 8px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel) 92%, var(--secondary)), var(--light) 120%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--site-panel) 92%, var(--secondary)),
+    var(--light) 120%
+  );
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--dark) 6%, transparent),
     0 14px 32px var(--site-shadow);
@@ -658,7 +769,11 @@ button.darkmode,
   border-color: color-mix(in srgb, var(--secondary) 50%, var(--lightgray));
   border-radius: 8px;
   background:
-    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--secondary) 13%, transparent), transparent 58%),
+    radial-gradient(
+      circle at 50% 40%,
+      color-mix(in srgb, var(--secondary) 13%, transparent),
+      transparent 58%
+    ),
     color-mix(in srgb, var(--light) 94%, var(--site-bg-deep));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dark) 5%, transparent);
 }
@@ -666,6 +781,11 @@ button.darkmode,
 .graph > .graph-outer > .global-graph-icon {
   top: 0.35rem;
   right: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 38%, transparent);
   background: color-mix(in srgb, var(--light) 78%, var(--secondary));
   color: var(--secondary);
@@ -675,6 +795,7 @@ button.darkmode,
 .graph > .graph-outer > .global-graph-icon:hover,
 .graph > .graph-outer > .global-graph-icon:focus-visible {
   background: color-mix(in srgb, var(--light) 70%, var(--secondary));
+  box-shadow: var(--site-focus-ring);
 }
 
 .graph > .global-graph-outer {
@@ -685,7 +806,11 @@ button.darkmode,
   border: 1px solid color-mix(in srgb, var(--secondary) 54%, var(--lightgray));
   border-radius: 10px;
   background:
-    radial-gradient(circle at center, color-mix(in srgb, var(--secondary) 8%, transparent), transparent 62%),
+    radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--secondary) 8%, transparent),
+      transparent 62%
+    ),
     var(--light);
   box-shadow: 0 24px 70px color-mix(in srgb, var(--tn-bg-dark2) 50%, transparent);
 }
@@ -753,7 +878,9 @@ button.darkmode,
   color: var(--dark);
   font-size: clamp(2.2rem, 9vw, 6rem);
   font-size: clamp(2.2rem, 12cqi, 6rem);
-  font-family: "Kalissa", "Kalissa Script", "Atziluth-Script", "Atziluth Script", "Segoe Script", "Brush Script MT", cursive;
+  font-family:
+    "Kalissa", "Kalissa Script", "Atziluth-Script", "Atziluth Script", "Segoe Script",
+    "Brush Script MT", cursive;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1;
@@ -837,7 +964,11 @@ body[data-slug="index"] .right.sidebar .toc {
   border: 1px solid color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
   border-radius: 8px;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--site-panel) 88%, var(--secondary)) 0%, var(--light) 105%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel) 88%, var(--secondary)) 0%,
+      var(--light) 105%
+    ),
     var(--site-panel);
   box-shadow: 0 12px 32px var(--site-shadow);
 }
@@ -850,7 +981,11 @@ body[data-slug="index"] .right.sidebar .toc {
   padding: 0.55rem 0.72rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 14%, transparent);
   border-radius: 6px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--secondary) 12%, transparent), transparent 72%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--secondary) 12%, transparent),
+    transparent 72%
+  );
   color: var(--dark);
   font-weight: 600;
   text-decoration: none;
@@ -866,7 +1001,11 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-card a:hover,
 .home-program-card a:focus-visible {
   border-color: color-mix(in srgb, var(--secondary) 42%, transparent);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--secondary) 20%, transparent), transparent 76%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--secondary) 20%, transparent),
+    transparent 76%
+  );
 }
 
 .home-contact {
@@ -890,7 +1029,11 @@ body[data-slug="index"] .right.sidebar .toc {
   padding: 0.55rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 40%, var(--lightgray));
   border-radius: 8px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--secondary) 28%, var(--site-panel)), var(--light) 120%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--secondary) 28%, var(--site-panel)),
+    var(--light) 120%
+  );
   color: var(--dark);
   font-weight: 700;
   text-decoration: none;
@@ -911,13 +1054,21 @@ body[data-slug="index"] .right.sidebar .toc {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border: 1px solid color-mix(in srgb, var(--secondary) 36%, var(--lightgray));
     border-radius: 999px;
     background:
-      radial-gradient(circle at 34% 26%, color-mix(in srgb, var(--tertiary) 22%, transparent), transparent 58%),
-      linear-gradient(135deg, color-mix(in srgb, var(--site-panel) 86%, var(--secondary)), var(--light) 128%);
+      radial-gradient(
+        circle at 34% 26%,
+        color-mix(in srgb, var(--tertiary) 22%, transparent),
+        transparent 58%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--site-panel) 86%, var(--secondary)),
+        var(--light) 128%
+      );
     color: var(--dark);
     box-shadow: 0 12px 32px var(--site-shadow);
   }
@@ -960,6 +1111,33 @@ body[data-slug="index"] .right.sidebar .toc {
 
   body[data-slug] .center {
     padding-top: 3.1rem;
+  }
+
+  body[data-slug] article.popover-hint {
+    max-width: min(100%, 42rem);
+  }
+
+  .breadcrumb-container {
+    margin-bottom: 0.35rem;
+    padding-right: 0.25rem;
+    font-size: 0.96rem;
+  }
+
+  .breadcrumb-container .breadcrumb-element > a {
+    min-height: 2rem;
+  }
+
+  ul.tags,
+  .tag-list,
+  body[data-slug$="/index"]:not([data-slug="index"]) .page-listing .section > .tags {
+    gap: 0.42rem;
+  }
+
+  a.tag-link,
+  ul.tags a,
+  body[data-slug$="/index"]:not([data-slug="index"]) .page-listing .section > .tags a {
+    min-height: 2.1rem;
+    padding-inline: 0.56rem;
   }
 
   .home-contact {

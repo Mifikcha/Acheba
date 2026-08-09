@@ -1,6 +1,6 @@
 import test, { describe } from "node:test"
 import assert from "node:assert"
-import { renderTranscludes, pageResources } from "./renderPage"
+import { prepareImages, renderTranscludes, pageResources } from "./renderPage"
 import { Root, Element } from "hast"
 import { FullSlug } from "../util/path"
 import { GlobalConfiguration } from "../cfg"
@@ -265,6 +265,66 @@ describe("renderTranscludes", () => {
     const bq = root.children[0] as Element
     const text = JSON.stringify(bq.children)
     assert.ok(text.includes("Circular transclusion"), "self-reference should be blocked")
+  })
+})
+
+describe("prepareImages", () => {
+  test("keeps the first image eager and lazy-loads the rest", () => {
+    const root: Root = {
+      type: "root",
+      children: [
+        {
+          type: "element",
+          tagName: "p",
+          properties: {},
+          children: [
+            {
+              type: "element",
+              tagName: "img",
+              properties: { src: "hero.png" },
+              children: [],
+            },
+          ],
+        },
+        {
+          type: "element",
+          tagName: "img",
+          properties: { src: "below-fold.png" },
+          children: [],
+        },
+      ],
+    }
+
+    prepareImages(root)
+
+    const first = (root.children[0] as Element).children[0] as Element
+    const second = root.children[1] as Element
+    assert.equal(first.properties.loading, "eager")
+    assert.equal(first.properties.decoding, "async")
+    assert.equal(first.properties.fetchPriority, "high")
+    assert.equal(second.properties.loading, "lazy")
+    assert.equal(second.properties.decoding, "async")
+  })
+
+  test("does not overwrite explicit image loading attributes", () => {
+    const root: Root = {
+      type: "root",
+      children: [
+        {
+          type: "element",
+          tagName: "img",
+          properties: { src: "manual.png", loading: "lazy", fetchPriority: "low" },
+          children: [],
+        },
+      ],
+    }
+
+    prepareImages(root)
+
+    const image = root.children[0] as Element
+    assert.equal(image.properties.loading, "lazy")
+    assert.equal(image.properties.fetchPriority, "low")
+    assert.equal(image.properties.decoding, "async")
   })
 })
 

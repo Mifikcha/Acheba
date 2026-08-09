@@ -30,6 +30,33 @@ interface RenderComponents {
 }
 
 const headerRegex = new RegExp(/h[1-6]/)
+
+/** @internal Exported for testing only. */
+export function prepareImages(root: Root) {
+  let imageIndex = 0
+
+  function walk(node: Element | Root) {
+    for (const child of node.children) {
+      if (child.type !== "element") continue
+
+      if (child.tagName === "img") {
+        const isFirstImage = imageIndex === 0
+        child.properties ??= {}
+        child.properties.decoding ??= "async"
+        child.properties.loading ??= isFirstImage ? "eager" : "lazy"
+        if (isFirstImage) {
+          child.properties.fetchPriority ??= "high"
+        }
+        imageIndex++
+      }
+
+      walk(child)
+    }
+  }
+
+  walk(root)
+}
+
 export function pageResources(
   baseDir: FullSlug | RelativeURL,
   staticResources: StaticResources,
@@ -319,6 +346,7 @@ export function renderPage(
   }
 
   // set componentData.tree to the edited html that has transclusions rendered
+  prepareImages(root)
   componentData.tree = root
 
   const {
