@@ -535,8 +535,8 @@ button.darkmode,
 }
 
 .search > .search-container {
-  background: var(--light) !important;
-  backdrop-filter: none !important;
+  background: color-mix(in srgb, var(--light) 52%, transparent) !important;
+  backdrop-filter: blur(14px) saturate(1.08) !important;
 }
 
 .search {
