@@ -176,6 +176,17 @@ html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-cont
   overflow: hidden !important;
 }
 
+html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-container {
+  background-color: var(--excalidraw-bg, #121212) !important;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px) !important;
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px !important;
+  background-position: 0 0, 0 0, 0 0, 0 0 !important;
+}
+
 html body[data-slug] #quartz-root.page[data-frame="excalidraw"] .excalidraw-container svg {
   width: 100vw !important;
   height: 100dvh !important;
