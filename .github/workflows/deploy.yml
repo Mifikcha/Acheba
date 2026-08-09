@@ -44,8 +44,12 @@ jobs:
 
       - name: Prepare public content
         run: |
+          cp -R _quartz/content/_Resours /tmp/quartz-resources
           rm -rf _quartz/content
           cp -R "Публичный сайт" _quartz/content
+          if [ ! -d _quartz/content/_Resours ]; then
+            cp -R /tmp/quartz-resources _quartz/content/_Resours
+          fi
 
       - name: Build
         working-directory: _quartz
