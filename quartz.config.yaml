@@ -166,7 +166,7 @@ plugins:
     enabled: true
     options:
       theme: default
-      mode: dark
+      mode: both
   - source: "@quartz-community/remove-draft"
     enabled: true
   - source: "@quartz-community/explicit-publish"
