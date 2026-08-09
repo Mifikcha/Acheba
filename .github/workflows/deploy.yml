@@ -40,8 +40,8 @@ jobs:
             ${{ runner.os }}-plugins-
       - name: Install Dependencies
         run: npm ci
-      - name: Install Quartz plugins
-        run: npx quartz plugin install
+      - name: Install and patch Quartz plugins
+        run: npm run install-plugins && node ./scripts/patch-graph.mjs
       - name: Build Quartz
         run: npx quartz build
       - name: Upload artifact
