@@ -1211,3 +1211,132 @@ body[data-slug="index"] .right.sidebar .toc {
   font-size: 0.9rem;
   line-height: 1.45;
 }
+
+.python-checker {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.4rem 0;
+  padding: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--site-panel) 88%, var(--secondary)),
+      color-mix(in srgb, var(--light) 92%, transparent) 130%
+    ),
+    var(--light);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--site-shadow) 70%, transparent);
+}
+
+.python-checker-header,
+.python-checker-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.python-checker-header {
+  justify-content: space-between;
+}
+
+.python-checker-header strong {
+  color: var(--dark);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.python-checker-status {
+  min-height: 1.9rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lightgray) 42%, transparent);
+  color: var(--gray);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.python-checker[data-state="success"] .python-checker-status {
+  background: color-mix(in srgb, #74c69d 22%, transparent);
+  color: color-mix(in srgb, #2d6a4f 72%, var(--dark));
+}
+
+.python-checker[data-state="error"] .python-checker-status {
+  background: color-mix(in srgb, #ff6b6b 18%, transparent);
+  color: color-mix(in srgb, #b4232a 72%, var(--dark));
+}
+
+.python-checker-editor,
+.python-checker-output {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--light) 88%, var(--site-panel));
+  color: var(--dark);
+  font-family: var(--codeFont);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.python-checker-editor {
+  min-height: 11rem;
+  resize: vertical;
+  padding: 0.8rem;
+  tab-size: 4;
+}
+
+.python-checker-editor:focus-visible,
+.python-checker button:focus-visible {
+  outline: 3px solid var(--site-focus-ring);
+  outline-offset: 2px;
+}
+
+.python-checker-controls {
+  justify-content: flex-start;
+}
+
+.python-checker button {
+  min-height: 2.45rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 34%, var(--lightgray));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--light) 90%, var(--site-panel));
+  color: var(--dark);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.python-checker button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--secondary) 58%, var(--lightgray));
+  background: color-mix(in srgb, var(--secondary) 16%, var(--light));
+}
+
+.python-checker button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.python-checker button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.python-checker-run {
+  background: color-mix(in srgb, var(--secondary) 24%, var(--light)) !important;
+}
+
+.python-checker-output {
+  min-height: 5.25rem;
+  max-height: 18rem;
+  margin: 0;
+  padding: 0.75rem 0.8rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
