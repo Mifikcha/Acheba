@@ -361,7 +361,8 @@ export function renderPage(
     frame: frameName,
   } = components
   const Body = BodyConstructor()
-  const frame = resolveFrame(frameName)
+  const isCodingLesson = componentData.fileData.frontmatter?.tags?.includes("coding_lesson")
+  const frame = resolveFrame(isCodingLesson ? "coding-lesson" : frameName)
 
   const lang = componentData.fileData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
   const direction = i18n(cfg.locale).direction ?? "ltr"

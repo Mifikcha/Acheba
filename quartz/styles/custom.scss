@@ -1212,101 +1212,280 @@ body[data-slug="index"] .right.sidebar .toc {
   line-height: 1.45;
 }
 
-.python-checker {
+.page[data-frame="coding-lesson"] {
+  --python-editor-bg: #fffbee;
+  --python-editor-fg: #252526;
+  --python-editor-muted: #8b8b82;
+  --python-editor-line: #e6dfc8;
+  --python-token-keyword: #af00db;
+  --python-token-builtin: #795e26;
+  --python-token-string: #a31515;
+  --python-token-number: #098658;
+  --python-token-comment: #008000;
+  --python-token-operator: #252526;
+  --python-token-constant: #0000ff;
+  min-height: 100dvh;
+  background: var(--light);
+}
+
+html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
+  --python-editor-bg: #1e1e1e;
+  --python-editor-fg: #d4d4d4;
+  --python-editor-muted: #858585;
+  --python-editor-line: #333333;
+  --python-token-keyword: #c586c0;
+  --python-token-builtin: #dcdcaa;
+  --python-token-string: #ce9178;
+  --python-token-number: #b5cea8;
+  --python-token-comment: #6a9955;
+  --python-token-operator: #d4d4d4;
+  --python-token-constant: #569cd6;
+}
+
+.coding-lesson-shell {
   display: grid;
-  gap: 0.75rem;
-  margin: 1.4rem 0;
-  padding: 0.9rem;
-  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
-  border-radius: 8px;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--site-panel) 88%, var(--secondary)),
-      color-mix(in srgb, var(--light) 92%, transparent) 130%
-    ),
-    var(--light);
-  box-shadow: 0 14px 34px color-mix(in srgb, var(--site-shadow) 70%, transparent);
-}
-
-.python-checker-header,
-.python-checker-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
-}
-
-.python-checker-header {
-  justify-content: space-between;
-}
-
-.python-checker-header strong {
-  color: var(--dark);
-  font-size: 1rem;
-  line-height: 1.25;
-}
-
-.python-checker-status {
-  min-height: 1.9rem;
-  padding: 0.28rem 0.55rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--lightgray) 42%, transparent);
-  color: var(--gray);
-  font-size: 0.82rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.python-checker[data-state="success"] .python-checker-status {
-  background: color-mix(in srgb, #74c69d 22%, transparent);
-  color: color-mix(in srgb, #2d6a4f 72%, var(--dark));
-}
-
-.python-checker[data-state="error"] .python-checker-status {
-  background: color-mix(in srgb, #ff6b6b 18%, transparent);
-  color: color-mix(in srgb, #b4232a 72%, var(--dark));
-}
-
-.python-checker-editor,
-.python-checker-output {
-  box-sizing: border-box;
+  grid-template-rows: 3.25rem minmax(0, 1fr);
   width: 100%;
-  border: 1px solid color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--light) 88%, var(--site-panel));
+  min-height: 100dvh;
   color: var(--dark);
-  font-family: var(--codeFont);
-  font-size: 0.92rem;
-  line-height: 1.55;
 }
 
-.python-checker-editor {
-  min-height: 11rem;
-  resize: vertical;
-  padding: 0.8rem;
-  tab-size: 4;
+.center.coding-lesson-shell {
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
-.python-checker-editor:focus-visible,
-.python-checker button:focus-visible {
+.coding-lesson-bar {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(7rem, 1fr) minmax(0, auto) minmax(5rem, 1fr);
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.25rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--lightgray);
+  background: var(--light);
+  font-family: var(--bodyFont);
+}
+
+.coding-lesson-bar > strong {
+  overflow: hidden;
+  color: var(--dark);
+  font-size: 0.95rem;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coding-course-exit,
+.coding-lesson-nav a {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.coding-course-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  min-height: 2.5rem;
+  padding: 0 0.55rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.coding-course-exit:hover {
+  background: color-mix(in srgb, var(--secondary) 12%, transparent);
+}
+
+.coding-course-exit:focus-visible,
+.coding-lesson-nav a:focus-visible,
+.python-checker button:focus-visible,
+.python-checker-editor:focus-visible {
   outline: 3px solid var(--site-focus-ring);
   outline-offset: 2px;
 }
 
+.coding-course-exit svg,
+.coding-lesson-nav svg,
+.python-checker button svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.python-checker-run svg {
+  fill: currentColor;
+  stroke: none !important;
+}
+
+.coding-lesson-progress {
+  justify-self: end;
+  color: var(--gray);
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.coding-lesson-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(28rem, 1fr);
+  min-height: 0;
+}
+
+.coding-lesson-reading {
+  box-sizing: border-box;
+  min-width: 0;
+  height: calc(100dvh - 3.25rem);
+  padding: 2rem clamp(1.25rem, 4vw, 4rem) 1.5rem;
+  overflow-y: auto;
+  scrollbar-color: color-mix(in srgb, var(--gray) 55%, transparent) transparent;
+}
+
+.coding-lesson-reading > article {
+  max-width: 72ch;
+  margin: 0 auto;
+}
+
+.coding-lesson-reading > article > h1:first-child {
+  margin-top: 0;
+}
+
+.coding-lesson-nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  max-width: 72ch;
+  margin: 3rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--lightgray);
+}
+
+.coding-lesson-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  min-height: 3.75rem;
+  padding: 0.55rem;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.coding-lesson-nav a:last-child {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.coding-lesson-nav a:hover {
+  background: color-mix(in srgb, var(--secondary) 10%, transparent);
+}
+
+.coding-lesson-nav a span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coding-lesson-nav small {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--gray);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.python-checker {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.4rem 0;
+  padding: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--site-panel) 72%, var(--light));
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--site-shadow) 70%, transparent);
+}
+
+.coding-workbench.python-checker {
+  grid-template-rows: auto auto minmax(16rem, 2fr) minmax(9rem, 1fr);
+  gap: 0;
+  min-width: 0;
+  height: calc(100dvh - 3.25rem);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-left: 1px solid var(--lightgray);
+  border-radius: 0;
+  background: var(--python-editor-bg);
+  box-shadow: none;
+}
+
+.python-checker-header,
+.python-checker-controls,
+.python-checker-title,
+.python-console-header {
+  display: flex;
+  align-items: center;
+}
+
+.python-checker-header {
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3.2rem;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--python-editor-line);
+  background: color-mix(in srgb, var(--python-editor-bg) 92%, var(--python-editor-fg));
+}
+
+.python-checker-title {
+  gap: 0.5rem;
+}
+
+.python-language-dot {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+  background: #3776ab;
+  box-shadow: inset -0.18rem -0.12rem 0 #ffd343;
+}
+
+.python-checker-header strong,
+.python-console-header strong {
+  color: var(--python-editor-fg);
+  font-family: var(--bodyFont);
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+
 .python-checker-controls {
-  justify-content: flex-start;
+  gap: 0.4rem;
 }
 
 .python-checker button {
-  min-height: 2.45rem;
-  padding: 0.45rem 0.8rem;
-  border: 1px solid color-mix(in srgb, var(--secondary) 34%, var(--lightgray));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 2.5rem;
+  min-height: 2.4rem;
+  padding: 0.38rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 34%, var(--python-editor-line));
   border-radius: 6px;
-  background: color-mix(in srgb, var(--light) 90%, var(--site-panel));
-  color: var(--dark);
+  background: color-mix(in srgb, var(--python-editor-bg) 92%, var(--secondary));
+  color: var(--python-editor-fg);
   cursor: pointer;
-  font: inherit;
+  font-family: var(--bodyFont);
+  font-size: 0.84rem;
   font-weight: 700;
   transition:
     background 160ms ease,
@@ -1315,8 +1494,8 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 .python-checker button:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--secondary) 58%, var(--lightgray));
-  background: color-mix(in srgb, var(--secondary) 16%, var(--light));
+  border-color: color-mix(in srgb, var(--secondary) 62%, var(--python-editor-line));
+  background: color-mix(in srgb, var(--secondary) 18%, var(--python-editor-bg));
 }
 
 .python-checker button:active:not(:disabled) {
@@ -1329,14 +1508,268 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 .python-checker-run {
-  background: color-mix(in srgb, var(--secondary) 24%, var(--light)) !important;
+  background: color-mix(in srgb, var(--secondary) 25%, var(--python-editor-bg)) !important;
+}
+
+.python-checker-task {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--python-editor-line);
+  background: color-mix(in srgb, var(--python-editor-bg) 96%, var(--secondary));
+  color: color-mix(in srgb, var(--python-editor-fg) 84%, var(--python-editor-bg));
+  font-family: var(--bodyFont);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.python-editor-shell {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  min-height: 11rem;
+  overflow: hidden;
+  background: var(--python-editor-bg);
+}
+
+.python-line-numbers-viewport {
+  overflow: hidden;
+  border-right: 1px solid var(--python-editor-line);
+  background: color-mix(in srgb, var(--python-editor-bg) 96%, var(--python-editor-fg));
+}
+
+.python-line-numbers,
+.python-checker-highlight,
+.python-checker-editor {
+  font-family: var(--codeFont);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+.python-line-numbers {
+  padding: 0.85rem 0.75rem;
+  color: var(--python-editor-muted);
+  text-align: right;
+  white-space: pre;
+  will-change: transform;
+}
+
+.python-editor-stack {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.python-checker-highlight,
+.python-checker-editor {
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.python-checker-highlight {
+  z-index: 1;
+  background: var(--python-editor-bg);
+  color: var(--python-editor-fg);
+  pointer-events: none;
+  scrollbar-width: none;
+}
+
+.python-checker-highlight > code {
+  display: block !important;
+}
+
+.python-checker-highlight::-webkit-scrollbar {
+  display: none;
+}
+
+.python-checker-editor {
+  z-index: 2;
+  resize: none;
+  background: transparent;
+  caret-color: var(--python-editor-fg);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  scrollbar-color: color-mix(in srgb, var(--python-editor-muted) 60%, transparent) transparent;
+}
+
+.python-checker-editor::selection {
+  background: color-mix(in srgb, var(--secondary) 38%, transparent);
+}
+
+.python-token-keyword {
+  color: var(--python-token-keyword);
+}
+
+.python-token-builtin {
+  color: var(--python-token-builtin);
+}
+
+.python-token-string {
+  color: var(--python-token-string);
+}
+
+.python-token-number {
+  color: var(--python-token-number);
+}
+
+.python-token-comment {
+  color: var(--python-token-comment);
+  font-style: italic;
+}
+
+.python-token-operator {
+  color: var(--python-token-operator);
+}
+
+.python-token-constant {
+  color: var(--python-token-constant);
+}
+
+.python-console {
+  min-height: 0;
+  overflow: hidden;
+  border-top: 1px solid var(--python-editor-line);
+  background: color-mix(in srgb, var(--python-editor-bg) 97%, var(--python-editor-fg));
+}
+
+.python-console-header {
+  justify-content: space-between;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.8rem;
+  border-bottom: 1px solid var(--python-editor-line);
+}
+
+.python-checker-status {
+  padding: 0.18rem 0.48rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--python-editor-muted) 18%, transparent);
+  color: var(--python-editor-muted);
+  font-family: var(--bodyFont);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.python-checker[data-state="success"] .python-checker-status {
+  background: color-mix(in srgb, #2ea043 20%, transparent);
+  color: color-mix(in srgb, #3fb950 82%, var(--python-editor-fg));
+}
+
+.python-checker[data-state="error"] .python-checker-status {
+  background: color-mix(in srgb, #f85149 18%, transparent);
+  color: color-mix(in srgb, #ff7b72 82%, var(--python-editor-fg));
 }
 
 .python-checker-output {
-  min-height: 5.25rem;
-  max-height: 18rem;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% - 2.5rem);
+  min-height: 5rem;
   margin: 0;
-  padding: 0.75rem 0.8rem;
+  padding: 0.75rem 0.9rem;
   overflow: auto;
+  border: 0;
+  background: transparent;
+  color: var(--python-editor-fg);
+  font-family: var(--codeFont);
+  font-size: 0.86rem;
+  line-height: 1.55;
   white-space: pre-wrap;
+}
+
+.python-checker-inline {
+  --python-editor-bg: color-mix(in srgb, var(--light) 88%, var(--site-panel));
+  --python-editor-fg: var(--dark);
+  --python-editor-muted: var(--gray);
+  --python-editor-line: color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
+}
+
+.python-checker-inline .python-editor-shell {
+  min-height: 14rem;
+}
+
+.python-checker-inline .python-console {
+  min-height: 8rem;
+}
+
+@media (max-width: 899px) {
+  body:has(#quartz-root[data-frame="coding-lesson"]) .mobile-sidebar-toggle {
+    display: none !important;
+  }
+
+  .coding-lesson-shell {
+    display: block;
+    padding: 0 !important;
+  }
+
+  .coding-lesson-bar {
+    position: sticky;
+    top: 0;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .coding-lesson-bar > strong {
+    text-align: left;
+  }
+
+  .coding-course-exit span {
+    display: none;
+  }
+
+  .coding-lesson-split {
+    display: block;
+  }
+
+  .coding-lesson-reading {
+    height: auto;
+    min-height: calc(100dvh - 3.25rem);
+    padding: 1.5rem 1rem 2rem;
+    overflow: visible;
+  }
+
+  .coding-workbench.python-checker {
+    grid-template-rows: auto auto minmax(20rem, 55dvh) minmax(10rem, 30dvh);
+    height: auto;
+    min-height: 90dvh;
+    border-top: 1px solid var(--lightgray);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .coding-lesson-bar {
+    gap: 0.5rem;
+    padding: 0 0.55rem;
+  }
+
+  .coding-lesson-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .coding-lesson-nav > span:empty {
+    display: none;
+  }
+
+  .coding-lesson-nav a:last-child {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .python-checker-task {
+    font-size: 0.82rem;
+  }
+
+  .python-editor-shell {
+    grid-template-columns: 2.8rem minmax(0, 1fr);
+  }
 }

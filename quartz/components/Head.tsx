@@ -149,6 +149,22 @@ html body[data-slug] #quartz-root.page[data-frame="excalidraw"] {
   background: var(--excalidraw-bg, var(--light)) !important;
 }
 
+html body[data-slug] #quartz-root.page[data-frame="coding-lesson"] {
+  width: 100vw !important;
+  max-width: none !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html body[data-slug] #quartz-root.page[data-frame="coding-lesson"] > #quartz-body {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 html body[data-slug] #quartz-root.page[data-frame="excalidraw"] > #quartz-body {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) !important;
