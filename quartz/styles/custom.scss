@@ -1226,7 +1226,8 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 .page[data-frame="coding-lesson"] {
-  --python-editor-bg: var(--light);
+  --python-accent: #2f78b7;
+  --python-editor-bg: color-mix(in srgb, var(--light) 92%, #dceaf4);
   --python-editor-fg: #252526;
   --python-editor-muted: #8b8b82;
   --python-editor-line: #e6dfc8;
@@ -1242,7 +1243,8 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
-  --python-editor-bg: var(--light);
+  --python-accent: #58a6d8;
+  --python-editor-bg: color-mix(in srgb, var(--light) 90%, #102636);
   --python-editor-fg: #d4d4d4;
   --python-editor-muted: #858585;
   --python-editor-line: #333333;
@@ -1350,8 +1352,59 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .coding-lesson-split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(28rem, 1fr);
+  grid-template-columns:
+    minmax(22rem, var(--coding-reading-width, 50%)) 0.7rem
+    minmax(28rem, 1fr);
   min-height: 0;
+}
+
+.coding-splitter {
+  position: relative;
+  z-index: 4;
+  width: 0.7rem;
+  height: calc(100dvh - 3.25rem);
+  cursor: col-resize;
+  touch-action: none;
+  background: color-mix(in srgb, var(--python-editor-line) 72%, var(--light));
+  transition: background 140ms ease;
+}
+
+.coding-splitter::before {
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 1px;
+  background: color-mix(in srgb, var(--python-accent) 38%, var(--python-editor-line));
+  content: "";
+}
+
+.coding-splitter > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.48rem;
+  height: 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--python-accent) 58%, var(--python-editor-line));
+  background: var(--python-editor-bg);
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition:
+    width 140ms ease,
+    height 140ms ease,
+    border-color 140ms ease;
+}
+
+.coding-splitter:hover,
+.coding-splitter:focus-visible,
+.coding-lesson-split[data-resizing="true"] .coding-splitter {
+  background: color-mix(in srgb, var(--python-accent) 14%, var(--light));
+  outline: 0;
+}
+
+.coding-splitter:hover > span,
+.coding-splitter:focus-visible > span,
+.coding-lesson-split[data-resizing="true"] .coding-splitter > span {
+  width: 0.66rem;
+  height: 0.66rem;
+  border-color: var(--python-accent);
 }
 
 .coding-lesson-reading {
@@ -1437,7 +1490,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   padding: 0;
   overflow: hidden;
   border: 0;
-  border-left: 1px solid var(--lightgray);
+  border-left: 0;
   border-radius: 0;
   background: var(--python-editor-bg);
   box-shadow: none;
@@ -1457,7 +1510,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   min-height: 3.2rem;
   padding: 0.45rem 0.75rem;
   border-bottom: 1px solid var(--python-editor-line);
-  background: color-mix(in srgb, var(--python-editor-bg) 92%, var(--python-editor-fg));
+  background: color-mix(in srgb, var(--python-editor-bg) 96%, var(--python-editor-fg));
 }
 
 .python-checker-title {
@@ -1468,16 +1521,26 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   width: 0.62rem;
   height: 0.62rem;
   border-radius: 50%;
-  background: #3776ab;
-  box-shadow: inset -0.18rem -0.12rem 0 #ffd343;
+  background: var(--python-accent);
+  box-shadow: inset -0.18rem -0.12rem 0 color-mix(in srgb, #ffd343 82%, var(--python-editor-bg));
 }
 
 .python-checker-header strong,
 .python-console-header strong {
   color: var(--python-editor-fg);
-  font-family: var(--bodyFont);
-  font-size: 0.88rem;
+  font-family: var(--codeFont);
+  font-size: 0.76rem;
+  letter-spacing: 0;
   line-height: 1.25;
+}
+
+.python-line-count {
+  padding-left: 0.55rem;
+  border-left: 1px solid var(--python-editor-line);
+  color: var(--python-editor-muted);
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .python-checker-controls {
@@ -1524,7 +1587,8 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   position: relative;
   min-width: 7.2rem !important;
   padding-inline: 2rem !important;
-  background: color-mix(in srgb, var(--secondary) 25%, var(--python-editor-bg)) !important;
+  border-color: color-mix(in srgb, var(--python-accent) 58%, var(--python-editor-line)) !important;
+  background: color-mix(in srgb, var(--python-accent) 16%, var(--python-editor-bg)) !important;
 }
 
 .python-checker-run svg {
@@ -1584,6 +1648,34 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+  background-color: var(--python-editor-bg);
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--python-accent) 8%, transparent) 0.65px,
+    transparent 0.8px
+  );
+  background-size: 20px 20px;
+}
+
+.python-active-line,
+.python-error-line {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1.472rem;
+  pointer-events: none;
+}
+
+.python-active-line {
+  border-left: 2px solid var(--python-accent);
+  background: color-mix(in srgb, var(--python-accent) 7%, transparent);
+}
+
+.python-error-line {
+  border-left: 2px solid #d84a45;
+  background: color-mix(in srgb, #d84a45 11%, transparent);
 }
 
 .python-checker-highlight,
@@ -1604,7 +1696,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .python-checker-highlight {
   z-index: 1;
-  background: var(--python-editor-bg);
+  background: transparent;
   color: var(--python-editor-fg);
   pointer-events: none;
   scrollbar-width: none;
@@ -1627,7 +1719,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   z-index: 2;
   resize: none;
   background: transparent;
-  caret-color: var(--python-editor-fg);
+  caret-color: var(--python-accent);
   color: transparent;
   -webkit-text-fill-color: transparent;
   scrollbar-color: color-mix(in srgb, var(--python-editor-muted) 60%, transparent) transparent;
@@ -1681,23 +1773,23 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .python-checker-status {
-  padding: 0.18rem 0.48rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--python-editor-muted) 18%, transparent);
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--python-editor-muted);
-  font-family: var(--bodyFont);
-  font-size: 0.75rem;
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .python-checker[data-state="success"] .python-checker-status {
-  background: color-mix(in srgb, #2ea043 20%, transparent);
+  background: transparent;
   color: color-mix(in srgb, #3fb950 82%, var(--python-editor-fg));
 }
 
 .python-checker[data-state="error"] .python-checker-status {
-  background: color-mix(in srgb, #f85149 18%, transparent);
+  background: transparent;
   color: color-mix(in srgb, #ff7b72 82%, var(--python-editor-fg));
 }
 
@@ -1715,7 +1807,142 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   font-family: var(--codeFont);
   font-size: 0.86rem;
   line-height: 1.55;
+  white-space: normal;
+}
+
+.python-output-empty,
+.python-output-loading {
+  color: var(--python-editor-muted);
+}
+
+.python-output-loading::after {
+  display: inline-block;
+  width: 1.5em;
+  overflow: hidden;
+  vertical-align: bottom;
+  content: "...";
+  animation: python-loading 1.1s steps(4, end) infinite;
+}
+
+.python-output-label {
+  margin-bottom: 0.45rem;
+  color: var(--python-editor-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.python-test-plan {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.12rem 0.55rem;
+  padding: 0.38rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--python-editor-line) 66%, transparent);
+}
+
+.python-test-index {
+  grid-row: 1 / 3;
+  color: var(--python-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.python-test-check,
+.python-test-result-check {
+  overflow-wrap: anywhere;
+  color: var(--python-editor-fg);
+  font: inherit;
+}
+
+.python-test-expect {
+  color: var(--python-editor-muted);
+  font-size: 0.76rem;
+}
+
+.python-output-block,
+.python-test-summary,
+.python-test-result {
+  animation: python-output-reveal 180ms ease both;
+}
+
+.python-output-block + .python-test-summary,
+.python-output-block + .python-output-block,
+.python-test-summary + .python-test-result,
+.python-test-result + .python-test-result {
+  margin-top: 0.85rem;
+}
+
+.python-output-value {
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--python-editor-fg);
+  font: inherit;
   white-space: pre-wrap;
+}
+
+.python-test-summary-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.42rem;
+  font-size: 0.74rem;
+}
+
+.python-test-summary-line span {
+  color: var(--python-editor-muted);
+}
+
+.python-test-progress {
+  position: relative;
+  display: block;
+  height: 2px;
+  background: var(--python-editor-line);
+}
+
+.python-test-progress::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--python-test-progress);
+  background: var(--python-accent);
+  content: "";
+}
+
+.python-test-result {
+  padding: 0.55rem 0 0.55rem 0.7rem;
+  border-left: 2px solid var(--python-accent);
+  color: color-mix(in srgb, var(--python-editor-fg) 82%, var(--python-editor-bg));
+  line-height: 1.6;
+}
+
+.python-test-result.is-failed {
+  border-left-color: #d84a45;
+  background: color-mix(in srgb, #d84a45 5%, transparent);
+}
+
+.python-test-result-title {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--python-editor-fg);
+  font-size: 0.72rem;
+}
+
+.python-test-result.is-failed .python-test-result-title,
+.python-test-message {
+  color: color-mix(in srgb, #e0524d 78%, var(--python-editor-fg));
+}
+
+@keyframes python-output-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+@keyframes python-loading {
+  from {
+    width: 0;
+  }
 }
 
 .python-checker-inline {
@@ -1785,6 +2012,10 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
     display: block;
   }
 
+  .coding-splitter {
+    display: none;
+  }
+
   .coding-lesson-reading {
     height: auto;
     min-height: calc(100dvh - 3.25rem);
@@ -1798,6 +2029,15 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
     min-height: 90dvh;
     border-top: 1px solid var(--lightgray);
     border-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .python-output-block,
+  .python-test-summary,
+  .python-test-result,
+  .python-output-loading::after {
+    animation: none;
   }
 }
 

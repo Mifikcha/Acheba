@@ -42,6 +42,7 @@ export const CodingLessonFrame: PageFrame = {
     const starterCode = String(frontmatter?.starter_code ?? "")
     const tests = String(frontmatter?.tests ?? "")
     const task = String(frontmatter?.coding_task ?? "")
+    const lessonCode = `PY / ${title.match(/^\d+(?:\.\d+)?/)?.[0] ?? String(lessonIndex + 1).padStart(2, "0")}`
 
     return (
       <main class="center coding-lesson-shell">
@@ -90,10 +91,23 @@ export const CodingLessonFrame: PageFrame = {
             </nav>
           </section>
 
+          <div
+            class="coding-splitter"
+            role="separator"
+            aria-label="Изменить ширину текста и редактора"
+            aria-orientation="vertical"
+            aria-valuemin={32}
+            aria-valuemax={68}
+            aria-valuenow={50}
+            tabIndex={0}
+          >
+            <span aria-hidden="true" />
+          </div>
+
           <aside
             class="python-checker coding-workbench"
             data-layout="lesson"
-            data-title="Python"
+            data-title={lessonCode}
             data-code={starterCode}
             data-tests={tests}
             data-task={task}

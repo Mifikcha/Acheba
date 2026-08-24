@@ -1,9 +1,21 @@
 type PythonRunResult = {
   stdout: string
   stderr: string
-  passed: Array<{ index: number; code: string }>
-  failed: Array<{ index: number; code: string; message: string }>
+  passed: TestResult[]
+  failed: TestResult[]
   codeOk: boolean
+  errorLine?: number
+}
+
+type TestResult = {
+  index: number
+  code: string
+  check: string
+  input: string
+  expected: string
+  actual: string
+  message: string
+  line?: number
 }
 
 type WorkerReply =
@@ -16,9 +28,11 @@ const defaultCode = `def solve(x):
 print(solve(5))`
 
 const pythonRunner = `
+import ast
 import contextlib
 import io
 import json
+import re
 import traceback
 
 stdout = io.StringIO()
@@ -28,12 +42,74 @@ tests = [line.strip() for line in (USER_TESTS or "").splitlines() if line.strip(
 passed = []
 failed = []
 code_ok = True
+error_line = None
+
+def short_repr(value, limit=240):
+    rendered = repr(value)
+    return rendered if len(rendered) <= limit else rendered[:limit - 1] + "…"
+
+def source_line_for_call(expression):
+    calls = [node for node in ast.walk(expression) if isinstance(node, ast.Call)]
+    names = [node.func.id for node in calls if isinstance(node.func, ast.Name)]
+    for line_number, line in enumerate(USER_CODE.splitlines(), 1):
+        if any(re.match(rf"\\s*def\\s+{re.escape(name)}\\s*\\(", line) for name in names):
+            return line_number
+    return None
+
+def inspect_test(test, index):
+    detail = {
+        "index": index,
+        "code": test,
+        "check": test.removeprefix("assert ").strip(),
+        "input": "",
+        "expected": "True",
+        "actual": "",
+        "message": "",
+        "line": None,
+    }
+    tree = ast.parse(test, mode="exec")
+    statement = tree.body[0] if len(tree.body) == 1 else None
+    if not isinstance(statement, ast.Assert):
+        exec(compile(tree, "<test>", "exec"), namespace)
+        detail["actual"] = "выполнено"
+        return True, detail
+
+    expression = statement.test
+    detail["check"] = ast.unparse(expression)
+    detail["line"] = source_line_for_call(expression)
+    calls = [ast.unparse(node) for node in ast.walk(expression) if isinstance(node, ast.Call)]
+    detail["input"] = ", ".join(dict.fromkeys(calls))
+
+    if (
+        isinstance(expression, ast.Compare)
+        and len(expression.ops) == 1
+        and len(expression.comparators) == 1
+        and isinstance(expression.ops[0], (ast.Eq, ast.Is))
+    ):
+        actual = eval(compile(ast.Expression(expression.left), "<test>", "eval"), namespace)
+        expected = eval(
+            compile(ast.Expression(expression.comparators[0]), "<test>", "eval"), namespace
+        )
+        detail["input"] = ast.unparse(expression.left)
+        detail["actual"] = short_repr(actual)
+        detail["expected"] = short_repr(expected)
+        return actual == expected, detail
+
+    actual = bool(eval(compile(ast.Expression(expression), "<test>", "eval"), namespace))
+    detail["actual"] = short_repr(actual)
+    return actual, detail
 
 try:
     with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
-        exec(USER_CODE, namespace)
-except Exception:
+        exec(compile(USER_CODE, "<ученик>", "exec"), namespace)
+except Exception as exc:
     code_ok = False
+    if isinstance(exc, SyntaxError):
+        error_line = exc.lineno
+    frames = traceback.extract_tb(exc.__traceback__)
+    student_frames = [frame for frame in frames if frame.filename == "<ученик>"]
+    if student_frames:
+        error_line = student_frames[-1].lineno
     traceback.print_exc(file=stderr)
 
 namespace["__source__"] = USER_CODE
@@ -42,16 +118,21 @@ namespace["__stderr__"] = stderr.getvalue()
 
 if code_ok and tests:
     for index, test in enumerate(tests, 1):
+        detail = {
+            "index": index, "code": test, "check": test.removeprefix("assert ").strip(),
+            "input": "", "expected": "True", "actual": "не удалось вычислить", "line": None,
+        }
         try:
             with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
-                exec(test, namespace)
-            passed.append({"index": index, "code": test})
+                ok, detail = inspect_test(test, index)
+            if ok:
+                passed.append(detail)
+            else:
+                detail["message"] = "Получено значение, не совпадающее с ожидаемым."
+                failed.append(detail)
         except Exception as exc:
-            failed.append({
-                "index": index,
-                "code": test,
-                "message": f"{exc.__class__.__name__}: {exc}",
-            })
+            detail["message"] = f"{exc.__class__.__name__}: {exc}"
+            failed.append(detail)
 
 json.dumps({
     "stdout": namespace["__output__"],
@@ -59,6 +140,7 @@ json.dumps({
     "passed": passed,
     "failed": failed,
     "codeOk": code_ok,
+    "errorLine": error_line,
 }, ensure_ascii=False)
 `
 
@@ -309,20 +391,92 @@ const createIcon = (path: string) => {
   return svg
 }
 
-const formatOutput = (result: PythonRunResult, showTests: boolean) => {
-  const lines: string[] = []
-  if (result.stdout.trim()) lines.push(result.stdout.trimEnd())
-  if (result.stderr.trim()) lines.push(result.stderr.trimEnd())
+const splitExpected = (test: string) => {
+  const expression = test.replace(/^assert\s+/, "").trim()
+  const equality = expression.match(/^(.+?)\s*==\s*(.+)$/)
+  return equality
+    ? { check: equality[1].trim(), expected: equality[2].trim() }
+    : { check: expression, expected: "True" }
+}
+
+const renderTestPlan = (output: HTMLElement, tests: string) => {
+  output.innerHTML = ""
+  const rows = tests
+    .split("\n")
+    .map((test) => test.trim())
+    .filter(Boolean)
+
+  if (rows.length === 0) {
+    output.append(createElement("div", "python-output-empty", "Вывод появится здесь."))
+    return
+  }
+
+  output.append(createElement("div", "python-output-label", "ПРОВЕРКИ ДО ЗАПУСКА"))
+  rows.forEach((test, index) => {
+    const { check, expected } = splitExpected(test)
+    const row = createElement("div", "python-test-plan")
+    row.append(
+      createElement("span", "python-test-index", String(index + 1).padStart(2, "0")),
+      createElement("code", "python-test-check", check),
+      createElement("span", "python-test-expect", `ожидается ${expected}`),
+    )
+    output.append(row)
+  })
+}
+
+const appendOutputBlock = (output: HTMLElement, label: string, value: string) => {
+  if (!value.trim()) return
+  const block = createElement("section", "python-output-block")
+  block.append(
+    createElement("div", "python-output-label", label),
+    createElement("pre", "python-output-value", value.trimEnd()),
+  )
+  output.append(block)
+}
+
+const renderResult = (output: HTMLElement, result: PythonRunResult) => {
+  output.innerHTML = ""
+  appendOutputBlock(output, "PROGRAM OUTPUT", result.stdout)
+  appendOutputBlock(output, "PYTHON ERROR", result.stderr)
 
   const total = result.passed.length + result.failed.length
   if (total > 0) {
-    lines.push("", `Тесты: ${result.passed.length}/${total} пройдено`)
-    for (const failure of result.failed) {
-      const testLabel = showTests ? ` (${failure.code})` : ""
-      lines.push(`Тест ${failure.index}${testLabel}: ${failure.message}`)
+    const summary = createElement("section", "python-test-summary")
+    const summaryLine = createElement("div", "python-test-summary-line")
+    summaryLine.append(
+      createElement("strong", undefined, `${result.passed.length} / ${total} TESTS PASSED`),
+      createElement("span", undefined, result.failed.length ? "FAILED" : "DONE"),
+    )
+    const progress = createElement("span", "python-test-progress")
+    progress.style.setProperty("--python-test-progress", `${(result.passed.length / total) * 100}%`)
+    summary.append(summaryLine, progress)
+    output.append(summary)
+
+    for (const test of [...result.failed, ...result.passed]) {
+      const row = createElement(
+        "section",
+        `python-test-result ${result.failed.includes(test) ? "is-failed" : "is-passed"}`,
+      )
+      row.append(
+        createElement(
+          "strong",
+          "python-test-result-title",
+          `TEST ${test.index} · ${result.failed.includes(test) ? "FAILED" : "PASSED"}`,
+        ),
+        createElement("code", "python-test-result-check", test.check),
+      )
+      if (test.input) row.append(createElement("div", undefined, `Подставляется: ${test.input}`))
+      row.append(
+        createElement("div", undefined, `Ожидалось: ${test.expected}`),
+        createElement("div", undefined, `Получено: ${test.actual}`),
+      )
+      if (test.message) row.append(createElement("div", "python-test-message", test.message))
+      output.append(row)
     }
   }
-  return lines.join("\n").trim() || "Код выполнен без вывода."
+
+  if (output.childElementCount === 0)
+    output.append(createElement("div", "python-output-empty", "Код выполнен без вывода."))
 }
 
 const initPythonChecker = (root: HTMLElement) => {
@@ -332,7 +486,6 @@ const initPythonChecker = (root: HTMLElement) => {
   const initialCode = readInitialCode(root)
   const tests = root.dataset.tests ?? ""
   const timeoutMs = Number(root.dataset.timeout ?? 8000)
-  const showTests = root.dataset.showTests === "true"
   const lessonLayout = root.dataset.layout === "lesson"
   root.innerHTML = ""
 
@@ -340,7 +493,8 @@ const initPythonChecker = (root: HTMLElement) => {
   const titleGroup = createElement("div", "python-checker-title")
   const languageDot = createElement("span", "python-language-dot")
   const title = createElement("strong", undefined, root.dataset.title ?? "Проверка Python")
-  titleGroup.append(languageDot, title)
+  const lineCount = createElement("span", "python-line-count")
+  titleGroup.append(languageDot, title, lineCount)
 
   const controls = createElement("div", "python-checker-controls")
   const runButton = createElement("button", "python-checker-run") as HTMLButtonElement
@@ -364,6 +518,9 @@ const initPythonChecker = (root: HTMLElement) => {
   const lineNumbers = createElement("div", "python-line-numbers")
   lineNumbersViewport.append(lineNumbers)
   const editorStack = createElement("div", "python-editor-stack")
+  const activeLine = createElement("div", "python-active-line")
+  const errorLine = createElement("div", "python-error-line")
+  errorLine.hidden = true
   const highlight = createElement("pre", "python-checker-highlight")
   highlight.setAttribute("aria-hidden", "true")
   const highlightedCode = createElement("code")
@@ -374,17 +531,26 @@ const initPythonChecker = (root: HTMLElement) => {
   editor.autocomplete = "off"
   editor.setAttribute("autocapitalize", "off")
   editor.setAttribute("aria-label", "Python-код")
-  editorStack.append(highlight, editor)
+  editorStack.append(activeLine, errorLine, highlight, editor)
   editorShell.append(lineNumbersViewport, editorStack)
 
   const consolePanel = createElement("section", "python-console")
   const consoleHeader = createElement("div", "python-console-header")
-  const consoleTitle = createElement("strong", undefined, "Консоль")
-  const status = createElement("span", "python-checker-status", "Готово")
+  const consoleTitle = createElement("strong", undefined, "STDOUT")
+  const status = createElement("span", "python-checker-status", "READY")
   consoleHeader.append(consoleTitle, status)
-  const output = createElement("pre", "python-checker-output", "Вывод появится здесь.")
+  const output = createElement("div", "python-checker-output")
   output.setAttribute("aria-live", "polite")
   consolePanel.append(consoleHeader, output)
+  let currentErrorLine: number | undefined
+
+  const lineMetrics = () => {
+    const styles = getComputedStyle(editor)
+    return {
+      lineHeight: Number.parseFloat(styles.lineHeight),
+      paddingTop: Number.parseFloat(styles.paddingTop),
+    }
+  }
 
   const syncEditor = () => {
     highlightedCode.innerHTML = highlightPython(editor.value)
@@ -392,33 +558,59 @@ const initPythonChecker = (root: HTMLElement) => {
     lineNumbers.textContent = Array.from({ length: count }, (_, index) => String(index + 1)).join(
       "\n",
     )
+    lineCount.textContent = `${count} LOC`
     highlight.scrollTop = editor.scrollTop
     highlight.scrollLeft = editor.scrollLeft
     lineNumbers.style.transform = `translateY(${-editor.scrollTop}px)`
+    const { lineHeight, paddingTop } = lineMetrics()
+    const line = editor.value.slice(0, editor.selectionStart).split("\n").length - 1
+    activeLine.style.transform = `translateY(${paddingTop + line * lineHeight - editor.scrollTop}px)`
+    if (currentErrorLine)
+      errorLine.style.transform = `translateY(${paddingTop + (currentErrorLine - 1) * lineHeight - editor.scrollTop}px)`
+  }
+
+  const markErrorLine = (line?: number) => {
+    currentErrorLine = line
+    if (!line) {
+      errorLine.hidden = true
+      return
+    }
+    errorLine.hidden = false
+    syncEditor()
   }
 
   const setRunning = (isRunning: boolean) => {
     runButton.disabled = isRunning
     resetButton.disabled = isRunning
     root.dataset.state = isRunning ? "loading" : "idle"
-    status.textContent = isRunning ? "Готовлю Python..." : "Готово"
+    status.textContent = isRunning ? "RUNNING" : "READY"
     runButton.querySelector("span")!.textContent = isRunning ? "Запуск..." : "Запустить"
   }
 
   const execute = async () => {
     setRunning(true)
-    output.textContent = "Первый запуск может занять несколько секунд."
+    output.innerHTML = ""
+    output.append(
+      createElement("div", "python-output-loading", "Загрузка Python и запуск тестов..."),
+    )
+    markErrorLine()
     try {
       const result = await runPython(editor.value, tests, timeoutMs)
       const total = result.passed.length + result.failed.length
       const failed = result.failed.length > 0 || !result.codeOk
       root.dataset.state = failed ? "error" : total > 0 ? "success" : "idle"
-      status.textContent = failed ? "Есть ошибка" : total > 0 ? "Тесты пройдены" : "Выполнено"
-      output.textContent = formatOutput(result, showTests)
+      status.textContent = failed ? "FAILED" : "DONE"
+      renderResult(output, result)
+      markErrorLine(result.errorLine ?? result.failed.find((test) => test.line)?.line)
     } catch (error) {
       root.dataset.state = "error"
-      status.textContent = "Есть ошибка"
-      output.textContent = error instanceof Error ? error.message : String(error)
+      status.textContent = "FAILED"
+      output.innerHTML = ""
+      appendOutputBlock(
+        output,
+        "RUNTIME ERROR",
+        error instanceof Error ? error.message : String(error),
+      )
     } finally {
       runButton.disabled = false
       resetButton.disabled = false
@@ -428,6 +620,9 @@ const initPythonChecker = (root: HTMLElement) => {
 
   editor.addEventListener("input", syncEditor)
   editor.addEventListener("scroll", syncEditor)
+  editor.addEventListener("click", syncEditor)
+  editor.addEventListener("keyup", syncEditor)
+  editor.addEventListener("select", syncEditor)
   editor.addEventListener("keydown", (event) => {
     if (event.key === "Tab") {
       event.preventDefault()
@@ -442,9 +637,10 @@ const initPythonChecker = (root: HTMLElement) => {
   runButton.addEventListener("click", () => void execute())
   resetButton.addEventListener("click", () => {
     editor.value = initialCode
-    output.textContent = "Вывод появится здесь."
-    status.textContent = "Готово"
+    renderTestPlan(output, tests)
+    status.textContent = "READY"
     root.dataset.state = "idle"
+    markErrorLine()
     syncEditor()
     editor.focus()
   })
@@ -455,6 +651,7 @@ const initPythonChecker = (root: HTMLElement) => {
   root.append(editorShell, consolePanel)
   if (!lessonLayout) root.classList.add("python-checker-inline")
   syncEditor()
+  renderTestPlan(output, tests)
 }
 
 const runnablePrompt = /^(?:запусти|попробуй)(?=\s|:)/i
@@ -480,6 +677,61 @@ const enhanceRunnableExamples = () => {
 const initPythonCheckers = () => {
   enhanceRunnableExamples()
   document.querySelectorAll<HTMLElement>(".python-checker").forEach(initPythonChecker)
+  initCodingSplitter()
+}
+
+const initCodingSplitter = () => {
+  document.querySelectorAll<HTMLElement>(".coding-lesson-split").forEach((split) => {
+    const splitter = split.querySelector<HTMLElement>(".coding-splitter")
+    if (!splitter || splitter.dataset.ready === "true") return
+    splitter.dataset.ready = "true"
+
+    const setRatio = (ratio: number) => {
+      const width = split.getBoundingClientRect().width
+      if (width < 900) {
+        split.style.setProperty("--coding-reading-width", "50%")
+        return
+      }
+      const rootSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
+      const minimum = Math.max(32, ((22 * rootSize) / width) * 100)
+      const maximum = Math.min(68, ((width - 28 * rootSize - 0.7 * rootSize) / width) * 100)
+      const clamped = Math.min(maximum, Math.max(minimum, ratio))
+      split.style.setProperty("--coding-reading-width", `${clamped}%`)
+      splitter.setAttribute("aria-valuemin", String(Math.ceil(minimum)))
+      splitter.setAttribute("aria-valuemax", String(Math.floor(maximum)))
+      splitter.setAttribute("aria-valuenow", String(Math.round(clamped)))
+    }
+    const updateFromPointer = (clientX: number) => {
+      const bounds = split.getBoundingClientRect()
+      setRatio(((clientX - bounds.left) / bounds.width) * 100)
+    }
+    const stopDragging = () => {
+      split.removeAttribute("data-resizing")
+      window.removeEventListener("pointermove", onPointerMove)
+      window.removeEventListener("pointerup", stopDragging)
+    }
+    const onPointerMove = (event: PointerEvent) => updateFromPointer(event.clientX)
+
+    splitter.addEventListener("pointerdown", (event) => {
+      event.preventDefault()
+      split.dataset.resizing = "true"
+      updateFromPointer(event.clientX)
+      window.addEventListener("pointermove", onPointerMove)
+      window.addEventListener("pointerup", stopDragging, { once: true })
+    })
+    splitter.addEventListener("dblclick", () => setRatio(50))
+    splitter.addEventListener("keydown", (event) => {
+      const current = Number(splitter.getAttribute("aria-valuenow") ?? 50)
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault()
+        setRatio(current + (event.key === "ArrowRight" ? 4 : -4))
+      } else if (event.key === "Home") {
+        event.preventDefault()
+        setRatio(50)
+      }
+    })
+    setRatio(50)
+  })
 }
 
 document.addEventListener("nav", initPythonCheckers)
