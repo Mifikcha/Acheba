@@ -9,6 +9,7 @@ course: ege-informatics
 module: foundation
 order: 0
 status: draft
+draft: true
 ---
 
 # Фундамент ЕГЭ по информатике

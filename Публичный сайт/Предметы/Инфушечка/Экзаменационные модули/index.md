@@ -9,6 +9,7 @@ course: ege-informatics
 module: ege-modules
 order: 20
 status: draft
+draft: true
 ---
 
 # Экзаменационные модули ЕГЭ по информатике
