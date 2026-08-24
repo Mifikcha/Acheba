@@ -65,6 +65,27 @@ const setSidebarState = (open: boolean) => {
   document.documentElement.dataset.sidebarLeft = open ? "open" : "closed"
 }
 
+const getSiteRootHref = () => {
+  const domain = document
+    .querySelector<HTMLMetaElement>('meta[property="twitter:domain"]')
+    ?.content?.trim()
+
+  if (!domain) {
+    return "/"
+  }
+
+  const path = new URL(`https://${domain}`).pathname.replace(/\/?$/, "/")
+  return path || "/"
+}
+
+const ensurePageTitleHomeLink = () => {
+  const href = getSiteRootHref()
+
+  document.querySelectorAll<HTMLAnchorElement>(".page-title a").forEach((link) => {
+    link.href = href
+  })
+}
+
 const ensureThemeToggle = () => {
   const leftSidebar = document.querySelector<HTMLElement>(".left.sidebar")
 
@@ -178,6 +199,7 @@ const prepareSidebar = () => {
   } catch {}
 
   ensureThemeToggle()
+  ensurePageTitleHomeLink()
   ensureMobileToggle()
   sortInfoTaskCards()
   hideHomeGraphLinks()
