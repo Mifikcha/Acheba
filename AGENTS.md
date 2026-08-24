@@ -24,7 +24,10 @@ For tasks that may depend on prior context:
 
 Before finishing a task that changes durable context, update the relevant memory file and mention that memory was updated.
 
+## Git Workflow
+
+After every completed set of workspace changes, create a focused commit and push it to the corresponding remote branch. Skip committing or pushing only when the user explicitly asks to keep the changes local.
+
 ## Skill Visibility
 
 Workspace-local skills are a fallback source. Personal Codex skills in `~/.codex/skills` are the preferred always-visible source and require restarting Codex after installation or changes.
-
