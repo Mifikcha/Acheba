@@ -28,6 +28,13 @@ Before finishing a task that changes durable context, update the relevant memory
 
 After every completed set of workspace changes, create a focused commit and push it to the corresponding remote branch. Skip committing or pushing only when the user explicitly asks to keep the changes local.
 
+For the public Quartz site, do not treat a push as complete by itself. After changes that affect the live site:
+
+- push content changes to `main` and Quartz/runtime changes to `_quartz` branch `v5`;
+- wait for the GitHub Pages workflow to finish successfully;
+- verify the live site, preferably by checking `https://mifikcha.github.io/Acheba/deploy-info.json` plus the specific changed page, CSS, or asset URL;
+- if Pages is still queued/in progress, say that explicitly instead of implying the live site is updated.
+
 ## Skill Visibility
 
 Workspace-local skills are a fallback source. Personal Codex skills in `~/.codex/skills` are the preferred always-visible source and require restarting Codex after installation or changes.
