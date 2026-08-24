@@ -1598,6 +1598,10 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .python-checker {
+  --python-grid-step: 20px;
+  --python-grid-major-step: calc(var(--python-grid-step) * 5);
+  --python-grid-dot: color-mix(in srgb, var(--python-accent) 18%, transparent);
+  --python-grid-major-dot: color-mix(in srgb, var(--python-accent) 31%, transparent);
   --python-scrollbar-track: color-mix(
     in srgb,
     var(--python-editor-bg, var(--site-panel)) 86%,
@@ -1791,12 +1795,12 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   min-height: 0;
   overflow: hidden;
   background-color: var(--python-editor-bg);
-  background-image: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--python-accent) 8%, transparent) 0.65px,
-    transparent 0.8px
-  );
-  background-size: 20px 20px;
+  background-image:
+    radial-gradient(circle, var(--python-grid-major-dot) 0 1px, transparent 1.15px),
+    radial-gradient(circle, var(--python-grid-dot) 0 0.8px, transparent 0.95px);
+  background-size:
+    var(--python-grid-major-step) var(--python-grid-major-step),
+    var(--python-grid-step) var(--python-grid-step);
 }
 
 .python-active-line,
