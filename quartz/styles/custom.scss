@@ -94,11 +94,16 @@
   background: color-mix(in srgb, var(--lightgray) 68%, var(--light)) !important;
 }
 
-:where(pre, figure[data-rehype-pretty-code-figure] > pre):not(.python-checker-highlight) {
-  background: var(--light) !important;
+article :where(pre, figure[data-rehype-pretty-code-figure] > pre):not(.python-checker-highlight) {
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray)) !important;
+  border-radius: 6px !important;
+  background: color-mix(in srgb, var(--lightgray) 34%, var(--light)) !important;
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--site-shadow) 46%, transparent);
 }
 
-:where(pre, figure[data-rehype-pretty-code-figure] > pre):not(.python-checker-highlight) > code {
+article
+  :where(pre, figure[data-rehype-pretty-code-figure] > pre):not(.python-checker-highlight)
+  > code {
   background: transparent !important;
 }
 
@@ -1482,7 +1487,9 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .coding-workbench.python-checker {
-  grid-template-rows: auto auto minmax(16rem, 2fr) minmax(9rem, 1fr);
+  grid-template-rows:
+    auto auto minmax(11rem, var(--python-editor-height, 2fr)) 0.65rem
+    minmax(7rem, 1fr);
   gap: 0;
   min-width: 0;
   height: calc(100dvh - 3.25rem);
@@ -1494,6 +1501,12 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   border-radius: 0;
   background: var(--python-editor-bg);
   box-shadow: none;
+}
+
+.coding-workbench.python-checker:not(:has(.python-checker-task)) {
+  grid-template-rows:
+    auto minmax(11rem, var(--python-editor-height, 2fr)) 0.65rem
+    minmax(7rem, 1fr);
 }
 
 .python-checker-header,
@@ -1747,7 +1760,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .python-token-comment {
   color: var(--python-token-comment);
-  font-style: italic;
+  font-style: normal;
 }
 
 .python-token-operator {
@@ -1761,8 +1774,56 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 .python-console {
   min-height: 0;
   overflow: hidden;
-  border-top: 1px solid var(--python-editor-line);
+  border-top: 0;
   background: color-mix(in srgb, var(--python-editor-bg) 97%, var(--python-editor-fg));
+}
+
+.python-console-splitter {
+  position: relative;
+  z-index: 4;
+  min-height: 0.65rem;
+  cursor: row-resize;
+  touch-action: none;
+  background: color-mix(in srgb, var(--python-editor-line) 72%, var(--python-editor-bg));
+  transition: background 140ms ease;
+}
+
+.python-console-splitter::before {
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: color-mix(in srgb, var(--python-accent) 38%, var(--python-editor-line));
+  content: "";
+}
+
+.python-console-splitter > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.48rem;
+  height: 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--python-accent) 58%, var(--python-editor-line));
+  background: var(--python-editor-bg);
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition:
+    width 140ms ease,
+    height 140ms ease,
+    border-color 140ms ease;
+}
+
+.python-console-splitter:hover,
+.python-console-splitter:focus-visible,
+.python-checker[data-console-resizing="true"] .python-console-splitter {
+  background: color-mix(in srgb, var(--python-accent) 14%, var(--python-editor-bg));
+  outline: 0;
+}
+
+.python-console-splitter:hover > span,
+.python-console-splitter:focus-visible > span,
+.python-checker[data-console-resizing="true"] .python-console-splitter > span {
+  width: 0.66rem;
+  height: 0.66rem;
+  border-color: var(--python-accent);
 }
 
 .python-console-header {
@@ -2024,11 +2085,21 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   }
 
   .coding-workbench.python-checker {
-    grid-template-rows: auto auto minmax(20rem, 55dvh) minmax(10rem, 30dvh);
+    grid-template-rows: auto auto minmax(12rem, var(--python-editor-height, 55dvh)) 0.65rem minmax(
+        7rem,
+        30dvh
+      );
     height: auto;
     min-height: 90dvh;
     border-top: 1px solid var(--lightgray);
     border-left: 0;
+  }
+
+  .coding-workbench.python-checker:not(:has(.python-checker-task)) {
+    grid-template-rows: auto minmax(12rem, var(--python-editor-height, 55dvh)) 0.65rem minmax(
+        7rem,
+        30dvh
+      );
   }
 }
 

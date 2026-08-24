@@ -535,6 +535,17 @@ const initPythonChecker = (root: HTMLElement) => {
   editorShell.append(lineNumbersViewport, editorStack)
 
   const consolePanel = createElement("section", "python-console")
+  const consoleSplitter = lessonLayout ? createElement("div", "python-console-splitter") : undefined
+  if (consoleSplitter) {
+    consoleSplitter.setAttribute("role", "separator")
+    consoleSplitter.setAttribute("aria-label", "Изменить высоту редактора и консоли")
+    consoleSplitter.setAttribute("aria-orientation", "horizontal")
+    consoleSplitter.setAttribute("aria-valuemin", "35")
+    consoleSplitter.setAttribute("aria-valuemax", "78")
+    consoleSplitter.setAttribute("aria-valuenow", "67")
+    consoleSplitter.tabIndex = 0
+    consoleSplitter.append(createElement("span"))
+  }
   const consoleHeader = createElement("div", "python-console-header")
   const consoleTitle = createElement("strong", undefined, "STDOUT")
   const status = createElement("span", "python-checker-status", "READY")
@@ -577,6 +588,63 @@ const initPythonChecker = (root: HTMLElement) => {
     }
     errorLine.hidden = false
     syncEditor()
+  }
+
+  const initConsoleSplitter = (splitter: HTMLElement) => {
+    const setRatio = (ratio: number) => {
+      const top = editorShell.getBoundingClientRect().top
+      const bottom = consolePanel.getBoundingClientRect().bottom
+      const available = bottom - top - splitter.getBoundingClientRect().height
+      if (available <= 0) return
+      const minimum = Math.min(35, (176 / available) * 100)
+      const maximum = Math.max(minimum, Math.min(78, ((available - 112) / available) * 100))
+      const clamped = Math.min(maximum, Math.max(minimum, ratio))
+      root.style.setProperty("--python-editor-height", `${(available * clamped) / 100}px`)
+      splitter.setAttribute("aria-valuemin", String(Math.round(minimum)))
+      splitter.setAttribute("aria-valuemax", String(Math.round(maximum)))
+      splitter.setAttribute("aria-valuenow", String(Math.round(clamped)))
+    }
+    const reset = () => {
+      root.style.removeProperty("--python-editor-height")
+      requestAnimationFrame(() => {
+        const editorHeight = editorShell.getBoundingClientRect().height
+        const total = editorHeight + consolePanel.getBoundingClientRect().height
+        if (total > 0)
+          splitter.setAttribute("aria-valuenow", String(Math.round((editorHeight / total) * 100)))
+      })
+    }
+    const updateFromPointer = (clientY: number) => {
+      const top = editorShell.getBoundingClientRect().top
+      const bottom = consolePanel.getBoundingClientRect().bottom
+      const available = bottom - top - splitter.getBoundingClientRect().height
+      setRatio(((clientY - top) / available) * 100)
+    }
+    const stopDragging = () => {
+      root.removeAttribute("data-console-resizing")
+      window.removeEventListener("pointermove", onPointerMove)
+      window.removeEventListener("pointerup", stopDragging)
+    }
+    const onPointerMove = (event: PointerEvent) => updateFromPointer(event.clientY)
+
+    splitter.addEventListener("pointerdown", (event) => {
+      event.preventDefault()
+      root.dataset.consoleResizing = "true"
+      updateFromPointer(event.clientY)
+      window.addEventListener("pointermove", onPointerMove)
+      window.addEventListener("pointerup", stopDragging, { once: true })
+    })
+    splitter.addEventListener("dblclick", reset)
+    splitter.addEventListener("keydown", (event) => {
+      const current = Number(splitter.getAttribute("aria-valuenow") ?? 67)
+      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+        event.preventDefault()
+        setRatio(current + (event.key === "ArrowDown" ? 5 : -5))
+      } else if (event.key === "Home") {
+        event.preventDefault()
+        reset()
+      }
+    })
+    reset()
   }
 
   const setRunning = (isRunning: boolean) => {
@@ -648,7 +716,12 @@ const initPythonChecker = (root: HTMLElement) => {
   root.classList.add("python-checker-enhanced")
   root.append(header)
   if (task) root.append(task)
-  root.append(editorShell, consolePanel)
+  root.append(editorShell)
+  if (consoleSplitter) {
+    root.append(consoleSplitter)
+    initConsoleSplitter(consoleSplitter)
+  }
+  root.append(consolePanel)
   if (!lessonLayout) root.classList.add("python-checker-inline")
   syncEditor()
   renderTestPlan(output, tests)
