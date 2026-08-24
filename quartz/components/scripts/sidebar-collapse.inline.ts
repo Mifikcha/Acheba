@@ -61,6 +61,20 @@ const toggleTheme = () => {
   )
 }
 
+const bindThemeToggle = (button: HTMLButtonElement) => {
+  if (button.dataset.themeToggleReady === "true") {
+    return
+  }
+
+  button.dataset.themeToggleReady = "true"
+  button.type = "button"
+  button.addEventListener("click", toggleTheme)
+}
+
+const bindThemeToggles = () => {
+  document.querySelectorAll<HTMLButtonElement>(".hopes-theme-toggle").forEach(bindThemeToggle)
+}
+
 const setSidebarState = (open: boolean) => {
   document.documentElement.dataset.sidebarLeft = open ? "open" : "closed"
 }
@@ -89,18 +103,31 @@ const ensurePageTitleHomeLink = () => {
 const ensureThemeToggle = () => {
   const leftSidebar = document.querySelector<HTMLElement>(".left.sidebar")
 
-  if (!leftSidebar || leftSidebar.querySelector(".hopes-theme-toggle")) {
+  if (!leftSidebar) {
+    return
+  }
+
+  if (!leftSidebar.querySelector(".hopes-theme-toggle")) {
+    const button = document.createElement("button")
+    button.className = "hopes-theme-toggle"
+
+    const pageTitle = leftSidebar.querySelector(".page-title")
+    pageTitle?.insertAdjacentElement("afterend", button)
+  }
+}
+
+const ensureFrameThemeToggle = () => {
+  const excalidrawFrame = document.querySelector<HTMLElement>(
+    '#quartz-root.page[data-frame="excalidraw"]',
+  )
+
+  if (!excalidrawFrame || excalidrawFrame.querySelector(".excalidraw-theme-toggle")) {
     return
   }
 
   const button = document.createElement("button")
-  button.className = "hopes-theme-toggle"
-  button.type = "button"
-  button.addEventListener("click", toggleTheme)
-
-  const pageTitle = leftSidebar.querySelector(".page-title")
-  pageTitle?.insertAdjacentElement("afterend", button)
-  applyStoredTheme()
+  button.className = "hopes-theme-toggle hopes-frame-theme-toggle excalidraw-theme-toggle"
+  excalidrawFrame.append(button)
 }
 
 const ensureMobileToggle = () => {
@@ -199,6 +226,8 @@ const prepareSidebar = () => {
   } catch {}
 
   ensureThemeToggle()
+  ensureFrameThemeToggle()
+  bindThemeToggles()
   ensurePageTitleHomeLink()
   ensureMobileToggle()
   sortInfoTaskCards()

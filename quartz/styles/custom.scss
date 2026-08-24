@@ -793,6 +793,13 @@ button.darkmode,
     0 10px 28px var(--site-shadow);
 }
 
+.hopes-frame-theme-toggle {
+  position: fixed;
+  z-index: 80;
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
 .mobile-sidebar-toggle {
   display: none;
 }
@@ -1145,6 +1152,30 @@ body[data-slug="index"] .right.sidebar .toc {
   );
 }
 
+.home-program-card a.home-python-sandbox {
+  border-color: color-mix(in srgb, #35b8c8 38%, var(--lightgray));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, #35b8c8 18%, transparent),
+    color-mix(in srgb, #ffd343 8%, transparent) 78%
+  );
+  color: color-mix(in srgb, #35b8c8 58%, var(--dark));
+}
+
+.home-program-card a.home-python-sandbox::after {
+  color: color-mix(in srgb, #35b8c8 72%, #ffd343);
+}
+
+.home-program-card a.home-python-sandbox:hover,
+.home-program-card a.home-python-sandbox:focus-visible {
+  border-color: color-mix(in srgb, #35b8c8 62%, var(--lightgray));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, #35b8c8 26%, transparent),
+    color-mix(in srgb, #ffd343 12%, transparent) 80%
+  );
+}
+
 .home-contact {
   display: grid;
   grid-template-columns: repeat(3, 10.4rem);
@@ -1470,11 +1501,25 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .coding-lesson-progress {
-  justify-self: end;
   color: var(--gray);
   font-size: 0.86rem;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
+}
+
+.coding-lesson-meta {
+  display: inline-flex;
+  justify-self: end;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.coding-theme-toggle {
+  width: 2.3rem !important;
+  height: 2.3rem;
+  flex-basis: 2.3rem;
+  align-self: center;
+  box-shadow: none;
 }
 
 .coding-lesson-split {
@@ -2027,6 +2072,19 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   line-height: 1.55;
   scrollbar-color: var(--python-scrollbar-thumb) var(--python-scrollbar-track);
   white-space: normal;
+}
+
+.python-sandbox-checker.python-checker {
+  --python-editor-height: clamp(22rem, 54vh, 36rem);
+  max-width: none;
+}
+
+.python-sandbox-checker .python-editor-shell {
+  min-height: clamp(22rem, 54vh, 36rem);
+}
+
+.python-sandbox-checker .python-console {
+  min-height: 11rem;
 }
 
 .python-output-empty,

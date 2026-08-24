@@ -16,6 +16,8 @@ const ArrowRight = () => (
   </svg>
 )
 
+const ThemeToggle = () => <button class="hopes-theme-toggle coding-theme-toggle" type="button" />
+
 export const CodingLessonFrame: PageFrame = {
   name: "coding-lesson",
   render({ componentData, pageBody: Content }: PageFrameProps) {
@@ -52,9 +54,12 @@ export const CodingLessonFrame: PageFrame = {
             <span>К курсу</span>
           </a>
           <strong>{title}</strong>
-          <span class="coding-lesson-progress">
-            {lessonIndex + 1} / {lessons.length}
-          </span>
+          <div class="coding-lesson-meta">
+            <span class="coding-lesson-progress">
+              {lessonIndex + 1} / {lessons.length}
+            </span>
+            <ThemeToggle />
+          </div>
         </header>
 
         <div class="coding-lesson-split">
