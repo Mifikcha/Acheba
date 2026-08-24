@@ -6,6 +6,13 @@
   --site-sidebar-padding-block: 1rem 2rem;
   --site-sidebar-padding-inline: 1rem;
   --site-sidebar-gap: 0.72rem;
+  --site-sidebar-bg-top: color-mix(in srgb, var(--site-panel) 88%, var(--secondary));
+  --site-sidebar-bg-base: color-mix(in srgb, var(--site-panel) 82%, var(--light));
+  --site-sidebar-border: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  --site-sidebar-scrollbar-track: color-mix(in srgb, var(--site-panel) 86%, var(--light));
+  --site-sidebar-scrollbar-thumb: color-mix(in srgb, var(--secondary) 54%, var(--tertiary));
+  --site-sidebar-scrollbar-thumb-hover: color-mix(in srgb, var(--tertiary) 64%, var(--secondary));
+  --site-sidebar-scrollbar-thumb-active: var(--secondary);
   --tn-bg-dark2: #121218;
   --tn-bg-dark: #16161e;
   --tn-bg: #1a1b26;
@@ -251,15 +258,15 @@ button.toc-header {
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--site-panel) 88%, var(--secondary)) 0%,
+      var(--site-sidebar-bg-top) 0%,
       transparent 22rem
     ),
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--site-panel) 82%, var(--light)) 0%,
+      var(--site-sidebar-bg-base) 0%,
       var(--light) 118%
     ) !important;
-  border-color: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  border-color: var(--site-sidebar-border);
 }
 
 .page > #quartz-body .left.sidebar,
@@ -627,6 +634,77 @@ button.darkmode,
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+
+:where(
+    .left.sidebar,
+    .right.sidebar,
+    .left.sidebar .overflow,
+    .right.sidebar .overflow,
+    .left.sidebar .explorer-content,
+    .right.sidebar .toc-content
+  ) {
+  scrollbar-color: var(--site-sidebar-scrollbar-thumb) var(--site-sidebar-scrollbar-track);
+  scrollbar-width: thin;
+}
+
+:where(
+    .left.sidebar,
+    .right.sidebar,
+    .left.sidebar .overflow,
+    .right.sidebar .overflow,
+    .left.sidebar .explorer-content,
+    .right.sidebar .toc-content
+  )::-webkit-scrollbar {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+:where(
+    .left.sidebar,
+    .right.sidebar,
+    .left.sidebar .overflow,
+    .right.sidebar .overflow,
+    .left.sidebar .explorer-content,
+    .right.sidebar .toc-content
+  )::-webkit-scrollbar-track {
+  background: var(--site-sidebar-scrollbar-track);
+}
+
+:where(
+    .left.sidebar,
+    .right.sidebar,
+    .left.sidebar .overflow,
+    .right.sidebar .overflow,
+    .left.sidebar .explorer-content,
+    .right.sidebar .toc-content
+  )::-webkit-scrollbar-thumb {
+  min-height: 2.5rem;
+  border: 2px solid var(--site-sidebar-scrollbar-track);
+  border-radius: 999px;
+  background: var(--site-sidebar-scrollbar-thumb);
+}
+
+:where(
+    .left.sidebar,
+    .right.sidebar,
+    .left.sidebar .overflow,
+    .right.sidebar .overflow,
+    .left.sidebar .explorer-content,
+    .right.sidebar .toc-content
+  )::-webkit-scrollbar-thumb:hover {
+  background: var(--site-sidebar-scrollbar-thumb-hover);
+}
+
+:where(
+    .left.sidebar,
+    .right.sidebar,
+    .left.sidebar .overflow,
+    .right.sidebar .overflow,
+    .left.sidebar .explorer-content,
+    .right.sidebar .toc-content
+  )::-webkit-scrollbar-thumb:active {
+  background: var(--site-sidebar-scrollbar-thumb-active);
 }
 
 .hopes-theme-toggle {
