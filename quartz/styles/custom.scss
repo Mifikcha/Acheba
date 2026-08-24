@@ -9,10 +9,16 @@
   --site-sidebar-bg-top: color-mix(in srgb, var(--site-panel) 88%, var(--secondary));
   --site-sidebar-bg-base: color-mix(in srgb, var(--site-panel) 82%, var(--light));
   --site-sidebar-border: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
-  --site-sidebar-scrollbar-track: color-mix(in srgb, var(--site-panel) 86%, var(--light));
-  --site-sidebar-scrollbar-thumb: color-mix(in srgb, var(--secondary) 54%, var(--tertiary));
-  --site-sidebar-scrollbar-thumb-hover: color-mix(in srgb, var(--tertiary) 64%, var(--secondary));
-  --site-sidebar-scrollbar-thumb-active: var(--secondary);
+  --site-scrollbar-size: 0.78rem;
+  --site-scrollbar-radius: 0.32rem;
+  --site-scrollbar-track: color-mix(in srgb, var(--site-panel) 86%, var(--light));
+  --site-scrollbar-thumb: color-mix(in srgb, var(--secondary) 54%, var(--tertiary));
+  --site-scrollbar-thumb-hover: color-mix(in srgb, var(--tertiary) 64%, var(--secondary));
+  --site-scrollbar-thumb-active: var(--secondary);
+  --site-sidebar-scrollbar-track: var(--site-scrollbar-track);
+  --site-sidebar-scrollbar-thumb: var(--site-scrollbar-thumb);
+  --site-sidebar-scrollbar-thumb-hover: var(--site-scrollbar-thumb-hover);
+  --site-sidebar-scrollbar-thumb-active: var(--site-scrollbar-thumb-active);
   --tn-bg-dark2: #121218;
   --tn-bg-dark: #16161e;
   --tn-bg: #1a1b26;
@@ -124,6 +130,41 @@ article {
   transition:
     background-color 180ms ease,
     color 180ms ease;
+}
+
+* {
+  scrollbar-color: var(--site-scrollbar-thumb) var(--site-scrollbar-track);
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: var(--site-scrollbar-size);
+  height: var(--site-scrollbar-size);
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: var(--site-scrollbar-radius);
+  background: var(--site-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  border: 2px solid var(--site-scrollbar-track);
+  border-radius: var(--site-scrollbar-radius);
+  background: var(--site-scrollbar-thumb);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--site-scrollbar-thumb-hover);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: var(--site-scrollbar-thumb-active);
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--site-scrollbar-track);
 }
 
 :root[data-theme-changing="true"] {
@@ -656,8 +697,8 @@ button.darkmode,
     .left.sidebar .explorer-content,
     .right.sidebar .toc-content
   )::-webkit-scrollbar {
-  width: 0.7rem;
-  height: 0.7rem;
+  width: var(--site-scrollbar-size);
+  height: var(--site-scrollbar-size);
 }
 
 :where(
@@ -681,7 +722,7 @@ button.darkmode,
   )::-webkit-scrollbar-thumb {
   min-height: 2.5rem;
   border: 2px solid var(--site-sidebar-scrollbar-track);
-  border-radius: 999px;
+  border-radius: var(--site-scrollbar-radius);
   background: var(--site-sidebar-scrollbar-thumb);
 }
 
@@ -1314,6 +1355,9 @@ body[data-slug="index"] .right.sidebar .toc {
   --python-editor-fg: #252526;
   --python-editor-muted: #8b8b82;
   --python-editor-line: #e6dfc8;
+  --python-scrollbar-track: color-mix(in srgb, var(--python-editor-bg) 86%, var(--python-editor-line));
+  --python-scrollbar-thumb: color-mix(in srgb, var(--python-accent) 62%, var(--secondary));
+  --python-scrollbar-thumb-hover: color-mix(in srgb, var(--python-accent) 78%, var(--tertiary));
   --python-token-keyword: #af00db;
   --python-token-builtin: #795e26;
   --python-token-string: #a31515;
@@ -1496,7 +1540,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   height: calc(100dvh - 3.25rem);
   padding: 2rem clamp(1.25rem, 4vw, 4rem) 1.5rem;
   overflow-y: auto;
-  scrollbar-color: color-mix(in srgb, var(--gray) 55%, transparent) transparent;
+  scrollbar-color: var(--site-scrollbar-thumb) var(--site-scrollbar-track);
 }
 
 .coding-lesson-reading > article {
@@ -1554,6 +1598,13 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .python-checker {
+  --python-scrollbar-track: color-mix(
+    in srgb,
+    var(--python-editor-bg, var(--site-panel)) 86%,
+    var(--python-editor-line, var(--lightgray))
+  );
+  --python-scrollbar-thumb: color-mix(in srgb, var(--python-accent, var(--tertiary)) 62%, var(--secondary));
+  --python-scrollbar-thumb-hover: color-mix(in srgb, var(--python-accent, var(--tertiary)) 78%, var(--tertiary));
   display: grid;
   gap: 0.75rem;
   margin: 1.4rem 0;
@@ -1813,7 +1864,31 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   caret-color: var(--python-accent);
   color: transparent;
   -webkit-text-fill-color: transparent;
-  scrollbar-color: color-mix(in srgb, var(--python-editor-muted) 60%, transparent) transparent;
+  scrollbar-color: var(--python-scrollbar-thumb) var(--python-scrollbar-track);
+}
+
+.python-checker-editor::-webkit-scrollbar,
+.python-checker-output::-webkit-scrollbar {
+  width: var(--site-scrollbar-size);
+  height: var(--site-scrollbar-size);
+}
+
+.python-checker-editor::-webkit-scrollbar-track,
+.python-checker-output::-webkit-scrollbar-track {
+  border-radius: var(--site-scrollbar-radius);
+  background: var(--python-scrollbar-track);
+}
+
+.python-checker-editor::-webkit-scrollbar-thumb,
+.python-checker-output::-webkit-scrollbar-thumb {
+  border-color: var(--python-scrollbar-track);
+  border-radius: var(--site-scrollbar-radius);
+  background: var(--python-scrollbar-thumb);
+}
+
+.python-checker-editor::-webkit-scrollbar-thumb:hover,
+.python-checker-output::-webkit-scrollbar-thumb:hover {
+  background: var(--python-scrollbar-thumb-hover);
 }
 
 .python-checker-editor::selection {
@@ -1946,6 +2021,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   font-family: var(--codeFont);
   font-size: 0.86rem;
   line-height: 1.55;
+  scrollbar-color: var(--python-scrollbar-thumb) var(--python-scrollbar-track);
   white-space: normal;
 }
 
@@ -2085,6 +2161,7 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .python-checker-inline {
+  --python-accent: var(--tertiary);
   --python-editor-bg: color-mix(in srgb, var(--light) 88%, var(--site-panel));
   --python-editor-fg: var(--dark);
   --python-editor-muted: var(--gray);
