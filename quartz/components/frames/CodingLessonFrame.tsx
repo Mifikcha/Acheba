@@ -18,13 +18,18 @@ const ArrowRight = () => (
 
 const ThemeToggle = () => <button class="hopes-theme-toggle coding-theme-toggle" type="button" />
 
+const homeHref = (baseUrl?: string) => {
+  if (!baseUrl) return "/"
+  return new URL(`https://${baseUrl}`).pathname.replace(/\/?$/, "/")
+}
+
 export const CodingLessonFrame: PageFrame = {
   name: "coding-lesson",
   render({ componentData, pageBody: Content }: PageFrameProps) {
     const { fileData, allFiles } = componentData
     const slug = fileData.slug!
     const parentSlug = slug.slice(0, slug.lastIndexOf("/")) as FullSlug
-    const overviewSlug = parentSlug
+    const siteHomeHref = homeHref(componentData.cfg.baseUrl)
     const lessons = allFiles
       .filter(
         (file) =>
@@ -49,7 +54,7 @@ export const CodingLessonFrame: PageFrame = {
     return (
       <main class="center coding-lesson-shell">
         <header class="coding-lesson-bar">
-          <a class="coding-course-exit" href={resolveRelative(slug, overviewSlug)}>
+          <a class="coding-course-exit" href={siteHomeHref}>
             <ArrowLeft />
             <span>К курсу</span>
           </a>
@@ -86,7 +91,7 @@ export const CodingLessonFrame: PageFrame = {
                   <ArrowRight />
                 </a>
               ) : (
-                <a href={resolveRelative(slug, overviewSlug)}>
+                <a href={siteHomeHref}>
                   <span>
                     <small>Готово</small>К курсу
                   </span>

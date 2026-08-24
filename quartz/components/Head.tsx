@@ -297,6 +297,12 @@ body::-webkit-scrollbar-corner,
   background-color: var(--python-scrollbar-thumb-hover) !important;
 }
 
+.katex .mrel,
+.katex .mrel .mord,
+.katex .mrel .inner {
+  font-family: KaTeX_Main, "Times New Roman", serif !important;
+}
+
 html body[data-slug] .search > .search-container.active {
   background: rgba(250, 246, 215, 0.48) !important;
   -webkit-backdrop-filter: blur(10px) saturate(1.05) !important;
