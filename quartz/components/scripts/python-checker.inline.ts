@@ -457,7 +457,28 @@ const initPythonChecker = (root: HTMLElement) => {
   syncEditor()
 }
 
+const runnablePrompt = /^(?:запусти|попробуй)(?=\s|:)/i
+
+const enhanceRunnableExamples = () => {
+  document.querySelectorAll<HTMLElement>(".coding-lesson-reading article p").forEach((prompt) => {
+    if (!runnablePrompt.test(prompt.textContent?.trim() ?? "")) return
+
+    const block = prompt.nextElementSibling
+    const code = block?.matches("pre, figure[data-rehype-pretty-code-figure]")
+      ? block.querySelector("code")
+      : null
+    if (!block || !code || block.nextElementSibling?.classList.contains("python-run-example"))
+      return
+
+    const checker = createElement("div", "python-checker python-run-example")
+    checker.dataset.title = "Пример"
+    checker.dataset.code = code.textContent?.trim() ?? ""
+    block.replaceWith(checker)
+  })
+}
+
 const initPythonCheckers = () => {
+  enhanceRunnableExamples()
   document.querySelectorAll<HTMLElement>(".python-checker").forEach(initPythonChecker)
 }
 

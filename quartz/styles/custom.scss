@@ -89,6 +89,19 @@
   --site-shadow: rgba(102, 92, 84, 0.16);
 }
 
+// Shiki writes a fixed background inline; keep Markdown code in the active palette.
+:where(code):not(.python-checker-highlight code) {
+  background: color-mix(in srgb, var(--lightgray) 68%, var(--light)) !important;
+}
+
+:where(pre, figure[data-rehype-pretty-code-figure] > pre):not(.python-checker-highlight) {
+  background: var(--light) !important;
+}
+
+:where(pre, figure[data-rehype-pretty-code-figure] > pre):not(.python-checker-highlight) > code {
+  background: transparent !important;
+}
+
 html,
 body,
 .page,
@@ -1213,7 +1226,7 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 .page[data-frame="coding-lesson"] {
-  --python-editor-bg: #fffbee;
+  --python-editor-bg: var(--light);
   --python-editor-fg: #252526;
   --python-editor-muted: #8b8b82;
   --python-editor-line: #e6dfc8;
@@ -1229,7 +1242,7 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
-  --python-editor-bg: #1e1e1e;
+  --python-editor-bg: var(--light);
   --python-editor-fg: #d4d4d4;
   --python-editor-muted: #858585;
   --python-editor-line: #333333;
@@ -1508,7 +1521,20 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 .python-checker-run {
+  position: relative;
+  min-width: 7.2rem !important;
+  padding-inline: 2rem !important;
   background: color-mix(in srgb, var(--secondary) 25%, var(--python-editor-bg)) !important;
+}
+
+.python-checker-run svg {
+  position: absolute;
+  left: 0.65rem;
+}
+
+.python-checker-run span {
+  width: 100%;
+  text-align: center;
 }
 
 .python-checker-task {
@@ -1586,6 +1612,11 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .python-checker-highlight > code {
   display: block !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  font: inherit !important;
+  line-height: inherit !important;
+  white-space: inherit;
 }
 
 .python-checker-highlight::-webkit-scrollbar {
@@ -1700,6 +1731,30 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .python-checker-inline .python-console {
   min-height: 8rem;
+}
+
+.python-run-example {
+  gap: 0;
+  margin: 0.75rem 0 1.25rem;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.python-run-example .python-checker-header {
+  min-height: 2.75rem;
+}
+
+.python-run-example .python-editor-shell {
+  min-height: 7.5rem;
+}
+
+.python-run-example .python-console {
+  min-height: 6.5rem;
+}
+
+.python-run-example .python-checker-output {
+  min-height: 4rem;
 }
 
 @media (max-width: 899px) {
