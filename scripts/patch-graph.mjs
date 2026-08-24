@@ -14,6 +14,19 @@ const graphFiles = [
   ),
 ]
 
+const pageTitleFiles = [
+  path.join(process.cwd(), "node_modules", "@quartz-community", "page-title", "dist", "index.js"),
+  path.join(
+    process.cwd(),
+    "node_modules",
+    "@quartz-community",
+    "page-title",
+    "dist",
+    "components",
+    "index.js",
+  ),
+]
+
 const themeCoreFile = path.join(
   process.cwd(),
   "node_modules",
@@ -101,6 +114,25 @@ for (const graphFile of graphFiles) {
 
   if (source !== original) {
     fs.writeFileSync(graphFile, source)
+    patched += 1
+  }
+}
+
+for (const pageTitleFile of pageTitleFiles) {
+  if (!fs.existsSync(pageTitleFile)) {
+    continue
+  }
+
+  const original = fs.readFileSync(pageTitleFile, "utf8")
+  let source = original
+
+  source = source.replace(
+    "const baseDir = pathToRoot(fileData.slug);",
+    'const baseDir = cfg?.baseUrl ? new URL(`https://${cfg.baseUrl}`).pathname.replace(/\\/?$/, "/") || "/" : pathToRoot(fileData.slug);',
+  )
+
+  if (source !== original) {
+    fs.writeFileSync(pageTitleFile, source)
     patched += 1
   }
 }
