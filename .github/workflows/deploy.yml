@@ -62,6 +62,17 @@ jobs:
           rm -f _quartz/public/CNAME
           touch _quartz/public/.nojekyll
 
+      - name: Write deploy metadata
+        run: |
+          cat > _quartz/public/deploy-info.json <<EOF
+          {
+            "site_sha": "$(git rev-parse HEAD)",
+            "quartz_sha": "$(git -C _quartz rev-parse HEAD)",
+            "source_branch": "${{ github.ref_name }}",
+            "built_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
