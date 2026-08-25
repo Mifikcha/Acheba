@@ -15,12 +15,6 @@ tags:
 
 <div class="python-checker python-sandbox-checker" data-title="Песочница">
 <textarea>
-name = "Питон"
-
-print("Привет,", name)
-print("2 + 2 =", 2 + 2)
-
-for i in range(3):
-    print("строка", i + 1)
+print("Hello, World!")
 </textarea>
 </div>
