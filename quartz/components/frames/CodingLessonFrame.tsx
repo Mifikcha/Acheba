@@ -30,11 +30,15 @@ export const CodingLessonFrame: PageFrame = {
     const slug = fileData.slug!
     const parentSlug = slug.slice(0, slug.lastIndexOf("/")) as FullSlug
     const siteHomeHref = homeHref(componentData.cfg.baseUrl)
+    const frontmatter = fileData.frontmatter as Record<string, unknown> | undefined
+    const codingScope = String(frontmatter?.coding_scope ?? "")
+    const scopeSlug = (codingScope || parentSlug) as FullSlug
+    const useRecursiveScope = codingScope.length > 0
     const lessons = allFiles
       .filter(
         (file) =>
-          file.slug?.startsWith(`${parentSlug}/`) &&
-          file.slug.slice(parentSlug.length + 1).indexOf("/") === -1 &&
+          file.slug?.startsWith(`${scopeSlug}/`) &&
+          (useRecursiveScope || file.slug.slice(scopeSlug.length + 1).indexOf("/") === -1) &&
           hasCodingLessonTag(file),
       )
       .sort(
@@ -44,7 +48,6 @@ export const CodingLessonFrame: PageFrame = {
     const lessonIndex = lessons.findIndex((lesson) => lesson.slug === slug)
     const previous = lessonIndex > 0 ? lessons[lessonIndex - 1] : undefined
     const next = lessonIndex >= 0 ? lessons[lessonIndex + 1] : undefined
-    const frontmatter = fileData.frontmatter as Record<string, unknown> | undefined
     const title = String(frontmatter?.title ?? slug.slice(slug.lastIndexOf("/") + 1))
     const starterCode = String(frontmatter?.starter_code ?? "")
     const tests = String(frontmatter?.tests ?? "")
