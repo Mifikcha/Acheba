@@ -399,7 +399,7 @@ const splitExpected = (test: string) => {
     : { check: expression, expected: "True" }
 }
 
-const renderTestPlan = (output: HTMLElement, tests: string) => {
+const renderTestPlan = (output: HTMLElement, tests: string, hidden = false) => {
   output.innerHTML = ""
   const rows = tests
     .split("\n")
@@ -408,6 +408,18 @@ const renderTestPlan = (output: HTMLElement, tests: string) => {
 
   if (rows.length === 0) {
     output.append(createElement("div", "python-output-empty", "Вывод появится здесь."))
+    return
+  }
+
+  if (hidden) {
+    output.append(
+      createElement("div", "python-output-label", "СКРЫТЫЕ ПРОВЕРКИ"),
+      createElement(
+        "div",
+        "python-output-empty",
+        `После запуска будет видно, сколько проверок прошло: ${rows.length}.`,
+      ),
+    )
     return
   }
 
@@ -434,7 +446,7 @@ const appendOutputBlock = (output: HTMLElement, label: string, value: string) =>
   output.append(block)
 }
 
-const renderResult = (output: HTMLElement, result: PythonRunResult) => {
+const renderResult = (output: HTMLElement, result: PythonRunResult, hiddenTests = false) => {
   output.innerHTML = ""
   appendOutputBlock(output, "PROGRAM OUTPUT", result.stdout)
   appendOutputBlock(output, "PYTHON ERROR", result.stderr)
@@ -451,6 +463,8 @@ const renderResult = (output: HTMLElement, result: PythonRunResult) => {
     progress.style.setProperty("--python-test-progress", `${(result.passed.length / total) * 100}%`)
     summary.append(summaryLine, progress)
     output.append(summary)
+
+    if (hiddenTests) return
 
     for (const test of [...result.failed, ...result.passed]) {
       const row = createElement(
@@ -485,6 +499,7 @@ const initPythonChecker = (root: HTMLElement) => {
 
   const initialCode = readInitialCode(root)
   const tests = root.dataset.tests ?? ""
+  const hiddenTests = root.dataset.hiddenTests === "true"
   const timeoutMs = Number(root.dataset.timeout ?? 8000)
   const lessonLayout = root.dataset.layout === "lesson"
   root.innerHTML = ""
@@ -668,7 +683,7 @@ const initPythonChecker = (root: HTMLElement) => {
       const failed = result.failed.length > 0 || !result.codeOk
       root.dataset.state = failed ? "error" : total > 0 ? "success" : "idle"
       status.textContent = failed ? "FAILED" : "DONE"
-      renderResult(output, result)
+      renderResult(output, result, hiddenTests)
       markErrorLine(result.errorLine ?? result.failed.find((test) => test.line)?.line)
     } catch (error) {
       root.dataset.state = "error"
@@ -705,7 +720,7 @@ const initPythonChecker = (root: HTMLElement) => {
   runButton.addEventListener("click", () => void execute())
   resetButton.addEventListener("click", () => {
     editor.value = initialCode
-    renderTestPlan(output, tests)
+    renderTestPlan(output, tests, hiddenTests)
     status.textContent = "READY"
     root.dataset.state = "idle"
     markErrorLine()
@@ -724,7 +739,7 @@ const initPythonChecker = (root: HTMLElement) => {
   root.append(consolePanel)
   if (!lessonLayout) root.classList.add("python-checker-inline")
   syncEditor()
-  renderTestPlan(output, tests)
+  renderTestPlan(output, tests, hiddenTests)
 }
 
 const runnablePrompt = /^(?:запусти|попробуй)(?=\s|:)/i

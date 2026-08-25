@@ -124,6 +124,7 @@ export const CodingLessonFrame: PageFrame = {
             data-title={lessonCode}
             data-code={starterCode}
             data-tests={tests}
+            data-hidden-tests={hideWorkbenchTask ? "true" : "false"}
             data-task={hideWorkbenchTask ? "" : task}
           />
         </div>
