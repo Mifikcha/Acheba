@@ -52,6 +52,7 @@ export const CodingLessonFrame: PageFrame = {
     const starterCode = String(frontmatter?.starter_code ?? "")
     const tests = String(frontmatter?.tests ?? "")
     const task = String(frontmatter?.coding_task ?? "")
+    const hideWorkbenchTask = codingScope === "предметы/инфушечка/истинный-фундамент/звезды"
     const lessonCode = `PY / ${title.match(/^\d+(?:\.\d+)?/)?.[0] ?? String(lessonIndex + 1).padStart(2, "0")}`
 
     return (
@@ -123,7 +124,7 @@ export const CodingLessonFrame: PageFrame = {
             data-title={lessonCode}
             data-code={starterCode}
             data-tests={tests}
-            data-task={task}
+            data-task={hideWorkbenchTask ? "" : task}
           />
         </div>
       </main>
