@@ -325,6 +325,10 @@ html body[data-slug] .search > .search-container.active > .search-space > .tag-s
     color-mix(in srgb, var(--light) 74%, transparent) !important;
 }
 
+html body[data-slug] .callout.is-collapsed > .callout-content {
+  display: none !important;
+}
+
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   html body[data-slug] .search > .search-container.active {
     background: rgba(250, 246, 215, 0.68) !important;
