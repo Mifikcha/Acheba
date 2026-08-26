@@ -20,8 +20,45 @@ const isLocalUrl = (href: string) => {
 
 const isSamePage = (url: URL): boolean => {
   const sameOrigin = url.origin === window.location.origin
-  const samePath = url.pathname === window.location.pathname
+  const normalizePath = (path: string) =>
+    path
+      .replace(/\/index\.html?$/i, "/")
+      .replace(/\.html$/i, "")
+      .replace(/\/$/i, "") || "/"
+
+  const samePath = normalizePath(url.pathname) === normalizePath(window.location.pathname)
   return sameOrigin && samePath
+}
+
+const getHashElement = (hash: string): HTMLElement | null => {
+  if (!hash) return null
+
+  try {
+    return document.getElementById(decodeURIComponent(hash.substring(1)))
+  } catch {
+    return document.getElementById(hash.substring(1))
+  }
+}
+
+const scrollToHash = (url: URL, updateHistory: boolean): boolean => {
+  const el = getHashElement(url.hash)
+  if (!el) return false
+
+  if (updateHistory) {
+    const next = `${url.pathname}${url.search}${url.hash}`
+    const current = `${window.location.pathname}${window.location.search}${window.location.hash}`
+    if (next !== current) {
+      history.pushState({}, "", url)
+    }
+  }
+
+  const scroll = () => el.scrollIntoView({ block: "start" })
+  scroll()
+  requestAnimationFrame(scroll)
+  window.setTimeout(scroll, 120)
+  window.setTimeout(scroll, 360)
+  window.setTimeout(scroll, 900)
+  return true
 }
 
 const getOpts = ({ target }: Event): { url: URL; scroll?: boolean } | undefined => {
@@ -113,8 +150,7 @@ async function _navigate(url: URL, isBack: boolean = false) {
   // scroll into place and add history
   if (!isBack) {
     if (url.hash) {
-      const el = document.getElementById(decodeURIComponent(url.hash.substring(1)))
-      el?.scrollIntoView()
+      scrollToHash(url, false)
     } else {
       window.scrollTo({ top: 0 })
     }
@@ -157,13 +193,11 @@ function createRouter() {
     window.addEventListener("click", async (event) => {
       const { url } = getOpts(event) ?? {}
       // dont hijack behaviour, just let browser act normally
-      if (!url || event.ctrlKey || event.metaKey) return
+      if (!url || event.ctrlKey || event.metaKey || event.button !== 0) return
       event.preventDefault()
 
       if (isSamePage(url) && url.hash) {
-        const el = document.getElementById(decodeURIComponent(url.hash.substring(1)))
-        el?.scrollIntoView()
-        history.pushState({}, "", url)
+        scrollToHash(url, true)
         return
       }
 
