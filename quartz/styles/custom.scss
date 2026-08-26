@@ -1111,87 +1111,35 @@ body[data-slug="index"] .right.sidebar .toc {
   padding: 0.85rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
   border-radius: 8px;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--site-panel) 88%, var(--secondary)) 0%,
-      var(--light) 105%
-    ),
-    var(--site-panel);
+  background: var(--site-panel);
   box-shadow: 0 12px 32px var(--site-shadow);
 }
 
 .home-program-card a {
-  --home-program-accent: var(--secondary);
-  --home-program-accent-2: var(--tertiary);
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 2.8rem;
   padding: 0.55rem 0.72rem;
-  border: 1px solid color-mix(in srgb, var(--home-program-accent) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, transparent);
   border-radius: 6px;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--home-program-accent) 12%, transparent),
-    transparent 72%
-  );
-  color: color-mix(in srgb, var(--home-program-accent) 22%, var(--dark));
+  background: color-mix(in srgb, var(--secondary) 14%, transparent);
+  color: var(--dark);
   font-weight: 600;
   text-decoration: none;
 }
 
 .home-program-card a::after {
   content: ">";
-  color: color-mix(in srgb, var(--home-program-accent) 72%, var(--home-program-accent-2));
+  color: var(--secondary);
   font-family: var(--codeFont);
   font-size: 0.85rem;
 }
 
 .home-program-card a:hover,
 .home-program-card a:focus-visible {
-  border-color: color-mix(in srgb, var(--home-program-accent) 44%, var(--lightgray));
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--home-program-accent) 21%, transparent),
-    transparent 76%
-  );
-}
-
-.home-program-card a.home-program-informatics {
-  --home-program-accent: var(--home-python-accent);
-  --home-program-accent-2: #ffd343;
-}
-
-.home-program-card a.home-program-physics {
-  --home-program-accent: var(--home-physics-accent);
-  --home-program-accent-2: color-mix(in srgb, var(--home-physics-accent) 72%, var(--tertiary));
-}
-
-.home-program-card a.home-python-sandbox {
-  --home-program-accent: var(--home-python-accent);
-  --home-program-accent-2: #ffd343;
-  border-color: color-mix(in srgb, var(--home-program-accent) 38%, var(--lightgray));
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--home-program-accent) 18%, transparent),
-    color-mix(in srgb, #ffd343 8%, transparent) 78%
-  );
-  color: color-mix(in srgb, var(--home-program-accent) 58%, var(--dark));
-}
-
-.home-program-card a.home-python-sandbox::after {
-  color: color-mix(in srgb, var(--home-program-accent) 72%, var(--home-program-accent-2));
-}
-
-.home-program-card a.home-python-sandbox:hover,
-.home-program-card a.home-python-sandbox:focus-visible {
-  border-color: color-mix(in srgb, var(--home-program-accent) 62%, var(--lightgray));
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--home-program-accent) 26%, transparent),
-    color-mix(in srgb, #ffd343 12%, transparent) 80%
-  );
+  border-color: color-mix(in srgb, var(--secondary) 42%, transparent);
+  background: color-mix(in srgb, var(--secondary) 20%, transparent);
 }
 
 .home-contact {
