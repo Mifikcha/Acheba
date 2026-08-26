@@ -2194,6 +2194,23 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   --python-editor-fg: var(--dark);
   --python-editor-muted: var(--gray);
   --python-editor-line: color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
+  --python-token-keyword: #af00db;
+  --python-token-builtin: #795e26;
+  --python-token-string: #a31515;
+  --python-token-number: #098658;
+  --python-token-comment: #008000;
+  --python-token-operator: #252526;
+  --python-token-constant: #0000ff;
+}
+
+html[saved-theme="dark"] .python-checker-inline {
+  --python-token-keyword: #c586c0;
+  --python-token-builtin: #dcdcaa;
+  --python-token-string: #ce9178;
+  --python-token-number: #b5cea8;
+  --python-token-comment: #6a9955;
+  --python-token-operator: #d4d4d4;
+  --python-token-constant: #569cd6;
 }
 
 .python-checker-inline .python-editor-shell {
