@@ -1787,6 +1787,10 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 .python-checker-highlight,
 .python-checker-editor {
   font-family: var(--codeFont);
+  font-variant-ligatures: none;
+  font-feature-settings:
+    "liga" 0,
+    "calt" 0;
   font-size: 0.92rem;
   line-height: 1.6;
   tab-size: 4;
