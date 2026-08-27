@@ -42,14 +42,24 @@ td,
 li,
 ol,
 ul,
-.katex,
-.math,
 .typst-doc,
 g[class~="typst-text"] {
   color: var(--darkgray);
   fill: var(--darkgray);
   overflow-wrap: break-word;
   text-wrap: pretty;
+}
+
+.katex,
+.math {
+  color: var(--darkgray);
+  fill: var(--darkgray);
+}
+
+.katex {
+  overflow-wrap: normal;
+  text-wrap: nowrap;
+  word-break: normal;
 }
 
 path[class~="typst-shape"] {
@@ -661,8 +671,15 @@ ol.overflow {
 .katex-display {
   display: block;
   overflow-x: auto;
-  overflow-y: visible;
-  padding-block: 0.18em;
+  overflow-y: hidden;
+  padding-block: 0.55em;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.katex-display::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .external-embed.youtube,

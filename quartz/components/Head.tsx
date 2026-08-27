@@ -297,17 +297,34 @@ body::-webkit-scrollbar-corner,
   background-color: var(--python-scrollbar-thumb-hover) !important;
 }
 
+.katex,
+.katex .katex-html,
+html body[data-slug] .katex-display > .katex,
+html body[data-slug] .katex-display > .katex > .katex-html,
 .katex .mrel,
 .katex .mrel .mord,
 .katex .mrel .inner {
   font-family: KaTeX_Main, "Times New Roman", serif !important;
 }
 
+.katex {
+  overflow-wrap: normal !important;
+  text-wrap: nowrap !important;
+  word-break: normal !important;
+}
+
 html body[data-slug] .katex-display {
   display: block !important;
   overflow-x: auto !important;
-  overflow-y: visible !important;
-  padding-block: 0.18em !important;
+  overflow-y: hidden !important;
+  padding-block: 0.55em !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html body[data-slug] .katex-display::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
 }
 
 html body[data-slug] .search > .search-container.active {
