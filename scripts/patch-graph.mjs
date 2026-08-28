@@ -71,13 +71,20 @@ const replacements = [
     "P=a.zoomIdentity;",
     "P=a.zoomIdentity.translate(R*(1-qu)/2,O*(1-qu)/2).scale(qu);ou.scale.set(P.k,P.k);ou.position.set(P.x,P.y);",
   ],
+  ["a.select(Z.canvas).call(et)}", "a.select(Z.canvas).call(et).call(et.transform,P)}"],
+  ["F=Math.max((l-1)/3.75,0)", "F=Math.min(Math.max((l-1.35)/1.65,0),1)"],
+  ["F=Math.min(Math.max((l-.55)/1.15,0),1)", "F=Math.min(Math.max((l-1.35)/1.65,0),1)"],
   [
-    "a.select(Z.canvas).call(et)}",
-    "a.select(Z.canvas).call(et).call(et.transform,P)}",
+    "}});var ru=new Set;if(Vu>=0)",
+    '}});Xu.has("/")&&Xu.forEach(function(i){i!=="/"&&!tu.some(function(l){return l.source==="/"&&l.target===i||l.source===i&&l.target==="/"})&&tu.push({source:"/",target:i})});var ru=new Set;if(Vu>=0)',
   ],
   [
-    "F=Math.max((l-1)/3.75,0)",
-    "F=Math.min(Math.max((l-.55)/1.15,0),1)",
+    "var se=!1;function ce()",
+    'var se=!1,bt=document.body.dataset.slug==="index"&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches;function ce()',
+  ],
+  [
+    "l.gfx.position.set(F+R/2,A+O/2),l.label&&l.label.position.set(F+R/2,A+O/2)",
+    "l.gfx.position.set(F+R/2,A+O/2),l.label&&l.label.position.set(F+R/2,A+O/2),bt&&_u===null&&(l.gfx.alpha=l.alpha*(.94+.06*Math.sin(performance.now()/1800+i*1.7)))",
   ],
   [
     "style:{fontSize:We*15,fill:ze,fontFamily:Ne}",
@@ -115,6 +122,21 @@ for (const graphFile of graphFiles) {
   if (source !== original) {
     fs.writeFileSync(graphFile, source)
     patched += 1
+  }
+}
+
+const graphInvariants = [
+  ['Xu.has("/")', "каждая заметка связана с Hopes and Dreams"],
+  ["(l-1.35)/1.65", "подписи появляются только при позднем приближении"],
+  ['bt=document.body.dataset.slug==="index"', "узлы на главной мягко дышат"],
+]
+
+for (const graphFile of graphFiles.filter(fs.existsSync)) {
+  const source = fs.readFileSync(graphFile, "utf8")
+  for (const [marker, rule] of graphInvariants) {
+    if (!source.includes(marker)) {
+      throw new Error(`[patch-graph] Не применено правило: ${rule} (${graphFile})`)
+    }
   }
 }
 
@@ -305,7 +327,9 @@ if (fs.existsSync(excalidrawPluginFile)) {
 }
 
 if (patched === 0) {
-  console.log("[patch-graph] Graph, theme, and Excalidraw patches already applied or upstream code changed.")
+  console.log(
+    "[patch-graph] Graph, theme, and Excalidraw patches already applied or upstream code changed.",
+  )
 } else {
   console.log(`[patch-graph] Graph/theme/Excalidraw patches applied in ${patched} file(s).`)
 }

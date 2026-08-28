@@ -439,10 +439,16 @@ const renderTestPlan = (output: HTMLElement, tests: string, hidden = false) => {
 const appendOutputBlock = (output: HTMLElement, label: string, value: string) => {
   if (!value.trim()) return
   const block = createElement("section", "python-output-block")
-  block.append(
-    createElement("div", "python-output-label", label),
-    createElement("pre", "python-output-value", value.trimEnd()),
-  )
+  const renderedValue = createElement("pre", "python-output-value")
+  value
+    .trimEnd()
+    .split("\n")
+    .forEach((line, index) => {
+      const renderedLine = createElement("span", "python-output-line", line)
+      renderedLine.style.animationDelay = `${Math.min(index * 34, 340)}ms`
+      renderedValue.append(renderedLine)
+    })
+  block.append(createElement("div", "python-output-label", label), renderedValue)
   output.append(block)
 }
 
@@ -514,7 +520,9 @@ const initPythonChecker = (root: HTMLElement) => {
   const controls = createElement("div", "python-checker-controls")
   const runButton = createElement("button", "python-checker-run") as HTMLButtonElement
   runButton.type = "button"
-  runButton.append(createIcon("m5 3 14 9-14 9V3z"), createElement("span", undefined, "Запустить"))
+  const runIcon = createIcon("m5 3 14 9-14 9V3z")
+  const runIconPath = runIcon.querySelector("path")!
+  runButton.append(runIcon, createElement("span", undefined, "Запустить"))
   const resetButton = createElement("button", "python-checker-reset") as HTMLButtonElement
   resetButton.type = "button"
   resetButton.title = "Сбросить код"
@@ -584,7 +592,13 @@ const initPythonChecker = (root: HTMLElement) => {
     lineNumbers.textContent = Array.from({ length: count }, (_, index) => String(index + 1)).join(
       "\n",
     )
-    lineCount.textContent = `${count} LOC`
+    const nextLineCount = `${count} LOC`
+    if (lineCount.textContent && lineCount.textContent !== nextLineCount) {
+      lineCount.classList.remove("is-updated")
+      void lineCount.offsetWidth
+      lineCount.classList.add("is-updated")
+    }
+    lineCount.textContent = nextLineCount
     highlight.scrollTop = editor.scrollTop
     highlight.scrollLeft = editor.scrollLeft
     lineNumbers.style.transform = `translateY(${-editor.scrollTop}px)`
@@ -665,8 +679,15 @@ const initPythonChecker = (root: HTMLElement) => {
   const setRunning = (isRunning: boolean) => {
     runButton.disabled = isRunning
     resetButton.disabled = isRunning
-    root.dataset.state = isRunning ? "loading" : "idle"
-    status.textContent = isRunning ? "RUNNING" : "READY"
+    runButton.dataset.running = String(isRunning)
+    runIconPath.setAttribute(
+      "d",
+      isRunning ? "M12 3a9 9 0 1 1-8.3 5.5M4 4v4h4" : "m5 3 14 9-14 9V3z",
+    )
+    if (isRunning) {
+      root.dataset.state = "loading"
+      status.textContent = "RUNNING"
+    }
     runButton.querySelector("span")!.textContent = isRunning ? "Запуск..." : "Запустить"
   }
 
@@ -679,15 +700,14 @@ const initPythonChecker = (root: HTMLElement) => {
     markErrorLine()
     try {
       const result = await runPython(editor.value, tests, timeoutMs)
-      const total = result.passed.length + result.failed.length
       const failed = result.failed.length > 0 || !result.codeOk
-      root.dataset.state = failed ? "error" : total > 0 ? "success" : "idle"
-      status.textContent = failed ? "FAILED" : "DONE"
+      root.dataset.state = failed ? "error" : "success"
+      status.textContent = failed ? "ERROR" : "PASS"
       renderResult(output, result, hiddenTests)
       markErrorLine(result.errorLine ?? result.failed.find((test) => test.line)?.line)
     } catch (error) {
       root.dataset.state = "error"
-      status.textContent = "FAILED"
+      status.textContent = "ERROR"
       output.innerHTML = ""
       appendOutputBlock(
         output,
@@ -695,9 +715,7 @@ const initPythonChecker = (root: HTMLElement) => {
         error instanceof Error ? error.message : String(error),
       )
     } finally {
-      runButton.disabled = false
-      resetButton.disabled = false
-      runButton.querySelector("span")!.textContent = "Запустить"
+      setRunning(false)
     }
   }
 

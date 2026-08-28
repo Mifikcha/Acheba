@@ -195,6 +195,125 @@ const hideHomeGraphLinks = () => {
   heading.remove()
 }
 
+const lowSignalTocHeading = /^(?:пример|решение|ответ|проверка|демоверсия)\s*(?:\d+|[):.]|$)/i
+
+const prepareTableOfContents = () => {
+  document.querySelectorAll<HTMLElement>(".toc").forEach((toc) => {
+    if (toc.dataset.hopesTocReady === "true") return
+    toc.dataset.hopesTocReady = "true"
+
+    const content = toc.querySelector<HTMLElement>(".toc-content")
+    if (!content) return
+
+    const entries = [...content.querySelectorAll<HTMLAnchorElement>("a[data-for]")]
+      .map((link) => ({ link, heading: document.getElementById(link.dataset.for ?? "") }))
+      .filter(({ link, heading }) => {
+        const hidden =
+          !heading ||
+          Boolean(heading.closest(".callout, .transclude")) ||
+          lowSignalTocHeading.test(heading.textContent?.trim() ?? "")
+        link.closest("li")?.toggleAttribute("hidden", hidden)
+        return !hidden && Boolean(heading)
+      }) as { link: HTMLAnchorElement; heading: HTMLElement }[]
+
+    if (entries.length < 2) {
+      toc.hidden = true
+      return
+    }
+
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const readingLine = Math.min(180, window.innerHeight * 0.28)
+      let activeIndex = 0
+      entries.forEach(({ heading }, index) => {
+        if (heading.getBoundingClientRect().top <= readingLine) activeIndex = index
+      })
+
+      entries.forEach(({ link }, index) => {
+        link.classList.toggle("is-past", index < activeIndex)
+        link.classList.toggle("is-active", index === activeIndex)
+        link.classList.toggle("is-future", index > activeIndex)
+      })
+
+      const activeItem = entries[activeIndex].link.closest<HTMLElement>("li")
+      if (!activeItem) return
+      const marker = activeItem.offsetTop + activeItem.offsetHeight / 2
+      const progress = entries.length === 1 ? 100 : (activeIndex / (entries.length - 1)) * 100
+      content.style.setProperty("--toc-marker-y", `${marker}px`)
+      content.style.setProperty("--toc-progress", `${progress}%`)
+    }
+    const scheduleUpdate = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true })
+    window.addEventListener("resize", scheduleUpdate)
+    update()
+    window.addCleanup?.(() => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", scheduleUpdate)
+      window.removeEventListener("resize", scheduleUpdate)
+      delete toc.dataset.hopesTocReady
+    })
+  })
+}
+
+const prepareHomeAtmosphere = () => {
+  if (document.body.dataset.slug !== "index") return
+  const entry = document.querySelector<HTMLElement>(".home-entry")
+  if (!entry || entry.dataset.atmosphereReady === "true") return
+  entry.dataset.atmosphereReady = "true"
+
+  const atmosphere = document.createElement("div")
+  atmosphere.className = "home-atmosphere"
+  atmosphere.setAttribute("aria-hidden", "true")
+  atmosphere.append(document.createElement("i"))
+  for (let index = 0; index < 5; index++) atmosphere.append(document.createElement("span"))
+  entry.prepend(atmosphere)
+
+  let frame = 0
+  let pointerX = 0
+  let pointerY = 0
+  const renderPointer = () => {
+    frame = 0
+    entry.style.setProperty("--hero-title-x", `${pointerX * 5}px`)
+    entry.style.setProperty("--hero-title-y", `${pointerY * 3}px`)
+    entry.style.setProperty("--hero-field-x", `${pointerX * -8}px`)
+    entry.style.setProperty("--hero-field-y", `${pointerY * -5}px`)
+  }
+  const handlePointer = (event: PointerEvent) => {
+    const bounds = entry.getBoundingClientRect()
+    pointerX = (event.clientX - bounds.left) / bounds.width - 0.5
+    pointerY = (event.clientY - bounds.top) / bounds.height - 0.5
+    if (!frame) frame = requestAnimationFrame(renderPointer)
+  }
+  const resetPointer = () => {
+    pointerX = 0
+    pointerY = 0
+    if (!frame) frame = requestAnimationFrame(renderPointer)
+  }
+  const observer = new IntersectionObserver(([state]) => {
+    atmosphere.classList.toggle("is-live", state.isIntersecting && !document.hidden)
+  })
+  const handleVisibility = () => {
+    if (document.hidden) atmosphere.classList.remove("is-live")
+    else if (entry.getBoundingClientRect().bottom > 0) atmosphere.classList.add("is-live")
+  }
+
+  entry.addEventListener("pointermove", handlePointer)
+  entry.addEventListener("pointerleave", resetPointer)
+  document.addEventListener("visibilitychange", handleVisibility)
+  observer.observe(entry)
+  window.addCleanup?.(() => {
+    cancelAnimationFrame(frame)
+    observer.disconnect()
+    entry.removeEventListener("pointermove", handlePointer)
+    entry.removeEventListener("pointerleave", resetPointer)
+    document.removeEventListener("visibilitychange", handleVisibility)
+  })
+}
+
 const prepareSidebar = () => {
   setSidebarState(!sidebarQuery.matches)
 
@@ -232,6 +351,8 @@ const prepareSidebar = () => {
   ensureMobileToggle()
   sortInfoTaskCards()
   hideHomeGraphLinks()
+  prepareTableOfContents()
+  prepareHomeAtmosphere()
   applyStoredTheme()
 }
 

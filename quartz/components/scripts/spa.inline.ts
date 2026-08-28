@@ -101,7 +101,13 @@ function stopLoading() {
 
 let isNavigating = false
 let p: DOMParser
-async function _navigate(url: URL, isBack: boolean = false) {
+type NavigationDirection = "neutral" | "forward" | "back"
+
+async function _navigate(
+  url: URL,
+  isBack: boolean = false,
+  direction: NavigationDirection = "neutral",
+) {
   isNavigating = true
   startLoading()
   p = p || new DOMParser()
@@ -146,6 +152,10 @@ async function _navigate(url: URL, isBack: boolean = false) {
 
   document.querySelector(".navigation-progress")?.remove()
   micromorph(document.body, html.body)
+  document.documentElement.dataset.pageEnter = direction
+  requestAnimationFrame(() => {
+    window.setTimeout(() => document.documentElement.removeAttribute("data-page-enter"), 190)
+  })
 
   // scroll into place and add history
   if (!isBack) {
@@ -172,11 +182,15 @@ async function _navigate(url: URL, isBack: boolean = false) {
   delete announcer.dataset.persist
 }
 
-async function navigate(url: URL, isBack: boolean = false) {
+async function navigate(
+  url: URL,
+  isBack: boolean = false,
+  direction: NavigationDirection = "neutral",
+) {
   if (isNavigating) return
   isNavigating = true
   try {
-    await _navigate(url, isBack)
+    await _navigate(url, isBack, direction)
   } catch (e) {
     console.error(e)
     window.location.assign(url)
@@ -201,7 +215,10 @@ function createRouter() {
         return
       }
 
-      navigate(url, false)
+      const anchor = isElement(event.target) ? event.target.closest("a") : null
+      const direction: NavigationDirection =
+        anchor?.rel === "next" ? "forward" : anchor?.rel === "prev" ? "back" : "neutral"
+      navigate(url, false, direction)
     })
 
     window.addEventListener("popstate", (event) => {
