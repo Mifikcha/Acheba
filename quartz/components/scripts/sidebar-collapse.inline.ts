@@ -195,7 +195,7 @@ const hideHomeGraphLinks = () => {
   heading.remove()
 }
 
-const lowSignalTocHeading = /^(?:пример|решение|ответ|проверка|демоверсия)\s*(?:\d+|[):.]|$)/i
+const lowSignalTocHeading = /^(?:примеры?|решение|ответ|проверка|демоверсия)\s*(?:\d+|[):.]|$)/i
 
 const prepareTableOfContents = () => {
   document.querySelectorAll<HTMLElement>(".toc").forEach((toc) => {
@@ -239,9 +239,7 @@ const prepareTableOfContents = () => {
       const activeItem = entries[activeIndex].link.closest<HTMLElement>("li")
       if (!activeItem) return
       const marker = activeItem.offsetTop + activeItem.offsetHeight / 2
-      const progress = entries.length === 1 ? 100 : (activeIndex / (entries.length - 1)) * 100
       content.style.setProperty("--toc-marker-y", `${marker}px`)
-      content.style.setProperty("--toc-progress", `${progress}%`)
     }
     const scheduleUpdate = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -268,31 +266,12 @@ const prepareHomeAtmosphere = () => {
   const atmosphere = document.createElement("div")
   atmosphere.className = "home-atmosphere"
   atmosphere.setAttribute("aria-hidden", "true")
-  atmosphere.append(document.createElement("i"))
-  for (let index = 0; index < 5; index++) atmosphere.append(document.createElement("span"))
+  const orbit = document.createElement("i")
+  orbit.append(document.createElement("b"))
+  atmosphere.append(orbit)
+  for (let index = 0; index < 9; index++) atmosphere.append(document.createElement("span"))
   entry.prepend(atmosphere)
 
-  let frame = 0
-  let pointerX = 0
-  let pointerY = 0
-  const renderPointer = () => {
-    frame = 0
-    entry.style.setProperty("--hero-title-x", `${pointerX * 5}px`)
-    entry.style.setProperty("--hero-title-y", `${pointerY * 3}px`)
-    entry.style.setProperty("--hero-field-x", `${pointerX * -8}px`)
-    entry.style.setProperty("--hero-field-y", `${pointerY * -5}px`)
-  }
-  const handlePointer = (event: PointerEvent) => {
-    const bounds = entry.getBoundingClientRect()
-    pointerX = (event.clientX - bounds.left) / bounds.width - 0.5
-    pointerY = (event.clientY - bounds.top) / bounds.height - 0.5
-    if (!frame) frame = requestAnimationFrame(renderPointer)
-  }
-  const resetPointer = () => {
-    pointerX = 0
-    pointerY = 0
-    if (!frame) frame = requestAnimationFrame(renderPointer)
-  }
   const observer = new IntersectionObserver(([state]) => {
     atmosphere.classList.toggle("is-live", state.isIntersecting && !document.hidden)
   })
@@ -301,16 +280,99 @@ const prepareHomeAtmosphere = () => {
     else if (entry.getBoundingClientRect().bottom > 0) atmosphere.classList.add("is-live")
   }
 
-  entry.addEventListener("pointermove", handlePointer)
-  entry.addEventListener("pointerleave", resetPointer)
   document.addEventListener("visibilitychange", handleVisibility)
   observer.observe(entry)
   window.addCleanup?.(() => {
-    cancelAnimationFrame(frame)
     observer.disconnect()
-    entry.removeEventListener("pointermove", handlePointer)
-    entry.removeEventListener("pointerleave", resetPointer)
     document.removeEventListener("visibilitychange", handleVisibility)
+  })
+}
+
+const ensureGlobalGraphControls = () => {
+  document.querySelectorAll<HTMLElement>(".global-graph-outer").forEach((outer) => {
+    if (outer.querySelector(".global-graph-controls")) return
+    const container = outer.querySelector<HTMLElement>(".global-graph-container")
+    if (!container) return
+
+    const panel = document.createElement("aside")
+    panel.className = "global-graph-controls"
+    panel.setAttribute("aria-label", "Настройка графа")
+    panel.innerHTML = `
+      <header>
+        <h2>Настройка графа</h2>
+        <button type="button" class="global-graph-close" aria-label="Закрыть граф" title="Закрыть">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+      <details>
+        <summary>Фильтры</summary>
+        <label class="global-graph-switch"><span>Показывать теги</span><input type="checkbox" data-graph-key="showTags"></label>
+      </details>
+      <details>
+        <summary>Группировка</summary>
+        <label class="global-graph-switch"><span>Радиальное расположение</span><input type="checkbox" data-graph-key="enableRadial"></label>
+        <label class="global-graph-switch"><span>Фокус по наведению</span><input type="checkbox" data-graph-key="focusOnHover"></label>
+      </details>
+      <details open>
+        <summary>Отображение</summary>
+        <label><span>Порог исчезновения текста <output data-graph-output="opacityScale"></output></span><input type="range" min="0.2" max="2.4" step="0.1" data-graph-key="opacityScale"></label>
+        <label><span>Размер подписей <output data-graph-output="fontSize"></output></span><input type="range" min="0.25" max="1.1" step="0.05" data-graph-key="fontSize"></label>
+        <label><span>Размер узла <output data-graph-output="nodeScale"></output></span><input type="range" min="0.6" max="2" step="0.1" data-graph-key="nodeScale"></label>
+        <label><span>Толщина линий <output data-graph-output="lineWidth"></output></span><input type="range" min="0.5" max="3" step="0.1" data-graph-key="lineWidth"></label>
+        <button type="button" class="global-graph-run">Запустить анимацию</button>
+      </details>
+      <details open>
+        <summary>Силы</summary>
+        <label><span>Сила притяжения <output data-graph-output="centerForce"></output></span><input type="range" min="0.05" max="1" step="0.05" data-graph-key="centerForce"></label>
+        <label><span>Сила отталкивания <output data-graph-output="repelForce"></output></span><input type="range" min="0.1" max="2" step="0.1" data-graph-key="repelForce"></label>
+        <label><span>Сила связей <output data-graph-output="linkStrength"></output></span><input type="range" min="0.1" max="2" step="0.1" data-graph-key="linkStrength"></label>
+        <label><span>Расстояние между узлами <output data-graph-output="linkDistance"></output></span><input type="range" min="15" max="140" step="5" data-graph-key="linkDistance"></label>
+      </details>
+    `
+    outer.append(panel)
+
+    const defaults = {
+      opacityScale: 1,
+      fontSize: 0.45,
+      nodeScale: 1,
+      lineWidth: 1.35,
+      centerForce: 0.3,
+      repelForce: 0.5,
+      linkStrength: 1,
+      linkDistance: 30,
+      showTags: true,
+      enableRadial: true,
+      focusOnHover: true,
+      ...JSON.parse(container.dataset.cfg ?? "{}"),
+    }
+    const render = () => document.dispatchEvent(new CustomEvent("render", { detail: {} }))
+
+    panel.addEventListener("click", (event) => event.stopPropagation())
+    panel.querySelector<HTMLButtonElement>(".global-graph-close")?.addEventListener("click", () => {
+      outer.classList.remove("active")
+      const sidebar = outer.closest<HTMLElement>(".sidebar")
+      if (sidebar) sidebar.style.zIndex = ""
+    })
+    panel.querySelector<HTMLButtonElement>(".global-graph-run")?.addEventListener("click", render)
+    panel.querySelectorAll<HTMLInputElement>("[data-graph-key]").forEach((input) => {
+      const key = input.dataset.graphKey ?? ""
+      const value = defaults[key as keyof typeof defaults]
+      if (input.type === "checkbox") input.checked = Boolean(value)
+      else input.value = String(value)
+
+      const output = panel.querySelector<HTMLOutputElement>(`[data-graph-output="${key}"]`)
+      const updateOutput = () => {
+        if (output) output.value = input.value
+      }
+      updateOutput()
+      input.addEventListener("input", updateOutput)
+      input.addEventListener("change", () => {
+        const config = JSON.parse(container.dataset.cfg ?? "{}")
+        config[key] = input.type === "checkbox" ? input.checked : Number(input.value)
+        container.dataset.cfg = JSON.stringify(config)
+        render()
+      })
+    })
   })
 }
 
@@ -353,6 +415,7 @@ const prepareSidebar = () => {
   hideHomeGraphLinks()
   prepareTableOfContents()
   prepareHomeAtmosphere()
+  ensureGlobalGraphControls()
   applyStoredTheme()
 }
 

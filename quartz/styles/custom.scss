@@ -381,7 +381,6 @@ button.toc-header h3 {
 
 ul.toc-content.overflow {
   --toc-marker-y: 0.65rem;
-  --toc-progress: 0%;
   position: relative;
   margin: 0.2rem 0 0;
   padding: 0.25rem 0 0.35rem 1rem;
@@ -401,8 +400,8 @@ ul.toc-content.overflow::before {
   width: 1px;
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--secondary) 70%, var(--tertiary)) var(--toc-progress),
-    color-mix(in srgb, var(--lightgray) 78%, transparent) var(--toc-progress)
+    color-mix(in srgb, var(--secondary) 70%, var(--tertiary)) 0 var(--toc-marker-y),
+    color-mix(in srgb, var(--lightgray) 78%, transparent) var(--toc-marker-y) 100%
   );
 }
 
@@ -1068,6 +1067,156 @@ button.darkmode,
   box-shadow: 0 24px 70px color-mix(in srgb, var(--tn-bg-dark2) 50%, transparent);
 }
 
+.graph > .global-graph-outer.active {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18rem;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  background: color-mix(in srgb, var(--site-bg-deep) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.graph > .global-graph-outer.active > .global-graph-container {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+
+.global-graph-controls {
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 46%, var(--lightgray));
+  background: color-mix(in srgb, var(--light) 96%, var(--secondary));
+  color: var(--darkgray);
+}
+
+.global-graph-controls > header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3rem;
+  padding: 0.45rem 0.55rem 0.45rem 0.7rem;
+  border-bottom: 1px solid var(--lightgray);
+  background: color-mix(in srgb, var(--light) 96%, var(--secondary));
+}
+
+.global-graph-controls h2 {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.global-graph-close {
+  display: inline-grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0.48rem;
+  border: 0;
+  background: transparent;
+  color: var(--darkgray);
+}
+
+.global-graph-close:hover,
+.global-graph-close:focus-visible {
+  background: color-mix(in srgb, var(--light) 78%, var(--secondary));
+  color: var(--secondary);
+}
+
+.global-graph-close svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
+.global-graph-controls details {
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.global-graph-controls summary {
+  padding: 0.72rem 0.65rem;
+  color: var(--darkgray);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.global-graph-controls details[open] > summary {
+  color: var(--dark);
+  box-shadow: inset 0 -1px color-mix(in srgb, var(--secondary) 70%, var(--lightgray));
+}
+
+.global-graph-controls details > label {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.65rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+.global-graph-controls label > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.global-graph-controls output {
+  color: var(--secondary);
+  font-family: var(--codeFont);
+  font-variant-numeric: tabular-nums;
+}
+
+.global-graph-controls input[type="range"] {
+  width: 100%;
+  accent-color: var(--secondary);
+}
+
+.global-graph-controls .global-graph-switch {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.global-graph-switch input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--secondary);
+}
+
+.global-graph-run {
+  width: calc(100% - 1.4rem);
+  min-height: 2.5rem;
+  margin: 0.35rem 0.7rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 36%, var(--lightgray));
+  background: color-mix(in srgb, var(--light) 82%, var(--secondary));
+  color: var(--dark);
+}
+
+.global-graph-run:hover,
+.global-graph-run:focus-visible {
+  border-color: var(--secondary);
+  background: color-mix(in srgb, var(--light) 72%, var(--secondary));
+}
+
+@media (max-width: 800px) {
+  .graph > .global-graph-outer.active {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(16rem, 58dvh) minmax(0, 1fr);
+    padding: 0.45rem;
+  }
+
+  .global-graph-controls {
+    height: auto;
+  }
+}
+
 .right.sidebar .graph,
 .right.sidebar .toc {
   flex: 0 0 auto;
@@ -1106,10 +1255,6 @@ button.darkmode,
 }
 
 .home-entry {
-  --hero-title-x: 0px;
-  --hero-title-y: 0px;
-  --hero-field-x: 0px;
-  --hero-field-y: 0px;
   position: relative;
   isolation: isolate;
   max-width: 76rem;
@@ -1145,33 +1290,46 @@ button.darkmode,
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1;
-  transform: translate3d(var(--hero-title-x), var(--hero-title-y), 0);
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
 .home-atmosphere {
   position: absolute;
   z-index: -1;
-  inset: 0 -8% -15% -5%;
+  inset: 0 -3% -12% -4%;
   overflow: hidden;
   pointer-events: none;
-  transform: translate3d(var(--hero-field-x), var(--hero-field-y), 0);
-  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .home-atmosphere > i {
   position: absolute;
-  top: 23%;
-  right: 9%;
-  width: min(38rem, 62vw);
-  height: min(12rem, 19vw);
-  border: 1px solid color-mix(in srgb, var(--tertiary) 16%, transparent);
-  border-bottom-color: transparent;
-  border-left-color: transparent;
+  top: 17%;
+  right: -2%;
+  width: min(52rem, 68vw);
+  height: min(20rem, 62%);
+  border: 1px solid color-mix(in srgb, var(--tertiary) 18%, transparent);
   border-radius: 50%;
-  opacity: 0.7;
-  transform: rotate(-9deg);
+  opacity: 0.58;
+  transform: rotate(-8deg);
+  animation: home-orbit-breathe 12s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.home-atmosphere > i > b {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tertiary) 82%, white);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--tertiary) 52%, transparent),
+    0 4px 22px color-mix(in srgb, var(--secondary) 28%, transparent);
+  offset-path: ellipse(50% 50% at 50% 50%);
+  offset-rotate: 0deg;
+  animation: home-orbit-travel 28s linear infinite;
+  animation-play-state: paused;
 }
 
 .home-atmosphere > span {
@@ -1181,11 +1339,13 @@ button.darkmode,
   border-radius: 50%;
   background: color-mix(in srgb, var(--tertiary) 56%, var(--secondary));
   box-shadow: 0 2px 10px color-mix(in srgb, var(--tertiary) 24%, transparent);
-  opacity: 0.18;
-  animation: home-star-drift 9s ease-in-out infinite alternate;
+  opacity: 0.16;
+  animation: home-star-drift 13s ease-in-out infinite alternate;
   animation-play-state: paused;
 }
 
+.home-atmosphere.is-live > i,
+.home-atmosphere.is-live > i > b,
 .home-atmosphere.is-live > span {
   animation-play-state: running;
 }
@@ -1224,15 +1384,67 @@ button.darkmode,
   animation-delay: -6s;
 }
 
+.home-atmosphere > span:nth-of-type(6) {
+  top: 49%;
+  left: 7%;
+  width: 0.18rem;
+  height: 0.18rem;
+  animation-delay: -9s;
+}
+
+.home-atmosphere > span:nth-of-type(7) {
+  top: 62%;
+  right: 24%;
+  animation-delay: -11s;
+}
+
+.home-atmosphere > span:nth-of-type(8) {
+  top: 8%;
+  left: 57%;
+  width: 0.2rem;
+  height: 0.2rem;
+  animation-delay: -4s;
+}
+
+.home-atmosphere > span:nth-of-type(9) {
+  bottom: 11%;
+  left: 66%;
+  width: 0.18rem;
+  height: 0.18rem;
+  animation-delay: -8s;
+}
+
 @keyframes home-star-drift {
   from {
-    opacity: 0.14;
-    transform: translate3d(-3px, 2px, 0);
+    opacity: 0.12;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--tertiary) 18%, transparent);
+    transform: translate3d(-2px, 2px, 0) scale(0.88);
   }
 
   to {
-    opacity: 0.34;
-    transform: translate3d(5px, -4px, 0);
+    opacity: 0.38;
+    box-shadow:
+      0 2px 12px color-mix(in srgb, var(--tertiary) 38%, transparent),
+      0 4px 24px color-mix(in srgb, var(--secondary) 16%, transparent);
+    transform: translate3d(3px, -3px, 0) scale(1.12);
+  }
+}
+
+@keyframes home-orbit-breathe {
+  from {
+    border-color: color-mix(in srgb, var(--tertiary) 13%, transparent);
+    opacity: 0.44;
+  }
+
+  to {
+    border-color: color-mix(in srgb, var(--tertiary) 23%, transparent);
+    opacity: 0.68;
+  }
+}
+
+@keyframes home-orbit-travel {
+  to {
+    offset-distance: 100%;
   }
 }
 
@@ -2628,6 +2840,8 @@ html[saved-theme="dark"] .python-checker-inline {
     transition-duration: 1ms;
   }
 
+  .home-atmosphere > i,
+  .home-atmosphere > i > b,
   .home-atmosphere > span,
   html[data-page-enter]
     :where(

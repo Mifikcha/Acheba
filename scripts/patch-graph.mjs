@@ -51,8 +51,14 @@ const replacements = [
     'function Fu(u){try{u=decodeURIComponent(u)}catch{}let e=_t(ft(u,"index"),!0);return e.length===0?"/":e}',
   ],
   ["return 2+Math.sqrt(l)}", "return 3.2+Math.sqrt(l)*1.2}"],
+  ["return 3.2+Math.sqrt(l)*1.2}", "return(3.2+Math.sqrt(l)*1.2)*(x.nodeScale||1)}"],
   ["l.color=l.active?ee:te", "l.color=l.active?Ie:ee"],
   ["width:1,color:v.color", "width:1.35,color:v.color"],
+  ["width:1.35,color:v.color", "width:x.lineWidth||1.35,color:v.color"],
+  [
+    '.force("link",a.forceLink(H).distance(Te))',
+    '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||1))',
+  ],
   ["alphaTarget(0.18).restart()", "alphaTarget(1).restart()"],
   ["alphaTarget(0.03).restart()", "alphaTarget(1).restart()"],
   [
@@ -105,6 +111,8 @@ const replacements = [
   ],
 ]
 
+const breathingFragment =
+  ",bt&&_u===null&&(l.gfx.alpha=l.alpha*(.94+.06*Math.sin(performance.now()/1800+i*1.7)))"
 let patched = 0
 
 for (const graphFile of graphFiles) {
@@ -114,6 +122,7 @@ for (const graphFile of graphFiles) {
 
   let source = fs.readFileSync(graphFile, "utf8")
   const original = source
+  source = source.split(breathingFragment).join("")
 
   for (const [from, to] of replacements) {
     source = source.split(from).join(to)
@@ -129,6 +138,9 @@ const graphInvariants = [
   ['Xu.has("/")', "каждая заметка связана с Hopes and Dreams"],
   ["(l-1.35)/1.65", "подписи появляются только при позднем приближении"],
   ['bt=document.body.dataset.slug==="index"', "узлы на главной мягко дышат"],
+  ["x.nodeScale||1", "панель меняет размер узлов"],
+  ["x.lineWidth||1.35", "панель меняет толщину связей"],
+  ["x.linkStrength||1", "панель меняет силу связей"],
 ]
 
 for (const graphFile of graphFiles.filter(fs.existsSync)) {

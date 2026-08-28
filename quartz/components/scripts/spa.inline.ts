@@ -40,9 +40,31 @@ const getHashElement = (hash: string): HTMLElement | null => {
   }
 }
 
-const scrollToHash = (url: URL, updateHistory: boolean): boolean => {
-  const el = getHashElement(url.hash)
+let hashScrollTimers: number[] = []
+
+const cancelHashScroll = () => {
+  hashScrollTimers.forEach(window.clearTimeout)
+  hashScrollTimers = []
+}
+
+const alignHashElement = (hash: string) => {
+  const el = getHashElement(hash)
   if (!el) return false
+
+  // CSS smooth scrolling makes repeated layout-shift corrections compete with each other.
+  // Correct instantly, then let the later passes account for images and component renders.
+  const rootBehavior = document.documentElement.style.scrollBehavior
+  const bodyBehavior = document.body.style.scrollBehavior
+  document.documentElement.style.scrollBehavior = "auto"
+  document.body.style.scrollBehavior = "auto"
+  el.scrollIntoView({ block: "start", behavior: "auto" })
+  document.documentElement.style.scrollBehavior = rootBehavior
+  document.body.style.scrollBehavior = bodyBehavior
+  return true
+}
+
+const scrollToHash = (url: URL, updateHistory: boolean): boolean => {
+  if (!getHashElement(url.hash)) return false
 
   if (updateHistory) {
     const next = `${url.pathname}${url.search}${url.hash}`
@@ -52,12 +74,12 @@ const scrollToHash = (url: URL, updateHistory: boolean): boolean => {
     }
   }
 
-  const scroll = () => el.scrollIntoView({ block: "start" })
-  scroll()
-  requestAnimationFrame(scroll)
-  window.setTimeout(scroll, 120)
-  window.setTimeout(scroll, 360)
-  window.setTimeout(scroll, 900)
+  cancelHashScroll()
+  alignHashElement(url.hash)
+  requestAnimationFrame(() => alignHashElement(url.hash))
+  hashScrollTimers = [120, 360, 900].map((delay) =>
+    window.setTimeout(() => alignHashElement(url.hash), delay),
+  )
   return true
 }
 
