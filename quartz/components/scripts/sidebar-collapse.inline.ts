@@ -195,6 +195,19 @@ const hideHomeGraphLinks = () => {
   heading.remove()
 }
 
+const placeHomeGraph = () => {
+  if (document.body.dataset.slug !== "index") return
+
+  const resources = document.querySelector<HTMLElement>(".home-resources")
+  const slot = document.querySelector<HTMLElement>("#home-graph-slot")
+  const graph = document.querySelector<HTMLElement>(".graph")
+  if (!resources || !slot || !graph || graph.classList.contains("home-graph")) return
+
+  graph.classList.add("home-graph")
+  graph.querySelector("h3")?.remove()
+  slot.replaceChildren(graph)
+}
+
 const lowSignalTocHeading = /^(?:примеры?|решение|ответ|проверка|демоверсия)\s*(?:\d+|[):.]|$)/i
 
 const prepareTableOfContents = () => {
@@ -413,6 +426,7 @@ const prepareSidebar = () => {
   ensureMobileToggle()
   sortInfoTaskCards()
   hideHomeGraphLinks()
+  placeHomeGraph()
   prepareTableOfContents()
   prepareHomeAtmosphere()
   ensureGlobalGraphControls()

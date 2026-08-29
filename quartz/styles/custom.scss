@@ -523,6 +523,14 @@ body[data-slug]:not([data-slug="index"])
   color: color-mix(in srgb, var(--secondary) 82%, var(--dark));
 }
 
+body[data-slug="index"]
+  :where(.home-hero h1, .home-section-head h2, article.popover-hint > h2:not(#graph-links)) {
+  --heading-rule-width: 72%;
+  position: relative;
+  width: 100%;
+  padding-bottom: 0.22em;
+}
+
 body[data-slug]:not([data-slug="index"])
   :where(
     .article-title,
@@ -532,7 +540,9 @@ body[data-slug]:not([data-slug="index"])
     article.popover-hint > h4,
     article.popover-hint > h5,
     article.popover-hint > h6
-  )::after {
+  )::after,
+body[data-slug="index"]
+  :where(.home-hero h1, .home-section-head h2, article.popover-hint > h2:not(#graph-links))::after {
   display: block;
   width: min(var(--heading-rule-width), 100%);
   height: 3px;
@@ -563,6 +573,20 @@ body[data-slug]:not([data-slug="index"]) article.popover-hint > h4 {
 
 body[data-slug]:not([data-slug="index"]) article.popover-hint > :where(h5, h6) {
   --heading-rule-width: 28%;
+}
+
+body[data-slug="index"] .home-contact .home-section-head h2 {
+  --heading-rule-width: 44%;
+}
+
+body[data-slug="index"] .home-hero h1 {
+  --heading-rule-width: min(58rem, 82%);
+}
+
+.note-properties,
+.properties,
+[data-component="note-properties"] {
+  display: none !important;
 }
 
 body[data-slug]:not([data-slug="index"]) .page-header,
@@ -1536,13 +1560,23 @@ button.darkmode,
 }
 
 .home-graph {
-  padding: 0;
+  max-width: 76rem;
+  margin-top: 2.6rem;
+  padding: 0.8rem;
   overflow: hidden;
+  border-color: color-mix(in srgb, var(--secondary) 26%, var(--lightgray));
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      color-mix(in srgb, var(--secondary) 8%, transparent),
+      transparent 62%
+    ),
+    color-mix(in srgb, var(--site-panel) 92%, var(--light));
 }
 
 .home-graph > .graph-outer {
-  height: min(58vh, 34rem);
-  min-height: 26rem;
+  height: min(68vh, 43rem);
+  min-height: 32rem;
   border: 0;
   border-radius: 8px;
 }

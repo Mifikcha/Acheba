@@ -259,8 +259,9 @@ plugins:
         focusOnHover: true
         enableRadial: false
     layout:
-      position: right
-      priority: 50
+      position: afterBody
+      priority: 5
+      condition: only-index
   - source: "@quartz-community/search"
     enabled: true
     layout:
@@ -343,7 +344,7 @@ plugins:
     options: {}
     order: 50
   - source: "@quartz-community/note-properties"
-    enabled: true
+    enabled: false
     options:
       includeAll: false
       includedProperties:
