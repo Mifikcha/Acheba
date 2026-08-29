@@ -1,3 +1,7 @@
+---
+title: Hopes and Dreams
+---
+
 <section class="home-entry">
   <div class="home-hero">
     <h1>Hopes and Dreams</h1>
