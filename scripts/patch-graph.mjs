@@ -50,14 +50,34 @@ const replacements = [
     'function Fu(u){let e=_t(ft(u,"index"),!0);return e.length===0?"/":e}',
     'function Fu(u){try{u=decodeURIComponent(u)}catch{}let e=_t(ft(u,"index"),!0);return e.length===0?"/":e}',
   ],
-  ["return 2+Math.sqrt(l)}", "return 3.2+Math.sqrt(l)*1.2}"],
-  ["return 3.2+Math.sqrt(l)*1.2}", "return(3.2+Math.sqrt(l)*1.2)*(x.nodeScale||1)}"],
+  ["return(3.2+Math.sqrt(l)*1.2)*(x.nodeScale||1)}", "return 2+Math.sqrt(l)}"],
+  ["return 3.2+Math.sqrt(l)*1.2}", "return 2+Math.sqrt(l)}"],
+  ["return(2+Math.sqrt(l))*(x.nodeScale||.77)}", "return 2+Math.sqrt(l)}"],
+  ["return(2+Math.sqrt(l))*(x.nodeScale||.75)}", "return 2+Math.sqrt(l)}"],
+  ["return 2+Math.sqrt(l)}", "return(2+Math.sqrt(l))*(x.nodeScale||.75)}"],
   ["l.color=l.active?ee:te", "l.color=l.active?Ie:ee"],
-  ["width:1,color:v.color", "width:1.35,color:v.color"],
-  ["width:1.35,color:v.color", "width:x.lineWidth||1.35,color:v.color"],
+  ["var l=z[i],F=.38;_u!==null&&(F=l.active?1:.12)", "var l=z[i],F=1;_u!==null&&(F=l.active?1:.2)"],
+  ["var l=z[i],F=.32;_u!==null&&(F=l.active?1:.09)", "var l=z[i],F=1;_u!==null&&(F=l.active?1:.2)"],
+  ["var l=z[i],F=1;_u!==null&&(F=l.active?1:.2)", "var l=z[i],F=.32;_u!==null&&(F=l.active?1:.09)"],
+  ["width:x.lineWidth||1.35,color:v.color", "width:1,color:v.color"],
+  ["width:1.35,color:v.color", "width:1,color:v.color"],
+  ["width:x.lineWidth||.55,color:v.color", "width:1,color:v.color"],
+  ["width:1,color:v.color", "width:x.lineWidth||.55,color:v.color"],
+  [
+    '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||1))',
+    '.force("link",a.forceLink(H).distance(Te))',
+  ],
+  [
+    '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||.85))',
+    '.force("link",a.forceLink(H).distance(Te))',
+  ],
+  [
+    '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||.65))',
+    '.force("link",a.forceLink(H).distance(Te))',
+  ],
   [
     '.force("link",a.forceLink(H).distance(Te))',
-    '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||1))',
+    '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||.65))',
   ],
   ["alphaTarget(0.18).restart()", "alphaTarget(1).restart()"],
   ["alphaTarget(0.03).restart()", "alphaTarget(1).restart()"],
@@ -78,8 +98,11 @@ const replacements = [
     "P=a.zoomIdentity.translate(R*(1-qu)/2,O*(1-qu)/2).scale(qu);ou.scale.set(P.k,P.k);ou.position.set(P.x,P.y);",
   ],
   ["a.select(Z.canvas).call(et)}", "a.select(Z.canvas).call(et).call(et.transform,P)}"],
-  ["F=Math.max((l-1)/3.75,0)", "F=Math.min(Math.max((l-1.35)/1.65,0),1)"],
-  ["F=Math.min(Math.max((l-.55)/1.15,0),1)", "F=Math.min(Math.max((l-1.35)/1.65,0),1)"],
+  ["F=Math.min(Math.max((l-1.35)/1.65,0),1)", "F=Math.max((l-1)/3.75,0)"],
+  ["F=Math.min(Math.max((l-1.6)/.9,0),.82)", "F=Math.max((l-1)/3.75,0)"],
+  ["F=Math.max((l-1)/3.75,0)", "F=Math.min(Math.max((l-1.6)/.9,0),.82)"],
+  ["F=Math.min(Math.max((l-.55)/1.15,0),1)", "F=Math.min(Math.max((l-1.6)/.9,0),.82)"],
+  [",De&&U.stroke({width:2,color:ue})", ""],
   [
     "}});var ru=new Set;if(Vu>=0)",
     '}});Xu.has("/")&&Xu.forEach(function(i){i!=="/"&&!tu.some(function(l){return l.source==="/"&&l.target===i||l.source===i&&l.target==="/"})&&tu.push({source:"/",target:i})});var ru=new Set;if(Vu>=0)',
@@ -136,11 +159,12 @@ for (const graphFile of graphFiles) {
 
 const graphInvariants = [
   ['Xu.has("/")', "каждая заметка связана с Hopes and Dreams"],
-  ["(l-1.35)/1.65", "подписи появляются только при позднем приближении"],
+  ["(l-1.6)/.9", "подписи появляются только при позднем приближении"],
   ['bt=document.body.dataset.slug==="index"', "узлы на главной мягко дышат"],
-  ["x.nodeScale||1", "панель меняет размер узлов"],
-  ["x.lineWidth||1.35", "панель меняет толщину связей"],
-  ["x.linkStrength||1", "панель меняет силу связей"],
+  ["x.nodeScale||.75", "панель меняет размер узлов"],
+  ["x.lineWidth||.55", "панель меняет толщину связей"],
+  ["x.linkStrength||.65", "панель меняет силу связей"],
+  ["F=.32;_u!==null&&(F=l.active?1:.09)", "обычные связи не забивают структуру графа"],
 ]
 
 for (const graphFile of graphFiles.filter(fs.existsSync)) {
@@ -149,6 +173,9 @@ for (const graphFile of graphFiles.filter(fs.existsSync)) {
     if (!source.includes(marker)) {
       throw new Error(`[patch-graph] Не применено правило: ${rule} (${graphFile})`)
     }
+  }
+  if (source.includes("De&&U.stroke")) {
+    throw new Error(`[patch-graph] Не удалена обводка узлов (${graphFile})`)
   }
 }
 

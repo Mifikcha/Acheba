@@ -315,33 +315,33 @@ const ensureGlobalGraphControls = () => {
       </details>
       <details open>
         <summary>Отображение</summary>
-        <label><span>Порог исчезновения текста <output data-graph-output="opacityScale"></output></span><input type="range" min="0.2" max="2.4" step="0.1" data-graph-key="opacityScale"></label>
-        <label><span>Размер подписей <output data-graph-output="fontSize"></output></span><input type="range" min="0.25" max="1.1" step="0.05" data-graph-key="fontSize"></label>
-        <label><span>Размер узла <output data-graph-output="nodeScale"></output></span><input type="range" min="0.6" max="2" step="0.1" data-graph-key="nodeScale"></label>
-        <label><span>Толщина линий <output data-graph-output="lineWidth"></output></span><input type="range" min="0.5" max="3" step="0.1" data-graph-key="lineWidth"></label>
+        <label><span>Порог исчезновения текста <output data-graph-output="opacityScale"></output></span><input type="range" min="0.35" max="1.4" step="0.05" data-graph-key="opacityScale"></label>
+        <label><span>Размер подписей <output data-graph-output="fontSize"></output></span><input type="range" min="0.22" max="0.8" step="0.02" data-graph-key="fontSize"></label>
+        <label><span>Размер узла <output data-graph-output="nodeScale"></output></span><input type="range" min="0.35" max="1.6" step="0.05" data-graph-key="nodeScale"></label>
+        <label><span>Толщина линий <output data-graph-output="lineWidth"></output></span><input type="range" min="0.25" max="1.5" step="0.05" data-graph-key="lineWidth"></label>
         <button type="button" class="global-graph-run">Запустить анимацию</button>
       </details>
       <details open>
         <summary>Силы</summary>
         <label><span>Сила притяжения <output data-graph-output="centerForce"></output></span><input type="range" min="0.05" max="1" step="0.05" data-graph-key="centerForce"></label>
-        <label><span>Сила отталкивания <output data-graph-output="repelForce"></output></span><input type="range" min="0.1" max="2" step="0.1" data-graph-key="repelForce"></label>
-        <label><span>Сила связей <output data-graph-output="linkStrength"></output></span><input type="range" min="0.1" max="2" step="0.1" data-graph-key="linkStrength"></label>
-        <label><span>Расстояние между узлами <output data-graph-output="linkDistance"></output></span><input type="range" min="15" max="140" step="5" data-graph-key="linkDistance"></label>
+        <label><span>Сила отталкивания <output data-graph-output="repelForce"></output></span><input type="range" min="0.2" max="1.6" step="0.05" data-graph-key="repelForce"></label>
+        <label><span>Сила связей <output data-graph-output="linkStrength"></output></span><input type="range" min="0.2" max="1.5" step="0.05" data-graph-key="linkStrength"></label>
+        <label><span>Расстояние между узлами <output data-graph-output="linkDistance"></output></span><input type="range" min="20" max="100" step="2" data-graph-key="linkDistance"></label>
       </details>
     `
     outer.append(panel)
 
     const defaults = {
-      opacityScale: 1,
-      fontSize: 0.45,
-      nodeScale: 1,
-      lineWidth: 1.35,
-      centerForce: 0.3,
-      repelForce: 0.5,
-      linkStrength: 1,
-      linkDistance: 30,
+      opacityScale: 0.8,
+      fontSize: 0.34,
+      nodeScale: 0.75,
+      lineWidth: 0.55,
+      centerForce: 0.12,
+      repelForce: 1.1,
+      linkStrength: 0.65,
+      linkDistance: 88,
       showTags: true,
-      enableRadial: true,
+      enableRadial: false,
       focusOnHover: true,
       ...JSON.parse(container.dataset.cfg ?? "{}"),
     }
