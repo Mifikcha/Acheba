@@ -135,6 +135,22 @@ const replacements = [
     "A.label.alpha=1,A.label.scale.set(l)):A.label.scale.set(i)",
     "A.label.alpha=1,A.label.scale.set(l/4)):A.label.scale.set(i/4)",
   ],
+  [
+    'F=l?"#"+i.substring(5):eu.get(i)?.title||i,A=',
+    'F=l?"#"+i.substring(5):function(X){try{X=decodeURIComponent(X)}catch{}X=String(X||"").split("/").pop()||String(X||"");return X.replace(/-/g," ").replace(/еге/gi,"ЕГЭ").replace(/python/gi,"Python").replace(/^./,function(ch){return ch.toLocaleUpperCase("ru-RU")})}(eu.get(i)?.title||i),A=',
+  ],
+  [
+    'F=l?"#"+i.substring(5):eu.get(i)?.title||function(X){try{X=decodeURIComponent(X)}catch{}X=X.split("/").pop()||X;return X.replace(/-/g," ").replace(/\\bеге\\b/gi,"ЕГЭ").replace(/\\bpython\\b/gi,"Python").replace(/^./,function(ch){return ch.toLocaleUpperCase("ru-RU")})}(i),A=',
+    'F=l?"#"+i.substring(5):function(X){try{X=decodeURIComponent(X)}catch{}X=String(X||"").split("/").pop()||String(X||"");return X.replace(/-/g," ").replace(/еге/gi,"ЕГЭ").replace(/python/gi,"Python").replace(/^./,function(ch){return ch.toLocaleUpperCase("ru-RU")})}(eu.get(i)?.title||i),A=',
+  ],
+  [
+    'replace(/\\bеге\\b/gi,"ЕГЭ").replace(/\\bpython\\b/gi,"Python")',
+    'replace(/еге/gi,"ЕГЭ").replace(/python/gi,"Python")',
+  ],
+  [
+    '/* @__PURE__ */ u2("h3", { children: i18n(cfg.locale ?? "en-US").components.graph.title })',
+    '/* @__PURE__ */ u2("h3", { children: "Граф знаний" })',
+  ],
 ]
 
 const breathingFragment =
@@ -169,6 +185,7 @@ const graphInvariants = [
   ["x.linkStrength||.65", "панель меняет силу связей"],
   ["alphaTarget(.025).restart()", "перетаскивание узла мягко прогревает физику графа"],
   ["F=.32;_u!==null&&(F=l.active?1:.09)", "обычные связи не забивают структуру графа"],
+  ['replace(/-/g," ")', "подписи графа показывают названия, а не slug-пути"],
 ]
 
 for (const graphFile of graphFiles.filter(fs.existsSync)) {

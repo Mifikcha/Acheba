@@ -204,8 +204,45 @@ const placeHomeGraph = () => {
   if (!resources || !slot || !graph || graph.classList.contains("home-graph")) return
 
   graph.classList.add("home-graph")
-  graph.querySelector("h3")?.remove()
+  const title = graph.querySelector("h3")
+  if (title) title.textContent = "Граф знаний"
   slot.replaceChildren(graph)
+}
+
+const humanizeSidebarLabel = (value: string) => {
+  let label = value.trim()
+  try {
+    label = decodeURIComponent(label)
+  } catch {}
+
+  label = label
+    .split("/")
+    .pop()!
+    .replace(/-/g, " ")
+    .replace(/\bеге\b/gi, "ЕГЭ")
+    .replace(/\bpython\b/gi, "Python")
+
+  return label.charAt(0).toLocaleUpperCase("ru-RU") + label.slice(1)
+}
+
+const normalizeExplorerLabels = () => {
+  document.querySelectorAll<HTMLElement>(".explorer a, .explorer .folder-title").forEach((item) => {
+    const text = item.textContent?.trim()
+    if (!text || !text.includes("-")) return
+
+    item.textContent = humanizeSidebarLabel(text)
+  })
+}
+
+const watchExplorerLabels = () => {
+  document.querySelectorAll<HTMLElement>(".explorer").forEach((explorer) => {
+    if (explorer.dataset.hopesExplorerLabelsReady === "true") return
+    explorer.dataset.hopesExplorerLabelsReady = "true"
+
+    const observer = new MutationObserver(normalizeExplorerLabels)
+    observer.observe(explorer, { childList: true, subtree: true })
+    window.addCleanup(() => observer.disconnect())
+  })
 }
 
 const lowSignalTocHeading = /^(?:примеры?|решение|ответ|проверка|демоверсия)\s*(?:\d+|[):.]|$)/i
@@ -427,6 +464,8 @@ const prepareSidebar = () => {
   sortInfoTaskCards()
   hideHomeGraphLinks()
   placeHomeGraph()
+  watchExplorerLabels()
+  requestAnimationFrame(() => requestAnimationFrame(normalizeExplorerLabels))
   prepareTableOfContents()
   prepareHomeAtmosphere()
   ensureGlobalGraphControls()
