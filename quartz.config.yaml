@@ -226,15 +226,15 @@ plugins:
         drag: true
         zoom: true
         depth: 1
-        scale: 0.9
-        repelForce: 0.7
-        centerForce: 0.25
-        linkDistance: 42
-        linkStrength: 0.9
-        nodeScale: 0.7
-        lineWidth: 0.5
-        fontSize: 0.38
-        opacityScale: 0.85
+        scale: 0.82
+        repelForce: 0.95
+        centerForce: 0.18
+        linkDistance: 64
+        linkStrength: 0.8
+        nodeScale: 0.48
+        lineWidth: 0.28
+        fontSize: 0.24
+        opacityScale: 1.15
         removeTags:
           - публичный-сайт
         showTags: true
@@ -244,15 +244,15 @@ plugins:
         drag: true
         zoom: true
         depth: -1
-        scale: 0.88
-        repelForce: 1.1
-        centerForce: 0.12
-        linkDistance: 88
-        linkStrength: 0.65
-        nodeScale: 0.75
-        lineWidth: 0.55
-        fontSize: 0.34
-        opacityScale: 0.8
+        scale: 0.78
+        repelForce: 1.35
+        centerForce: 0.08
+        linkDistance: 118
+        linkStrength: 0.72
+        nodeScale: 0.5
+        lineWidth: 0.26
+        fontSize: 0.22
+        opacityScale: 1.2
         removeTags:
           - публичный-сайт
         showTags: true

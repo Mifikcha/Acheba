@@ -326,20 +326,20 @@ const ensureGlobalGraphControls = () => {
         <label><span>Сила притяжения <output data-graph-output="centerForce"></output></span><input type="range" min="0.05" max="1" step="0.05" data-graph-key="centerForce"></label>
         <label><span>Сила отталкивания <output data-graph-output="repelForce"></output></span><input type="range" min="0.2" max="1.6" step="0.05" data-graph-key="repelForce"></label>
         <label><span>Сила связей <output data-graph-output="linkStrength"></output></span><input type="range" min="0.2" max="1.5" step="0.05" data-graph-key="linkStrength"></label>
-        <label><span>Расстояние между узлами <output data-graph-output="linkDistance"></output></span><input type="range" min="20" max="100" step="2" data-graph-key="linkDistance"></label>
+        <label><span>Расстояние между узлами <output data-graph-output="linkDistance"></output></span><input type="range" min="20" max="180" step="2" data-graph-key="linkDistance"></label>
       </details>
     `
     outer.append(panel)
 
     const defaults = {
-      opacityScale: 0.8,
-      fontSize: 0.34,
-      nodeScale: 0.75,
-      lineWidth: 0.55,
-      centerForce: 0.12,
-      repelForce: 1.1,
-      linkStrength: 0.65,
-      linkDistance: 88,
+      opacityScale: 1.2,
+      fontSize: 0.22,
+      nodeScale: 0.5,
+      lineWidth: 0.26,
+      centerForce: 0.08,
+      repelForce: 1.35,
+      linkStrength: 0.72,
+      linkDistance: 118,
       showTags: true,
       enableRadial: false,
       focusOnHover: true,

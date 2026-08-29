@@ -505,6 +505,66 @@ body[data-slug]:not([data-slug="index"]) article.popover-hint {
   line-height: 1.7;
 }
 
+body[data-slug]:not([data-slug="index"])
+  :where(
+    .article-title,
+    article.popover-hint > h1,
+    article.popover-hint > h2,
+    article.popover-hint > h3,
+    article.popover-hint > h4,
+    article.popover-hint > h5,
+    article.popover-hint > h6
+  ) {
+  --heading-rule-width: 100%;
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.28em;
+  color: color-mix(in srgb, var(--secondary) 82%, var(--dark));
+}
+
+body[data-slug]:not([data-slug="index"])
+  :where(
+    .article-title,
+    article.popover-hint > h1,
+    article.popover-hint > h2,
+    article.popover-hint > h3,
+    article.popover-hint > h4,
+    article.popover-hint > h5,
+    article.popover-hint > h6
+  )::after {
+  display: block;
+  width: min(var(--heading-rule-width), 100%);
+  height: 3px;
+  margin-top: 0.18em;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--tertiary) 32%, var(--lightgray)),
+    color-mix(in srgb, var(--secondary) 12%, transparent)
+  );
+  content: "";
+}
+
+body[data-slug]:not([data-slug="index"]) :where(.article-title, article.popover-hint > h1) {
+  --heading-rule-width: 100%;
+}
+
+body[data-slug]:not([data-slug="index"]) article.popover-hint > h2 {
+  --heading-rule-width: 86%;
+}
+
+body[data-slug]:not([data-slug="index"]) article.popover-hint > h3 {
+  --heading-rule-width: 64%;
+}
+
+body[data-slug]:not([data-slug="index"]) article.popover-hint > h4 {
+  --heading-rule-width: 42%;
+}
+
+body[data-slug]:not([data-slug="index"]) article.popover-hint > :where(h5, h6) {
+  --heading-rule-width: 28%;
+}
+
 body[data-slug]:not([data-slug="index"]) .page-header,
 body[data-slug]:not([data-slug="index"]) .page-listing {
   font-size: 1.08rem;

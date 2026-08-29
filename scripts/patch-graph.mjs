@@ -79,18 +79,21 @@ const replacements = [
     '.force("link",a.forceLink(H).distance(Te))',
     '.force("link",a.forceLink(H).distance(Te).strength(x.linkStrength||.65))',
   ],
-  ["alphaTarget(0.18).restart()", "alphaTarget(1).restart()"],
-  ["alphaTarget(0.03).restart()", "alphaTarget(1).restart()"],
+  ["alphaTarget(1).restart()", "alphaTarget(.025).restart()"],
+  ["alphaTarget(0.18).restart()", "alphaTarget(.025).restart()"],
+  ["alphaTarget(0.08).restart()", "alphaTarget(.025).restart()"],
+  ["alphaTarget(.08).restart()", "alphaTarget(.025).restart()"],
+  ["alphaTarget(0.03).restart()", "alphaTarget(.025).restart()"],
   [
     "oe=Date.now(),Eu=!0,_u=i.subject.id",
-    "i.active||au.alphaTarget(1).restart(),oe=Date.now(),Eu=!0,_u=i.subject.id",
+    "i.active||au.alphaTarget(.025).restart(),oe=Date.now(),Eu=!0,_u=i.subject.id",
   ],
   [
-    "i.active||au.alphaTarget(1).restart(),i.active||au.alphaTarget(1).restart(),",
-    "i.active||au.alphaTarget(1).restart(),",
+    "i.active||au.alphaTarget(.025).restart(),i.active||au.alphaTarget(.025).restart(),",
+    "i.active||au.alphaTarget(.025).restart(),",
   ],
   [
-    "i.active||au.alphaTarget(1).restart(),i.subject.fx=l-i.subject.__dragOffset.x,i.subject.fy=F-i.subject.__dragOffset.y",
+    "i.active||au.alphaTarget(.025).restart(),i.subject.fx=l-i.subject.__dragOffset.x,i.subject.fy=F-i.subject.__dragOffset.y",
     "i.subject.fx=l-i.subject.__dragOffset.x,i.subject.fy=F-i.subject.__dragOffset.y",
   ],
   [
@@ -164,6 +167,7 @@ const graphInvariants = [
   ["x.nodeScale||.75", "панель меняет размер узлов"],
   ["x.lineWidth||.55", "панель меняет толщину связей"],
   ["x.linkStrength||.65", "панель меняет силу связей"],
+  ["alphaTarget(.025).restart()", "перетаскивание узла мягко прогревает физику графа"],
   ["F=.32;_u!==null&&(F=l.active?1:.09)", "обычные связи не забивают структуру графа"],
 ]
 
