@@ -116,7 +116,11 @@ const replacements = [
   ],
   [
     "l.gfx.position.set(F+R/2,A+O/2),l.label&&l.label.position.set(F+R/2,A+O/2)",
-    "l.gfx.position.set(F+R/2,A+O/2),l.label&&l.label.position.set(F+R/2,A+O/2),bt&&_u===null&&(l.gfx.alpha=l.alpha*(.94+.06*Math.sin(performance.now()/1800+i*1.7)))",
+    "l.gfx.position.set(F+R/2,A+O/2),l.label&&l.label.position.set(F+R/2,A+O/2),l.gfx.alpha+=(l.alpha*(bt&&_u===null?.94+.06*Math.sin(performance.now()/1800+i*1.7):1)-l.gfx.alpha)*.18",
+  ],
+  [
+    ",l.gfx.alpha+=(l.alpha*(bt&&_u===null?.94+.06*Math.sin(performance.now()/1800+i*1.7):1)-l.gfx.alpha)*.18,l.gfx.alpha+=(l.alpha*(bt&&_u===null?.94+.06*Math.sin(performance.now()/1800+i*1.7):1)-l.gfx.alpha)*.18",
+    ",l.gfx.alpha+=(l.alpha*(bt&&_u===null?.94+.06*Math.sin(performance.now()/1800+i*1.7):1)-l.gfx.alpha)*.18",
   ],
   [
     "style:{fontSize:We*15,fill:ze,fontFamily:Ne}",
@@ -143,10 +147,18 @@ const replacements = [
     '.scaleExtent([.25,4]).on("zoom",ut)',
     '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
   ],
+  ["l.gfx.alpha=F}}", "l.alpha=F}}"],
+  ["l.alpha=F,l.color=l.active?Ie:ee", "l.targetAlpha=F,l.color=l.active?Ie:ee"],
+  [
+    "N!=null&&K!=null&&gu!=null&&Fe!=null&&(v.gfx.clear()",
+    "N!=null&&K!=null&&gu!=null&&Fe!=null&&(v.alpha+=((v.targetAlpha??v.alpha)-v.alpha)*.18,v.gfx.clear()",
+  ],
 ]
 
 const breathingFragment =
   ",bt&&_u===null&&(l.gfx.alpha=l.alpha*(.94+.06*Math.sin(performance.now()/1800+i*1.7)))"
+const smoothAlphaFragment =
+  "l.gfx.alpha+=(l.alpha*(bt&&_u===null?.94+.06*Math.sin(performance.now()/1800+i*1.7):1)-l.gfx.alpha)*.18"
 let patched = 0
 
 for (const graphFile of graphFiles) {
@@ -160,6 +172,10 @@ for (const graphFile of graphFiles) {
 
   for (const [from, to] of replacements) {
     source = source.split(from).join(to)
+  }
+
+  while (source.includes(`${smoothAlphaFragment},${smoothAlphaFragment}`)) {
+    source = source.split(`${smoothAlphaFragment},${smoothAlphaFragment}`).join(smoothAlphaFragment)
   }
 
   if (source !== original) {
@@ -181,6 +197,8 @@ const graphInvariants = [
     "wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4})",
     "колесо графа зумит в четыре раза мягче",
   ],
+  ["l.gfx.alpha+=", "наведение на узлы плавно меняет прозрачность"],
+  ["v.targetAlpha", "наведение на связи плавно меняет прозрачность"],
 ]
 
 for (const graphFile of graphFiles.filter(fs.existsSync)) {
