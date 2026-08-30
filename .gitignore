@@ -7,3 +7,18 @@ _quartz
 .obsidian
 .trash
 Excalidraw
+
+# Python / tool caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local build leftovers
+public-check/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

@@ -1,0 +1,21 @@
+# Heavy binary attachments are available on disk, but should not be bulk-loaded
+# into routine agent context.
+_Resours/**
+Публичный сайт/_Resours/**
+
+# Large source/reference files are rarely useful unless a task names them.
+*.pdf
+*.mp4
+*.webm
+*.gif
+*.png
+*.jpg
+*.jpeg
+
+# Generated caches and local build output.
+**/__pycache__/**
+**/*.py[cod]
+**/.pytest_cache/**
+**/.mypy_cache/**
+**/.ruff_cache/**
+**/public-check/**
