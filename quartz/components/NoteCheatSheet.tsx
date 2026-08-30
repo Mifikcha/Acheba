@@ -13,9 +13,11 @@ function isMaterialNote({ fileData }: QuartzComponentProps): boolean {
   const filePath = String(fileData.filePath ?? "")
   const relativePath = String(fileData.relativePath ?? "").replaceAll("\\", "/")
   const slug = String(fileData.slug ?? "")
+  const isHome = slug === "index" || relativePath === "index.md"
 
-  if (slug === "index" || slug.endsWith("/index")) return false
   if (!filePath.endsWith(".md")) return false
+  if (isHome) return true
+  if (slug.endsWith("/index")) return false
   if (!relativePath.startsWith("Предметы/")) return false
   if (relativePath === "index.md" || relativePath.endsWith("/index.md")) return false
   if (relativePath.endsWith(".excalidraw.md")) return false
