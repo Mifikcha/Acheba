@@ -14,11 +14,54 @@ title: Hopes and Dreams
     <h2 id="home-resources-title">Программы обучения</h2>
   </div>
   <div class="home-program-card">
-    <a class="home-program-physics" href="./_программы-обучения/физика-9-класс-—-программа">Физика 9 класс — программа</a>
-    <a class="home-program-physics" href="./_программы-обучения/физика-11-класс-—-программа">Физика 11 класс — программа</a>
-    <a class="home-program-informatics" href="./_программы-обучения/информатика-—-программа-до-80">Информатика — программа до 80</a>
-    <a class="home-program-informatics" href="./_программы-обучения/информатика-—-программа-80+">Информатика — программа 80+</a>
-    <a class="home-python-sandbox" href="./песочница-python">Песочница Python</a>
+    <a class="home-program-route home-program-physics" href="./_программы-обучения/физика-9-класс-—-программа">
+      <span class="home-program-symbol" aria-hidden="true">○</span>
+      <span class="home-program-subject">Физика</span>
+      <strong>9 класс</strong>
+      <span class="home-program-path">Механика → Электричество</span>
+      <span class="home-program-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="home-program-route home-program-physics" href="./_программы-обучения/физика-11-класс-—-программа">
+      <span class="home-program-symbol" aria-hidden="true">○</span>
+      <span class="home-program-subject">Физика</span>
+      <strong>11 класс</strong>
+      <span class="home-program-path">Механика → МКТ → Оптика</span>
+      <span class="home-program-arrow" aria-hidden="true">↗</span>
+    </a>
+    <div class="home-program-route home-program-math" aria-disabled="true">
+      <span class="home-program-symbol" aria-hidden="true">△</span>
+      <span class="home-program-subject">Математика</span>
+      <strong>Джентельменский набор</strong>
+      <span class="home-program-path">База → уверенные задачи</span>
+    </div>
+    <div class="home-program-route home-program-math" aria-disabled="true">
+      <span class="home-program-symbol" aria-hidden="true">△</span>
+      <span class="home-program-subject">Математика</span>
+      <strong>Набор на 100 баллов</strong>
+      <span class="home-program-path">Параметры → экономика → стереометрия</span>
+    </div>
+    <a class="home-program-route home-program-informatics" href="./_программы-обучения/информатика-—-программа-до-80">
+      <span class="home-program-symbol" aria-hidden="true">&gt;_</span>
+      <span class="home-program-subject">Информатика</span>
+      <strong>Программа до 80</strong>
+      <span class="home-program-path">База → Python → ЕГЭ</span>
+      <span class="home-program-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="home-program-route home-program-informatics" href="./_программы-обучения/информатика-—-программа-80+">
+      <span class="home-program-symbol" aria-hidden="true">&gt;_</span>
+      <span class="home-program-subject">Информатика</span>
+      <strong>Программа 80+</strong>
+      <span class="home-program-path">Алгоритмы → сложные задачи</span>
+      <span class="home-program-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="home-python-sandbox" href="./песочница-python">
+      <span class="home-program-symbol" aria-hidden="true">&gt;_</span>
+      <span>
+        <strong>Песочница Python</strong>
+        <span class="home-program-path">Свободная среда для экспериментов</span>
+      </span>
+      <span class="home-program-arrow" aria-hidden="true">OPEN ↗</span>
+    </a>
   </div>
 </section>
 
