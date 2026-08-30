@@ -12,6 +12,7 @@ configuration:
     - private
     - templates
     - .obsidian
+    - _Шпаргалки/**
     - Предметы/Матанчик/Теория/**
   theme:
     fontOrigin: googleFonts
@@ -220,7 +221,7 @@ plugins:
       position: left
       priority: 50
   - source: "@quartz-community/graph"
-    enabled: true
+    enabled: false
     options:
       localGraph:
         drag: true
@@ -246,11 +247,11 @@ plugins:
         depth: -1
         scale: 0.78
         repelForce: 1.35
-        centerForce: 0.08
+        centerForce: 0.1
         linkDistance: 118
         linkStrength: 0.72
         nodeScale: 0.5
-        lineWidth: 0.26
+        lineWidth: 0.25
         fontSize: 0.22
         opacityScale: 1.2
         removeTags:
@@ -258,9 +259,6 @@ plugins:
         showTags: true
         focusOnHover: true
         enableRadial: false
-    layout:
-      position: right
-      priority: 50
   - source: "@quartz-community/search"
     enabled: true
     layout:

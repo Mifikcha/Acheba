@@ -31,6 +31,8 @@ import Flex from "../../components/Flex"
 import MobileOnly from "../../components/MobileOnly"
 import DesktopOnly from "../../components/DesktopOnly"
 import ConditionalRender from "../../components/ConditionalRender"
+import GraphResourcesConstructor from "../../components/GraphResources"
+import NoteCheatSheetConstructor from "../../components/NoteCheatSheet"
 
 const CONFIG_YAML_PATH = path.join(process.cwd(), "quartz.config.yaml")
 const DEFAULT_CONFIG_YAML_PATH = path.join(process.cwd(), "quartz.config.default.yaml")
@@ -632,6 +634,14 @@ function detectCategoryFromModule(module: unknown): ProcessingCategory | null {
   return null
 }
 
+function addHopesComponents(layout: Partial<FullPageLayout>): void {
+  const GraphResources = GraphResourcesConstructor()
+  const NoteCheatSheet = NoteCheatSheetConstructor()
+
+  layout.afterBody = [...(layout.afterBody ?? []), GraphResources]
+  layout.right = [NoteCheatSheet, ...(layout.right ?? [])]
+}
+
 export async function loadQuartzLayout(layoutOverrides?: {
   defaults?: Partial<FullPageLayout>
   byPageType?: Record<string, Partial<FullPageLayout>>
@@ -652,6 +662,7 @@ export async function loadQuartzLayout(layoutOverrides?: {
 
   // Build default layout for all page types
   const defaultLayout = buildLayoutForEntries(enabledWithLayout, layoutConfig)
+  addHopesComponents(defaultLayout)
 
   // Build per-page-type overrides
   const byPageType: Record<string, Partial<FullPageLayout>> = {}
@@ -691,6 +702,10 @@ export async function loadQuartzLayout(layoutOverrides?: {
 
       byPageType[pageType] = ptLayout
     }
+  }
+
+  for (const [pageType, layout] of Object.entries(byPageType)) {
+    if (pageType !== "404") addHopesComponents(layout)
   }
 
   const HeadModule = await import("../../components/Head")

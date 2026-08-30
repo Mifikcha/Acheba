@@ -1278,8 +1278,31 @@ button.darkmode,
 }
 
 .right.sidebar .graph,
-.right.sidebar .toc {
+.right.sidebar .toc,
+.right.sidebar .note-cheatsheet {
   flex: 0 0 auto;
+}
+
+.note-cheatsheet {
+  padding: 0.72rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--site-panel) 92%, var(--tertiary));
+  color: var(--darkgray);
+  box-shadow: 0 10px 26px var(--site-shadow);
+}
+
+.note-cheatsheet h3 {
+  margin: 0 0 0.55rem;
+  color: var(--dark);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.note-cheatsheet p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .right.sidebar .graph {
@@ -1517,6 +1540,7 @@ button.darkmode,
 }
 
 .home-resources,
+.home-knowledge-graph,
 .home-contact {
   max-width: 76rem;
   margin-top: 2.6rem;
@@ -1538,6 +1562,10 @@ button.darkmode,
 .home-graph {
   padding: 0;
   overflow: hidden;
+}
+
+.home-knowledge-graph {
+  padding-top: 0.25rem;
 }
 
 .home-graph > .graph-outer {
