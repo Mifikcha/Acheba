@@ -11,7 +11,6 @@ title: Hopes and Dreams
 
 <section class="home-resources" aria-labelledby="home-resources-title">
   <div class="home-section-head">
-    <p>Маршруты</p>
     <h2 id="home-resources-title">Программы обучения</h2>
   </div>
   <div class="home-program-card">
@@ -42,7 +41,6 @@ title: Hopes and Dreams
 
 <section class="home-contact" aria-labelledby="home-contact-title">
   <div class="home-section-head">
-    <p>Контакты</p>
     <h2 id="home-contact-title">Связаться</h2>
   </div>
   <a href="https://t.me/Skifcha">Telegram</a>
