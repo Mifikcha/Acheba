@@ -298,7 +298,7 @@ const prepareGraphScrollContract = () => {
       graph.addEventListener(
         "wheel",
         (event) => {
-          if (event.ctrlKey || event.metaKey) return
+          if (event.shiftKey) return
           event.stopPropagation()
         },
         { capture: true },

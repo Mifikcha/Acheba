@@ -135,6 +135,14 @@ const replacements = [
     "A.label.alpha=1,A.label.scale.set(l)):A.label.scale.set(i)",
     "A.label.alpha=1,A.label.scale.set(l/4)):A.label.scale.set(i/4)",
   ],
+  [
+    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
+    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
+  ],
+  [
+    '.scaleExtent([.25,4]).on("zoom",ut)',
+    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
+  ],
 ]
 
 const breathingFragment =
@@ -169,6 +177,10 @@ const graphInvariants = [
   ["x.linkStrength||.65", "панель меняет силу связей"],
   ["alphaTarget(.025).restart()", "перетаскивание узла мягко прогревает физику графа"],
   ["F=.32;_u!==null&&(F=l.active?1:.09)", "обычные связи не забивают структуру графа"],
+  [
+    "wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4})",
+    "колесо графа зумит в четыре раза мягче",
+  ],
 ]
 
 for (const graphFile of graphFiles.filter(fs.existsSync)) {

@@ -1588,8 +1588,22 @@ button.darkmode,
   font-size: 0.78rem;
   font-weight: 700;
   line-height: 1;
+  opacity: 0.72;
   pointer-events: none;
   box-shadow: 0 8px 20px color-mix(in srgb, var(--site-shadow) 70%, transparent);
+  transition:
+    opacity 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.home-graph > .graph-outer:hover .graph-wheel-hint,
+.home-graph > .graph-outer:focus-within .graph-wheel-hint {
+  border-color: color-mix(in srgb, var(--secondary) 44%, transparent);
+  background: color-mix(in srgb, var(--light) 92%, var(--secondary));
+  color: var(--dark);
+  opacity: 1;
 }
 
 .home-graph .graph-container canvas {
