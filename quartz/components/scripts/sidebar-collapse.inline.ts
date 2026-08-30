@@ -288,6 +288,24 @@ const prepareHomeAtmosphere = () => {
   })
 }
 
+const prepareGraphScrollContract = () => {
+  document
+    .querySelectorAll<HTMLElement>(".graph-container, .global-graph-container")
+    .forEach((graph) => {
+      if (graph.dataset.scrollContractReady === "true") return
+      graph.dataset.scrollContractReady = "true"
+
+      graph.addEventListener(
+        "wheel",
+        (event) => {
+          if (event.ctrlKey || event.metaKey) return
+          event.stopPropagation()
+        },
+        { capture: true },
+      )
+    })
+}
+
 const ensureGlobalGraphControls = () => {
   document.querySelectorAll<HTMLElement>(".global-graph-outer").forEach((outer) => {
     if (outer.querySelector(".global-graph-controls")) return
@@ -415,6 +433,7 @@ const prepareSidebar = () => {
   hideHomeGraphLinks()
   prepareTableOfContents()
   prepareHomeAtmosphere()
+  prepareGraphScrollContract()
   ensureGlobalGraphControls()
   applyStoredTheme()
 }
