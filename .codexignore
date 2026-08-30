@@ -3,6 +3,13 @@
 _Resours/**
 Публичный сайт/_Resours/**
 
+# Personal vault sections migrated out of this public-site repo.
+Анкетки тестики/**
+Надежда/**
+Потенциальные саммари видео/**
+Репетиторство/**
+Excalidraw/**
+
 # Large source/reference files are rarely useful unless a task names them.
 *.pdf
 *.mp4

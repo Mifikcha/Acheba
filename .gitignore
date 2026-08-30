@@ -8,6 +8,12 @@ _quartz
 .trash
 Excalidraw
 
+# Personal vault content lives in ../Abomination.
+Анкетки тестики/
+Надежда/
+Потенциальные саммари видео/
+Репетиторство/
+
 # Python / tool caches
 __pycache__/
 *.py[cod]
