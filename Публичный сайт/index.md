@@ -55,22 +55,25 @@ title: Hopes and Dreams
       </div>
       <div class="home-program-row">Информатика</div>
       <div class="home-program-route home-program-informatics home-program-level-basic" aria-disabled="true">
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-basic.svg')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 01</span>
         <strong>Базовый набор</strong>
       </div>
       <a class="home-program-route home-program-informatics home-program-level-gentleman" href="./_программы-обучения/информатика-—-программа-до-80">
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-gentleman.svg')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-informatics home-program-level-star" href="./_программы-обучения/информатика-—-программа-80+">
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-star.svg')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 03</span>
         <strong>Звездный набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
     </div>
     <a class="home-python-sandbox" href="./песочница-python">
-      <span class="home-program-code" aria-hidden="true">&gt;_</span>
+      <span class="home-python-prompt" aria-hidden="true">&gt;</span>
       <strong>Песочница Python</strong>
       <span class="home-program-arrow" aria-hidden="true">OPEN ↗</span>
     </a>
