@@ -2,6 +2,14 @@
 
 // put your custom CSS here!
 
+@font-face {
+  font-family: "Kalissa";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./static/fonts/KalissaRegular.otf") format("opentype");
+}
+
 :root {
   --site-sidebar-padding-block: 1rem 2rem;
   --site-sidebar-padding-inline: 1rem;
@@ -843,6 +851,10 @@ button.darkmode,
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+}
+
+.right.sidebar {
+  overscroll-behavior-y: auto;
 }
 
 :where(
@@ -1938,6 +1950,15 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-math {
   border-style: dashed;
   color: color-mix(in srgb, var(--dark) 82%, var(--darkgray));
+}
+
+.home-program-math .home-program-visual {
+  inset: 0;
+}
+
+.home-program-math .home-program-image-visual::before {
+  -webkit-mask: var(--home-program-image) center / 100% 100% no-repeat;
+  mask: var(--home-program-image) center / 100% 100% no-repeat;
 }
 
 .home-program-math .home-program-code {
