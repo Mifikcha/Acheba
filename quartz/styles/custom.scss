@@ -1864,21 +1864,28 @@ body[data-slug="index"] .right.sidebar .toc {
   line-height: 1;
 }
 
-.home-python-prompt::after {
-  content: "";
-  position: absolute;
-  left: 1.75rem;
-  bottom: -0.22rem;
-  z-index: -1;
-  width: 2.6rem;
-  height: 2px;
-  border-radius: 2px;
-  background: currentColor;
-}
-
 .home-python-sandbox strong {
   position: relative;
   z-index: 1;
+  font-family: var(--codeFont);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.home-python-initial {
+  position: relative;
+  display: inline-block;
+}
+
+.home-python-initial::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.2rem;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--secondary);
 }
 
 .home-python-sandbox .home-program-arrow {
