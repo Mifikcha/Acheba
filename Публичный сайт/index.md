@@ -21,104 +21,35 @@ title: Hopes and Dreams
       <div class="home-program-column">11 класс / 100</div>
       <div class="home-program-row">Физика</div>
       <a class="home-program-route home-program-physics home-program-level-basic" href="./_программы-обучения/физика-9-класс-—-программа">
-        <span class="home-program-visual" aria-hidden="true">
-          <svg class="home-program-diagram" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-            <line class="home-program-diagram-muted" x1="30" y1="108" x2="292" y2="108" />
-            <rect x="126" y="65" width="88" height="43" rx="2" />
-            <line x1="214" y1="86" x2="282" y2="86" />
-            <polyline points="270,78 282,86 270,94" />
-            <line x1="126" y1="86" x2="47" y2="86" />
-            <polyline points="59,78 47,86 59,94" />
-            <text x="273" y="70">F</text>
-            <text x="42" y="70">F<tspan baseline-shift="sub" font-size="10">тр</tspan></text>
-          </svg>
-        </span>
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-basic.svg')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 01</span>
         <strong>Базовый набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-physics home-program-level-gentleman" href="./_программы-обучения/физика-11-класс-—-программа">
-        <span class="home-program-visual" aria-hidden="true">
-          <svg class="home-program-diagram" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-            <polyline class="home-program-diagram-muted" points="42,116 270,116 270,25 42,116" />
-            <g transform="translate(157 70) rotate(-22)">
-              <rect x="-29" y="-18" width="58" height="36" rx="2" />
-            </g>
-            <line x1="157" y1="70" x2="157" y2="129" />
-            <polyline points="149,117 157,129 165,117" />
-            <text x="166" y="126">mg</text>
-            <line x1="157" y1="70" x2="184" y2="18" />
-            <polyline points="174,28 184,18 185,32" />
-            <text x="192" y="25">N</text>
-            <line x1="151" y1="65" x2="96" y2="42" />
-            <polyline points="108,40 96,42 104,52" />
-            <text x="77" y="34">F<tspan baseline-shift="sub" font-size="10">тр</tspan></text>
-          </svg>
-        </span>
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-gentleman.svg')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <div class="home-program-route home-program-physics home-program-level-star" aria-disabled="true">
-        <span class="home-program-visual" aria-hidden="true">
-          <svg class="home-program-diagram" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-            <line class="home-program-diagram-muted" x1="28" y1="23" x2="145" y2="23" />
-            <line class="home-program-diagram-muted" x1="105" y1="23" x2="105" y2="108" stroke-dasharray="4 5" />
-            <line x1="105" y1="23" x2="56" y2="82" />
-            <circle cx="56" cy="82" r="9" />
-            <text x="37" y="77">m</text>
-            <text x="71" y="47">l</text>
-            <path class="home-program-diagram-muted" d="M56 82 Q105 126 170 93" stroke-dasharray="4 5" />
-            <line class="home-program-diagram-muted" x1="145" y1="108" x2="294" y2="108" />
-            <rect x="199" y="77" width="52" height="31" rx="2" />
-            <text x="217" y="70">M</text>
-          </svg>
-        </span>
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-star.svg')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 03</span>
         <strong>Звездный набор</strong>
       </div>
       <div class="home-program-row">Математика</div>
       <div class="home-program-route home-program-math home-program-level-basic" aria-disabled="true">
-        <span class="home-program-visual" aria-hidden="true">
-          <svg class="home-program-diagram home-program-graph-diagram" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-            <line class="home-program-diagram-muted" x1="24" y1="112" x2="294" y2="112" />
-            <line class="home-program-diagram-muted" x1="160" y1="128" x2="160" y2="12" />
-            <path d="M74 18 C98 18 118 112 160 112 C202 112 222 18 246 18" />
-            <text x="270" y="104">x</text>
-            <text x="169" y="25">y</text>
-            <text x="224" y="35">y = x²</text>
-          </svg>
-        </span>
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/math-basic.svg')" aria-hidden="true"></span>
         <span class="home-program-code">MATH / 01</span>
         <strong>Базовый набор</strong>
       </div>
       <div class="home-program-route home-program-math home-program-level-gentleman" aria-disabled="true">
-        <span class="home-program-visual" aria-hidden="true">
-          <svg class="home-program-diagram home-program-graph-diagram" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-            <line class="home-program-diagram-muted" x1="18" y1="74" x2="302" y2="74" />
-            <line class="home-program-diagram-muted" x1="60" y1="126" x2="60" y2="12" />
-            <path d="M18 74 C42 22 78 22 102 74 S162 126 186 74 S246 22 302 74" />
-            <text x="278" y="64">x</text>
-            <text x="69" y="24">y</text>
-            <text x="206" y="113">y = sin x</text>
-          </svg>
-        </span>
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/math-gentleman.svg')" aria-hidden="true"></span>
         <span class="home-program-code">MATH / 02</span>
         <strong>Джентельменский набор</strong>
       </div>
       <div class="home-program-route home-program-math home-program-level-star" aria-disabled="true">
-        <span class="home-program-visual" aria-hidden="true">
-          <svg class="home-program-diagram home-program-graph-diagram" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-            <line class="home-program-diagram-muted" x1="20" y1="112" x2="300" y2="112" />
-            <line class="home-program-diagram-muted" x1="84" y1="130" x2="84" y2="10" />
-            <line x1="40" y1="13" x2="270" y2="136" />
-            <circle cx="112" cy="63" r="45" />
-            <circle cx="165" cy="78" r="43" />
-            <circle cx="216" cy="99" r="43" />
-            <circle cx="164" cy="78" r="3" fill="currentColor" />
-            <text x="224" y="28">y = −x + 2</text>
-          </svg>
-        </span>
+        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/math-star.svg')" aria-hidden="true"></span>
         <span class="home-program-code">MATH / 03</span>
         <strong>Звездный набор</strong>
       </div>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="42,116 270,116 270,25 42,116" opacity="0.58" />
+  <g transform="translate(157 70) rotate(-22)">
+    <rect x="-29" y="-18" width="58" height="36" rx="2" />
+  </g>
+  <line x1="157" y1="70" x2="157" y2="129" />
+  <polyline points="149,117 157,129 165,117" />
+  <line x1="157" y1="70" x2="184" y2="18" />
+  <polyline points="174,28 184,18 185,32" />
+  <line x1="151" y1="65" x2="96" y2="42" />
+  <polyline points="108,40 96,42 104,52" />
+  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
+    <text x="166" y="126">mg</text>
+    <text x="192" y="25">N</text>
+    <text x="77" y="34">F<tspan baseline-shift="sub" font-size="10">тр</tspan></text>
+  </g>
+</svg>

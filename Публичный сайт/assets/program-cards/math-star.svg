@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="20" y1="112" x2="300" y2="112" opacity="0.58" />
+  <line x1="84" y1="130" x2="84" y2="10" opacity="0.58" />
+  <line x1="40" y1="13" x2="270" y2="136" />
+  <circle cx="112" cy="63" r="45" stroke-width="2.35" />
+  <circle cx="165" cy="78" r="43" stroke-width="2.35" />
+  <circle cx="216" cy="99" r="43" stroke-width="2.35" />
+  <circle cx="164" cy="78" r="3" fill="#000" stroke-width="2.35" />
+  <text x="224" y="28" fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">y = −x + 2</text>
+</svg>

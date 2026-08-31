@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="30" y1="108" x2="292" y2="108" opacity="0.58" />
+  <rect x="126" y="65" width="88" height="43" rx="2" />
+  <line x1="214" y1="86" x2="282" y2="86" />
+  <polyline points="270,78 282,86 270,94" />
+  <line x1="126" y1="86" x2="47" y2="86" />
+  <polyline points="59,78 47,86 59,94" />
+  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
+    <text x="273" y="70">F</text>
+    <text x="42" y="70">F<tspan baseline-shift="sub" font-size="10">тр</tspan></text>
+  </g>
+</svg>

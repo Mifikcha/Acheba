@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="24" y1="112" x2="294" y2="112" opacity="0.58" />
+  <line x1="160" y1="128" x2="160" y2="12" opacity="0.58" />
+  <path d="M74 18 C98 18 118 112 160 112 C202 112 222 18 246 18" stroke-width="2.35" />
+  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
+    <text x="270" y="104">x</text>
+    <text x="169" y="25">y</text>
+    <text x="224" y="35">y = x²</text>
+  </g>
+</svg>

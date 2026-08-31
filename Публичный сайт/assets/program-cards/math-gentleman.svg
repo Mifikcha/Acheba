@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="18" y1="74" x2="302" y2="74" opacity="0.58" />
+  <line x1="60" y1="126" x2="60" y2="12" opacity="0.58" />
+  <path d="M18 74 C42 22 78 22 102 74 S162 126 186 74 S246 22 302 74" stroke-width="2.35" />
+  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
+    <text x="278" y="64">x</text>
+    <text x="69" y="24">y</text>
+    <text x="206" y="113">y = sin x</text>
+  </g>
+</svg>

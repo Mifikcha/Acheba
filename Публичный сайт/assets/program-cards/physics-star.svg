@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="28" y1="23" x2="145" y2="23" opacity="0.58" />
+  <line x1="105" y1="23" x2="105" y2="108" stroke-dasharray="4 5" opacity="0.58" />
+  <line x1="105" y1="23" x2="56" y2="82" />
+  <circle cx="56" cy="82" r="9" />
+  <path d="M56 82 Q105 126 170 93" stroke-dasharray="4 5" opacity="0.58" />
+  <line x1="145" y1="108" x2="294" y2="108" opacity="0.58" />
+  <rect x="199" y="77" width="52" height="31" rx="2" />
+  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
+    <text x="37" y="77">m</text>
+    <text x="71" y="47">l</text>
+    <text x="217" y="70">M</text>
+  </g>
+</svg>
