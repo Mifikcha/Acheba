@@ -141,11 +141,15 @@ const replacements = [
   ],
   [
     '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
+    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)*.325}).on("zoom",ut)',
+  ],
+  [
     '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
+    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)*.325}).on("zoom",ut)',
   ],
   [
     '.scaleExtent([.25,4]).on("zoom",ut)',
-    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4}).on("zoom",ut)',
+    '.scaleExtent([.25,4]).wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)*.325}).on("zoom",ut)',
   ],
   ["l.gfx.alpha=F}}", "l.alpha=F}}"],
   ["l.alpha=F,l.color=l.active?Ie:ee", "l.targetAlpha=F,l.color=l.active?Ie:ee"],
@@ -194,8 +198,8 @@ const graphInvariants = [
   ["alphaTarget(.025).restart()", "перетаскивание узла мягко прогревает физику графа"],
   ["F=.32;_u!==null&&(F=l.active?1:.09)", "обычные связи не забивают структуру графа"],
   [
-    "wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)/4})",
-    "колесо графа зумит в четыре раза мягче",
+    "wheelDelta(function(i){return-i.deltaY*(i.deltaMode===1?.05:i.deltaMode?1:.002)*.325})",
+    "чувствительность колеса графа увеличена на 30%",
   ],
   ["l.gfx.alpha+=", "наведение на узлы плавно меняет прозрачность"],
   ["v.targetAlpha", "наведение на связи плавно меняет прозрачность"],

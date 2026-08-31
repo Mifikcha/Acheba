@@ -124,7 +124,13 @@
     --callout-icon: var(--callout-icon-quote);
   }
 
+  &.is-collapsible > .callout-title {
+    cursor: pointer;
+  }
+
   &.is-collapsed {
+    cursor: pointer;
+
     & > .callout-title > .fold-callout-icon {
       transform: rotateZ(-90deg);
     }

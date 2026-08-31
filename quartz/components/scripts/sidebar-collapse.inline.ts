@@ -314,7 +314,7 @@ const prepareGraphScrollContract = () => {
       graph.addEventListener(
         "wheel",
         (event) => {
-          if (event.shiftKey) return
+          if (event.shiftKey || graph.classList.contains("global-graph-container")) return
           event.stopPropagation()
         },
         { capture: true },
