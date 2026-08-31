@@ -1,10 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <line x1="18" y1="74" x2="302" y2="74" opacity="0.58" />
-  <line x1="60" y1="126" x2="60" y2="12" opacity="0.58" />
-  <path d="M18 74 C42 22 78 22 102 74 S162 126 186 74 S246 22 302 74" stroke-width="2.35" />
-  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
-    <text x="278" y="64">x</text>
-    <text x="69" y="24">y</text>
-    <text x="206" y="113">y = sin x</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" width="320" height="140"
+     fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <title>Sine waves</title>
+  <defs>
+    <radialGradient id="vg" cx="50%" cy="52%" r="85%">
+      <stop offset="0.60" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tl" x1="0" y1="0" x2="0.46" y2="0.56">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <mask id="vignette" maskContentUnits="userSpaceOnUse">
+      <rect width="320" height="140" fill="url(#vg)"/>
+    </mask>
+    <mask id="corner" maskContentUnits="userSpaceOnUse">
+      <rect width="320" height="140" fill="url(#tl)"/>
+    </mask>
+  </defs>
+  <g mask="url(#corner)"><g mask="url(#vignette)">
+    <line x1="32" y1="76" x2="306" y2="76" stroke-width="1.8" opacity="0.5"/>
+    <line x1="58" y1="20" x2="58" y2="126" stroke-width="1.8" opacity="0.5"/>
+    <path d="M20 76 C42 26 64 26 86 76 S130 126 152 76 S196 26 218 76 S262 126 284 76 S306 26 328 76" stroke-width="2.8"/>
+    <path d="M20 116 C48 116 62 36 98 36 S148 116 184 116 S234 36 270 36 S320 116 356 116" stroke-width="2.2" opacity="0.62"/>
+    <g fill="#000" stroke="none" font-family="Georgia, 'Times New Roman', serif" font-style="italic">
+      <text x="290" y="69" font-size="14">x</text>
+      <text x="65" y="30" font-size="14">y</text>
+      <text x="232" y="115" font-size="14">y = sin x</text>
+    </g>
+  </g></g>
 </svg>

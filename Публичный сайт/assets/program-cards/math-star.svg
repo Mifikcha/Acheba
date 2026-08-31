@@ -1,10 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <line x1="20" y1="112" x2="300" y2="112" opacity="0.58" />
-  <line x1="84" y1="130" x2="84" y2="10" opacity="0.58" />
-  <line x1="40" y1="13" x2="270" y2="136" />
-  <circle cx="112" cy="63" r="45" stroke-width="2.35" />
-  <circle cx="165" cy="78" r="43" stroke-width="2.35" />
-  <circle cx="216" cy="99" r="43" stroke-width="2.35" />
-  <circle cx="164" cy="78" r="3" fill="#000" stroke-width="2.35" />
-  <text x="224" y="28" fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">y = −x + 2</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" width="320" height="140"
+     fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <title>Parametric curve family</title>
+  <defs>
+    <radialGradient id="vg" cx="50%" cy="52%" r="85%">
+      <stop offset="0.60" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tl" x1="0" y1="0" x2="0.46" y2="0.56">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <mask id="vignette" maskContentUnits="userSpaceOnUse">
+      <rect width="320" height="140" fill="url(#vg)"/>
+    </mask>
+    <mask id="corner" maskContentUnits="userSpaceOnUse">
+      <rect width="320" height="140" fill="url(#tl)"/>
+    </mask>
+  </defs>
+  <g mask="url(#corner)"><g mask="url(#vignette)">
+    <line x1="28" y1="76" x2="308" y2="76" stroke-width="1.5" opacity="0.34"/>
+    <line x1="174" y1="10" x2="174" y2="134" stroke-width="1.5" opacity="0.34"/>
+    <g transform="translate(174 76)" stroke-width="2.1">
+      <ellipse rx="112" ry="33"/>
+      <ellipse rx="108" ry="34" transform="rotate(15)" opacity="0.96"/>
+      <ellipse rx="103" ry="35" transform="rotate(30)" opacity="0.92"/>
+      <ellipse rx="98" ry="36" transform="rotate(45)" opacity="0.88"/>
+      <ellipse rx="93" ry="37" transform="rotate(60)" opacity="0.84"/>
+      <ellipse rx="88" ry="38" transform="rotate(75)" opacity="0.8"/>
+      <ellipse rx="84" ry="39" transform="rotate(90)" opacity="0.76"/>
+      <ellipse rx="80" ry="40" transform="rotate(105)" opacity="0.72"/>
+      <ellipse rx="76" ry="41" transform="rotate(120)" opacity="0.68"/>
+      <ellipse rx="72" ry="42" transform="rotate(135)" opacity="0.64"/>
+      <ellipse rx="68" ry="43" transform="rotate(150)" opacity="0.6"/>
+      <ellipse rx="64" ry="44" transform="rotate(165)" opacity="0.56"/>
+      <ellipse rx="36" ry="18" transform="rotate(45)" stroke-width="2.6"/>
+      <ellipse rx="36" ry="18" transform="rotate(-45)" stroke-width="2.6"/>
+    </g>
+  </g></g>
 </svg>

@@ -55,34 +55,15 @@ title: Hopes and Dreams
       </div>
       <div class="home-program-row">Информатика</div>
       <div class="home-program-route home-program-informatics home-program-level-basic" aria-disabled="true">
-        <span class="home-program-visual home-program-code-visual" aria-hidden="true"><code>print("Hello, World!")</code></span>
         <span class="home-program-code">CS / 01</span>
         <strong>Базовый набор</strong>
       </div>
       <a class="home-program-route home-program-informatics home-program-level-gentleman" href="./_программы-обучения/информатика-—-программа-до-80">
-        <span class="home-program-visual home-program-code-visual" aria-hidden="true"><pre>print('19', [s for s in range(1, 128) if f(s, 2)])
-print('20', [s for s in range(1, 128) if not f(s, 1) and f(s, 3)])
-print('21', [s for s in range(1, 128) if not f(s, 2) and f(s, 4)])
-19 [64]
-20 [32, 63]
-21 [62]</pre></span>
         <span class="home-program-code">CS / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-informatics home-program-level-star" href="./_программы-обучения/информатика-—-программа-80+">
-        <span class="home-program-visual home-program-code-visual home-program-code-visual-star" aria-hidden="true"><pre>prog = {(r[0], s): c
-        for r in map(str.split, table.strip().split('\n'))
-        for s, c in zip('λ01', r[1:]) if c != '-'}
-tape = dict(enumerate(bin(n)[2:]))
-pos, st = len(tape) if head == 'справа' else -1, 'q0'
-for _ in range(10**5):
-    w, m, st = prog[st, tape.get(pos, 'λ')].split(',')
-    tape[pos] = w
-    if m == 'S': break
-    pos += 1 if m == 'R' else -1
-print(''.join(tape[i] for i in sorted(tape)))
-print(int(''.join(tape[i] for i in sorted(tape) if tape[i] != 'λ'), 2))</pre></span>
         <span class="home-program-code">CS / 03</span>
         <strong>Звездный набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>

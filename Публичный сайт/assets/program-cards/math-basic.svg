@@ -1,10 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <line x1="24" y1="112" x2="294" y2="112" opacity="0.58" />
-  <line x1="160" y1="128" x2="160" y2="12" opacity="0.58" />
-  <path d="M74 18 C98 18 118 112 160 112 C202 112 222 18 246 18" stroke-width="2.35" />
-  <g fill="#000" stroke="none" font-family="ui-monospace, Consolas, monospace" font-size="15" font-weight="700">
-    <text x="270" y="104">x</text>
-    <text x="169" y="25">y</text>
-    <text x="224" y="35">y = x²</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 140" width="320" height="140"
+     fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <title>Parabola</title>
+  <defs>
+    <radialGradient id="vg" cx="50%" cy="52%" r="85%">
+      <stop offset="0.60" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tl" x1="0" y1="0" x2="0.46" y2="0.56">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <mask id="vignette" maskContentUnits="userSpaceOnUse">
+      <rect width="320" height="140" fill="url(#vg)"/>
+    </mask>
+    <mask id="corner" maskContentUnits="userSpaceOnUse">
+      <rect width="320" height="140" fill="url(#tl)"/>
+    </mask>
+  </defs>
+  <g mask="url(#corner)"><g mask="url(#vignette)">
+    <line x1="42" y1="88" x2="300" y2="88" stroke-width="1.8" opacity="0.55"/>
+    <line x1="96" y1="20" x2="96" y2="128" stroke-width="1.8" opacity="0.55"/>
+    <path d="M112 18 C126 65 144 112 174 112 C204 112 222 65 236 18" stroke-width="3"/>
+    <g fill="#000" stroke="none" font-family="Georgia, 'Times New Roman', serif" font-style="italic">
+      <text x="282" y="82" font-size="14">x</text>
+      <text x="103" y="30" font-size="14">y</text>
+      <text x="234" y="37" font-size="15">y = x<tspan font-size="10" dy="-5">2</tspan></text>
+    </g>
+  </g></g>
 </svg>
