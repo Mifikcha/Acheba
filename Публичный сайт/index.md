@@ -74,7 +74,7 @@ title: Hopes and Dreams
     </div>
     <a class="home-python-sandbox" href="./песочница-python">
       <span class="home-python-prompt" aria-hidden="true">&gt;</span>
-      <strong>Песочница Python</strong>
+      <strong><span class="home-python-initial">П</span>есочница Python</strong>
       <span class="home-program-arrow" aria-hidden="true">OPEN ↗</span>
     </a>
   </div>
