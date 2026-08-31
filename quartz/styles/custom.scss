@@ -1765,33 +1765,14 @@ body[data-slug="index"] .right.sidebar .toc {
   left: 4%;
 }
 
-.home-program-diagram {
+.home-program-image-visual::before {
+  content: "";
   display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.home-program-diagram-muted {
-  opacity: 0.58;
-}
-
-.home-program-diagram text {
-  fill: currentColor;
-  stroke: none;
-  font-family: var(--codeFont);
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.home-program-graph-diagram path,
-.home-program-graph-diagram circle {
-  stroke-width: 2.35;
+  background: currentColor;
+  -webkit-mask: var(--home-program-image) center bottom / contain no-repeat;
+  mask: var(--home-program-image) center bottom / contain no-repeat;
 }
 
 .home-program-code-visual {
