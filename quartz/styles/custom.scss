@@ -1697,8 +1697,10 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-python-sandbox {
   position: relative;
   box-sizing: border-box;
-  min-height: 7.35rem;
+  min-height: 8.6rem;
   padding: 1rem;
+  overflow: hidden;
+  isolation: isolate;
   border: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
   border-radius: 6px;
   background: color-mix(in srgb, var(--site-panel) 91%, var(--secondary));
@@ -1708,14 +1710,122 @@ body[data-slug="index"] .right.sidebar .toc {
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+    color 180ms ease;
 }
 
 .home-program-route {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 0.45rem;
+}
+
+.home-program-route > :not(.home-program-visual) {
+  position: relative;
+  z-index: 2;
+}
+
+.home-program-visual {
+  position: absolute;
+  z-index: 0;
+  inset: 2.35rem 0.45rem 0.4rem 30%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-width: 0;
+  color: color-mix(in srgb, var(--secondary) 82%, var(--darkgray));
+  opacity: var(--home-program-visual-opacity);
+  pointer-events: none;
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+
+.home-program-level-basic {
+  --home-program-visual-opacity: 0.42;
+  --home-program-visual-hover-opacity: 0.5;
+}
+
+.home-program-level-gentleman {
+  --home-program-visual-opacity: 0.49;
+  --home-program-visual-hover-opacity: 0.57;
+}
+
+.home-program-level-star {
+  --home-program-visual-opacity: 0.56;
+  --home-program-visual-hover-opacity: 0.64;
+}
+
+.home-program-level-basic .home-program-visual {
+  left: 34%;
+}
+
+.home-program-level-gentleman .home-program-visual {
+  left: 18%;
+}
+
+.home-program-level-star .home-program-visual {
+  left: 4%;
+}
+
+.home-program-diagram {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-program-diagram-muted {
+  opacity: 0.58;
+}
+
+.home-program-diagram text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--codeFont);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.home-program-graph-diagram path,
+.home-program-graph-diagram circle {
+  stroke-width: 2.35;
+}
+
+.home-program-code-visual {
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  font-family: var(--codeFont);
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  white-space: pre;
+}
+
+.home-program-code-visual code,
+.home-program-code-visual pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: currentColor;
+  font-family: inherit;
+  font-size: 0.54rem;
+  font-weight: 700;
+  line-height: 1.38;
+  white-space: pre;
+}
+
+.home-program-level-basic .home-program-code-visual code {
+  font-size: clamp(0.74rem, 1.05vw, 0.92rem);
+  line-height: 1.2;
+}
+
+.home-program-code-visual-star pre {
+  font-size: 0.54rem;
+  line-height: 1.32;
 }
 
 .home-program-code {
@@ -1736,6 +1846,13 @@ body[data-slug="index"] .right.sidebar .toc {
   overflow-wrap: anywhere;
 }
 
+.home-program-route strong {
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.14rem 0.3rem 0.18rem 0;
+  background: color-mix(in srgb, var(--site-panel) 62%, transparent);
+}
+
 .home-program-arrow {
   align-self: end;
   justify-self: end;
@@ -1744,19 +1861,17 @@ body[data-slug="index"] .right.sidebar .toc {
   font-size: 1.05rem;
   font-weight: 800;
   line-height: 1;
-  transition: transform 180ms ease;
 }
 
 .home-program-card a:hover,
 .home-program-card a:focus-visible {
   border-color: color-mix(in srgb, var(--secondary) 54%, transparent);
   box-shadow: 0 14px 30px color-mix(in srgb, var(--site-shadow) 86%, transparent);
-  transform: translateY(-2px);
 }
 
-.home-program-card a:hover .home-program-arrow,
-.home-program-card a:focus-visible .home-program-arrow {
-  transform: translate(0.25rem, -0.12rem);
+.home-program-route:is(a:hover, a:focus-visible) .home-program-visual {
+  opacity: var(--home-program-visual-hover-opacity);
+  filter: brightness(1.08);
 }
 
 .home-program-math {
@@ -1848,7 +1963,7 @@ body[data-slug="index"] .right.sidebar .toc {
 
   .home-program-route,
   .home-python-sandbox {
-    min-height: 6rem;
+    min-height: 7.4rem;
   }
 
   .home-python-sandbox {
@@ -1878,7 +1993,11 @@ body[data-slug="index"] .right.sidebar .toc {
 
   .home-program-route,
   .home-python-sandbox {
-    min-height: 6.2rem;
+    min-height: 7.4rem;
+  }
+
+  .home-program-route .home-program-visual {
+    left: 45%;
   }
 
   .home-python-sandbox {
