@@ -1354,6 +1354,7 @@ button.darkmode,
   isolation: isolate;
   max-width: 76rem;
   padding: 5.6rem 0 1.2rem;
+  overflow: hidden;
 }
 
 .home-hero {
@@ -1377,8 +1378,8 @@ button.darkmode,
   z-index: 2;
   margin: 0;
   color: var(--dark);
-  font-size: clamp(2.2rem, 9vw, 6rem);
-  font-size: clamp(2.2rem, 12cqi, 6rem);
+  font-size: clamp(2.2rem, 9vw, 5rem);
+  font-size: clamp(2.2rem, 12cqi, 5rem);
   font-family:
     "Kalissa", "Kalissa Script", "Atziluth-Script", "Atziluth Script", "Segoe Script",
     "Brush Script MT", cursive;
@@ -1391,149 +1392,259 @@ button.darkmode,
 .home-atmosphere {
   position: absolute;
   z-index: -1;
-  inset: 0 -3% -12% -4%;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
 }
 
-.home-atmosphere > i {
+.home-star-field,
+.home-orbit-system {
   position: absolute;
-  top: 17%;
-  right: -2%;
-  width: min(52rem, 68vw);
-  height: min(20rem, 62%);
-  border: 1px solid color-mix(in srgb, var(--tertiary) 18%, transparent);
+  inset: 0;
+}
+
+.home-star-field > i {
+  position: absolute;
+  width: var(--star-size, 2px);
+  height: var(--star-size, 2px);
   border-radius: 50%;
-  opacity: 0.58;
-  transform: rotate(-8deg);
-  animation: home-orbit-breathe 12s ease-in-out infinite alternate;
+  background: color-mix(in srgb, var(--tertiary) 72%, white);
+  opacity: var(--star-opacity, 0.16);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--tertiary) 20%, transparent);
+  animation: home-star-twinkle var(--star-duration, 19s) ease-in-out infinite alternate;
+  animation-delay: var(--star-delay, -3s);
   animation-play-state: paused;
 }
 
-.home-atmosphere > i > b {
+.home-star-field > i:nth-child(1) {
+  top: 17%;
+  left: 13%;
+  --star-opacity: 0.12;
+}
+.home-star-field > i:nth-child(2) {
+  top: 27%;
+  left: 31%;
+  --star-size: 1px;
+  --star-delay: -11s;
+}
+.home-star-field > i:nth-child(3) {
+  top: 12%;
+  left: 58%;
+  --star-size: 3px;
+  --star-opacity: 0.22;
+  --star-duration: 27s;
+}
+.home-star-field > i:nth-child(4) {
+  top: 36%;
+  left: 74%;
+  --star-delay: -17s;
+}
+.home-star-field > i:nth-child(5) {
+  top: 21%;
+  right: 7%;
+  --star-size: 1px;
+  --star-opacity: 0.1;
+}
+.home-star-field > i:nth-child(6) {
+  top: 51%;
+  left: 7%;
+  --star-size: 1px;
+  --star-delay: -7s;
+}
+.home-star-field > i:nth-child(7) {
+  top: 58%;
+  left: 25%;
+  --star-opacity: 0.11;
+  --star-duration: 23s;
+}
+.home-star-field > i:nth-child(8) {
+  top: 69%;
+  left: 43%;
+  --star-size: 3px;
+  --star-opacity: 0.2;
+  --star-delay: -14s;
+}
+.home-star-field > i:nth-child(9) {
+  top: 53%;
+  left: 57%;
+  --star-size: 1px;
+  --star-opacity: 0.09;
+}
+.home-star-field > i:nth-child(10) {
+  top: 77%;
+  left: 67%;
+  --star-delay: -9s;
+  --star-duration: 29s;
+}
+.home-star-field > i:nth-child(11) {
+  top: 62%;
+  right: 13%;
+  --star-size: 1px;
+  --star-opacity: 0.1;
+}
+.home-star-field > i:nth-child(12) {
+  bottom: 11%;
+  right: 4%;
+  --star-opacity: 0.13;
+  --star-delay: -19s;
+}
+.home-star-field > i:nth-child(13) {
+  top: 8%;
+  left: 42%;
+  --star-size: 1px;
+  --star-opacity: 0.08;
+}
+.home-star-field > i:nth-child(14) {
+  bottom: 18%;
+  left: 17%;
+  --star-size: 1px;
+  --star-delay: -5s;
+}
+.home-star-field > i:nth-child(15) {
+  top: 42%;
+  left: 48%;
+  --star-opacity: 0.1;
+  --star-duration: 31s;
+}
+.home-star-field > i:nth-child(16) {
+  top: 14%;
+  right: 24%;
+  --star-size: 1px;
+  --star-opacity: 0.12;
+}
+.home-star-field > i:nth-child(17) {
+  bottom: 7%;
+  left: 52%;
+  --star-size: 1px;
+  --star-delay: -23s;
+}
+.home-star-field > i:nth-child(18) {
+  top: 45%;
+  right: 2%;
+  --star-size: 3px;
+  --star-opacity: 0.18;
+  --star-duration: 25s;
+}
+
+.home-orbit-system {
+  --orbit-center-x: 92%;
+  --orbit-center-y: 52%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 2%, rgb(0 0 0 / 0.16) 34%, black 58%);
+  mask-image: linear-gradient(90deg, transparent 2%, rgb(0 0 0 / 0.16) 34%, black 58%);
+}
+
+.home-orbit {
+  position: absolute;
+  top: var(--orbit-center-y);
+  left: var(--orbit-center-x);
+  width: var(--orbit-width);
+  height: var(--orbit-height);
+  border: 1px solid color-mix(in srgb, var(--tertiary) var(--orbit-strength), transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(var(--orbit-angle));
+}
+
+.home-orbit > b {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0.32rem;
-  height: 0.32rem;
+  width: var(--body-size, 0.28rem);
+  height: var(--body-size, 0.28rem);
+  border: 1px solid color-mix(in srgb, var(--tertiary) 66%, white);
   border-radius: 50%;
-  background: color-mix(in srgb, var(--tertiary) 82%, white);
-  box-shadow:
-    0 2px 8px color-mix(in srgb, var(--tertiary) 52%, transparent),
-    0 4px 22px color-mix(in srgb, var(--secondary) 28%, transparent);
+  background: color-mix(in srgb, var(--site-panel) 68%, var(--tertiary));
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--tertiary) 30%, transparent);
   offset-path: ellipse(50% 50% at 50% 50%);
   offset-rotate: 0deg;
-  animation: home-orbit-travel 28s linear infinite;
+  offset-distance: var(--orbit-start, 0%);
+  animation: home-orbit-travel var(--orbit-period) linear infinite;
   animation-play-state: paused;
 }
 
-.home-atmosphere > span {
+.home-orbit-1 {
+  --orbit-width: min(50rem, 68vw);
+  --orbit-height: min(17rem, 45vh);
+  --orbit-angle: -7deg;
+  --orbit-strength: 21%;
+  --orbit-period: 47s;
+  --orbit-start: 13%;
+  --body-size: 0.34rem;
+}
+
+.home-orbit-2 {
+  --orbit-width: min(58rem, 78vw);
+  --orbit-height: min(12rem, 32vh);
+  --orbit-angle: 18deg;
+  --orbit-strength: 17%;
+  --orbit-period: 73s;
+  --orbit-start: 58%;
+}
+
+.home-orbit-3 {
+  --orbit-width: min(34rem, 48vw);
+  --orbit-height: min(24rem, 66vh);
+  --orbit-angle: -38deg;
+  --orbit-strength: 15%;
+  --orbit-period: 109s;
+  --orbit-start: 34%;
+  --body-size: 0.24rem;
+}
+
+.home-orbit-4 {
+  --orbit-width: min(82rem, 108vw);
+  --orbit-height: min(31rem, 82vh);
+  --orbit-angle: 8deg;
+  --orbit-strength: 8%;
+}
+
+.home-orbit-5 {
+  --orbit-width: min(68rem, 92vw);
+  --orbit-height: min(39rem, 102vh);
+  --orbit-angle: 47deg;
+  --orbit-strength: 6%;
+}
+
+.home-orbit-sphere {
   position: absolute;
-  width: 0.28rem;
-  height: 0.28rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--tertiary) 56%, var(--secondary));
-  box-shadow: 0 2px 10px color-mix(in srgb, var(--tertiary) 24%, transparent);
-  opacity: 0.16;
-  animation: home-star-drift 13s ease-in-out infinite alternate;
+  top: var(--orbit-center-y);
+  left: var(--orbit-center-x);
+  width: clamp(3.8rem, 6vw, 4.4rem);
+  height: clamp(3.8rem, 6vw, 4.4rem);
+  overflow: visible;
+  fill: none;
+  stroke: color-mix(in srgb, var(--tertiary) 36%, var(--secondary));
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.74;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  transform-origin: center;
+  animation: home-sphere-turn 64s ease-in-out infinite alternate;
   animation-play-state: paused;
 }
 
-.home-atmosphere.is-live > i,
-.home-atmosphere.is-live > i > b,
-.home-atmosphere.is-live > span {
+.home-atmosphere.is-live .home-star-field > i,
+.home-atmosphere.is-live .home-orbit > b,
+.home-atmosphere.is-live .home-orbit-sphere {
   animation-play-state: running;
 }
 
-.home-atmosphere > span:nth-of-type(1) {
-  top: 17%;
-  left: 18%;
-  animation-delay: -2s;
-}
-
-.home-atmosphere > span:nth-of-type(2) {
-  top: 34%;
-  right: 33%;
-  width: 0.2rem;
-  height: 0.2rem;
-  animation-delay: -5s;
-}
-
-.home-atmosphere > span:nth-of-type(3) {
-  top: 13%;
-  right: 14%;
-  animation-delay: -7s;
-}
-
-.home-atmosphere > span:nth-of-type(4) {
-  bottom: 23%;
-  left: 43%;
-  width: 0.22rem;
-  height: 0.22rem;
-  animation-delay: -3s;
-}
-
-.home-atmosphere > span:nth-of-type(5) {
-  right: 7%;
-  bottom: 18%;
-  animation-delay: -6s;
-}
-
-.home-atmosphere > span:nth-of-type(6) {
-  top: 49%;
-  left: 7%;
-  width: 0.18rem;
-  height: 0.18rem;
-  animation-delay: -9s;
-}
-
-.home-atmosphere > span:nth-of-type(7) {
-  top: 62%;
-  right: 24%;
-  animation-delay: -11s;
-}
-
-.home-atmosphere > span:nth-of-type(8) {
-  top: 8%;
-  left: 57%;
-  width: 0.2rem;
-  height: 0.2rem;
-  animation-delay: -4s;
-}
-
-.home-atmosphere > span:nth-of-type(9) {
-  bottom: 11%;
-  left: 66%;
-  width: 0.18rem;
-  height: 0.18rem;
-  animation-delay: -8s;
-}
-
-@keyframes home-star-drift {
+@keyframes home-star-twinkle {
   from {
-    opacity: 0.12;
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--tertiary) 18%, transparent);
-    transform: translate3d(-2px, 2px, 0) scale(0.88);
+    opacity: calc(var(--star-opacity, 0.16) * 0.68);
   }
 
   to {
-    opacity: 0.38;
-    box-shadow:
-      0 2px 12px color-mix(in srgb, var(--tertiary) 38%, transparent),
-      0 4px 24px color-mix(in srgb, var(--secondary) 16%, transparent);
-    transform: translate3d(3px, -3px, 0) scale(1.12);
+    opacity: var(--star-opacity, 0.16);
   }
 }
 
-@keyframes home-orbit-breathe {
+@keyframes home-sphere-turn {
   from {
-    border-color: color-mix(in srgb, var(--tertiary) 13%, transparent);
-    opacity: 0.44;
+    transform: translate(-50%, -50%) rotate(-7deg) scaleX(0.97);
   }
 
   to {
-    border-color: color-mix(in srgb, var(--tertiary) 23%, transparent);
-    opacity: 0.68;
+    transform: translate(-50%, -50%) rotate(7deg) scaleX(1.03);
   }
 }
 
@@ -1749,7 +1860,9 @@ body[data-slug="index"] .right.sidebar .toc {
   color: color-mix(in srgb, var(--secondary) 82%, var(--darkgray));
   opacity: var(--home-program-visual-opacity);
   pointer-events: none;
-  transition: opacity 180ms ease, filter 180ms ease;
+  transition:
+    opacity 180ms ease,
+    filter 180ms ease;
 }
 
 .home-program-level-basic {
@@ -1926,6 +2039,28 @@ body[data-slug="index"] .right.sidebar .toc {
 @media all and (max-width: 900px) {
   .home-entry {
     padding-top: 2.4rem;
+  }
+
+  .home-orbit-system {
+    --orbit-center-x: 104%;
+    --orbit-center-y: 48%;
+  }
+
+  .home-orbit-3,
+  .home-orbit-4,
+  .home-orbit-5,
+  .home-star-field > i:nth-child(n + 11) {
+    display: none;
+  }
+
+  .home-orbit-1 {
+    --orbit-width: 48rem;
+    --orbit-strength: 16%;
+  }
+
+  .home-orbit-2 {
+    --orbit-width: 42rem;
+    --orbit-strength: 12%;
   }
 
   .home-program-card {
@@ -3240,9 +3375,9 @@ html[saved-theme="dark"] .python-checker-inline {
     transition-duration: 1ms;
   }
 
-  .home-atmosphere > i,
-  .home-atmosphere > i > b,
-  .home-atmosphere > span,
+  .home-star-field > i,
+  .home-orbit > b,
+  .home-orbit-sphere,
   html[data-page-enter]
     :where(
       .center > .page-header,

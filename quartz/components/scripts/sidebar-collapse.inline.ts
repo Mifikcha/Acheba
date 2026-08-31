@@ -266,10 +266,26 @@ const prepareHomeAtmosphere = () => {
   const atmosphere = document.createElement("div")
   atmosphere.className = "home-atmosphere"
   atmosphere.setAttribute("aria-hidden", "true")
-  const orbit = document.createElement("i")
-  orbit.append(document.createElement("b"))
-  atmosphere.append(orbit)
-  for (let index = 0; index < 9; index++) atmosphere.append(document.createElement("span"))
+  atmosphere.innerHTML = `
+    <div class="home-star-field">
+      ${Array.from({ length: 18 }, () => "<i></i>").join("")}
+    </div>
+    <div class="home-orbit-system">
+      ${[1, 2, 3, 4, 5]
+        .map(
+          (orbit) =>
+            `<span class="home-orbit home-orbit-${orbit}">${orbit < 4 ? "<b></b>" : ""}</span>`,
+        )
+        .join("")}
+      <svg class="home-orbit-sphere" viewBox="0 0 100 100" focusable="false">
+        <circle cx="50" cy="50" r="33" />
+        <ellipse cx="50" cy="50" rx="33" ry="12" />
+        <ellipse cx="50" cy="50" rx="13" ry="33" />
+        <ellipse cx="50" cy="50" rx="33" ry="12" transform="rotate(38 50 50)" />
+        <ellipse cx="50" cy="50" rx="33" ry="12" transform="rotate(-38 50 50)" />
+      </svg>
+    </div>
+  `
   entry.prepend(atmosphere)
 
   const observer = new IntersectionObserver(([state]) => {
