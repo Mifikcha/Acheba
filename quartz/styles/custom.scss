@@ -1096,12 +1096,24 @@ button.darkmode,
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
   min-width: 2.5rem;
   min-height: 2.5rem;
+  padding: 0.52rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 38%, transparent);
   background: color-mix(in srgb, var(--light) 78%, var(--secondary));
   color: var(--secondary);
   opacity: 1;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+.graph > .graph-outer > .global-graph-icon > svg {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
 .graph > .graph-outer > .global-graph-icon:hover,
@@ -1637,10 +1649,13 @@ body[data-slug="index"] .right.sidebar .toc {
 }
 
 .home-program-card {
+  container-type: inline-size;
   display: grid;
-  max-width: 68rem;
-  gap: 0.8rem;
-  padding: 0.75rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  gap: 0.95rem;
+  padding: 0.9rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 20%, var(--lightgray));
   border-radius: 8px;
   background: color-mix(in srgb, var(--site-panel) 94%, var(--light));
@@ -1650,14 +1665,14 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-matrix {
   display: grid;
   grid-template-columns: minmax(6rem, 0.46fr) repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
+  gap: 0.65rem;
 }
 
 .home-program-axis,
 .home-program-column,
 .home-program-row {
   color: color-mix(in srgb, var(--darkgray) 78%, var(--secondary));
-  font-size: 0.66rem;
+  font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1.1;
@@ -1674,7 +1689,7 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-row {
   display: flex;
   align-items: center;
-  min-height: 6rem;
+  min-height: 7.35rem;
   border-top: 1px solid color-mix(in srgb, var(--secondary) 18%, transparent);
 }
 
@@ -1682,8 +1697,8 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-python-sandbox {
   position: relative;
   box-sizing: border-box;
-  min-height: 6rem;
-  padding: 0.85rem;
+  min-height: 7.35rem;
+  padding: 1rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
   border-radius: 6px;
   background: color-mix(in srgb, var(--site-panel) 91%, var(--secondary));
@@ -1706,7 +1721,7 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-code {
   color: var(--secondary);
   font-family: var(--codeFont);
-  font-size: 0.72rem;
+  font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1;
@@ -1716,8 +1731,9 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-python-sandbox strong {
   display: block;
   color: var(--dark);
-  font-size: clamp(1.02rem, 1.8vw, 1.24rem);
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem);
   line-height: 1.08;
+  overflow-wrap: anywhere;
 }
 
 .home-program-arrow {
@@ -1725,7 +1741,7 @@ body[data-slug="index"] .right.sidebar .toc {
   justify-self: end;
   color: var(--secondary);
   font-family: var(--codeFont);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 800;
   line-height: 1;
   transition: transform 180ms ease;
@@ -1767,7 +1783,7 @@ body[data-slug="index"] .right.sidebar .toc {
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.9rem;
-  min-height: 4.8rem;
+  min-height: 5.45rem;
   background: color-mix(in srgb, var(--site-panel) 90%, var(--tertiary));
 }
 
@@ -1833,6 +1849,36 @@ body[data-slug="index"] .right.sidebar .toc {
   .home-program-route,
   .home-python-sandbox {
     min-height: 6rem;
+  }
+
+  .home-python-sandbox {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .home-python-sandbox .home-program-arrow {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@container (max-width: 48rem) {
+  .home-program-matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .home-program-axis,
+  .home-program-column {
+    display: none;
+  }
+
+  .home-program-row {
+    min-height: auto;
+    padding-top: 0.55rem;
+  }
+
+  .home-program-route,
+  .home-python-sandbox {
+    min-height: 6.2rem;
   }
 
   .home-python-sandbox {
