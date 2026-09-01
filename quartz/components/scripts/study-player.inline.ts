@@ -5,6 +5,7 @@ import {
   formatAudioTime,
   type StudyPlayerState,
 } from "./study-player-controller"
+import { hidePlayerPopover, isPlayerPopoverOpen, showPlayerPopover } from "./study-player-popover"
 
 type PlayerBinding = { cleanup: () => void }
 
@@ -30,7 +31,7 @@ function bindPlayer(root: HTMLElement, player: AudioPlayerController): PlayerBin
   player.setExpanded(false)
 
   const positionPopover = () => {
-    if (popover.hidden) return
+    if (!isPlayerPopoverOpen(popover)) return
     const anchor = root.getBoundingClientRect()
     const margin = 16
     const gap = 12
@@ -48,7 +49,7 @@ function bindPlayer(root: HTMLElement, player: AudioPlayerController): PlayerBin
   const openPopover = () => {
     returnFocus =
       document.activeElement instanceof HTMLElement ? document.activeElement : expandButton
-    popover.hidden = false
+    showPlayerPopover(popover)
     player.setExpanded(true)
     requestAnimationFrame(() => {
       positionPopover()
@@ -57,10 +58,10 @@ function bindPlayer(root: HTMLElement, player: AudioPlayerController): PlayerBin
   }
 
   const closePopover = (restoreFocus = true) => {
-    if (popover.hidden) return
+    if (!isPlayerPopoverOpen(popover)) return
     const focusWasInside = popover.contains(document.activeElement)
     player.setExpanded(false)
-    popover.hidden = true
+    hidePlayerPopover(popover)
     if (restoreFocus && focusWasInside) (returnFocus ?? expandButton).focus()
   }
 
@@ -164,7 +165,7 @@ function bindPlayer(root: HTMLElement, player: AudioPlayerController): PlayerBin
   document.addEventListener(
     "pointerdown",
     (event) => {
-      if (popover.hidden || !(event.target instanceof Node)) return
+      if (!isPlayerPopoverOpen(popover) || !(event.target instanceof Node)) return
       if (!popover.contains(event.target) && !expandButton.contains(event.target))
         closePopover(false)
     },
@@ -174,7 +175,7 @@ function bindPlayer(root: HTMLElement, player: AudioPlayerController): PlayerBin
   document.addEventListener(
     "keydown",
     (event) => {
-      if (popover.hidden) return
+      if (!isPlayerPopoverOpen(popover)) return
       if (event.key === "Escape") {
         event.preventDefault()
         closePopover()

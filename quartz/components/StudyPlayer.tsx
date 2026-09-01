@@ -138,6 +138,7 @@ function StudyPlayer(props: QuartzComponentProps) {
       <section
         class="study-player-popover"
         data-player-popover
+        popover="manual"
         role="dialog"
         aria-modal="false"
         aria-labelledby="study-player-dialog-title"

@@ -271,8 +271,10 @@
 
 .study-player-popover {
   position: fixed;
-  z-index: 120;
+  inset: auto;
+  z-index: 2147483647;
   box-sizing: border-box;
+  margin: 0;
   max-height: calc(100dvh - 2rem);
   padding: 0.9rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 34%, var(--lightgray));
