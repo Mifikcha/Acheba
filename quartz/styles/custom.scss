@@ -1421,6 +1421,15 @@ button.darkmode,
   pointer-events: none;
 }
 
+.home-atmosphere::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, transparent 70%, var(--light) 100%),
+    linear-gradient(to right, transparent 87%, var(--light) 100%);
+  content: "";
+}
+
 .home-nebula,
 .home-star-field,
 .home-constellations,
@@ -1911,10 +1920,10 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-axis,
 .home-program-column,
 .home-program-row {
-  color: color-mix(in srgb, var(--darkgray) 78%, var(--secondary));
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0;
+  color: color-mix(in srgb, var(--darkgray) 90%, var(--secondary));
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
   line-height: 1.1;
   text-transform: uppercase;
 }
@@ -1922,15 +1931,19 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-column {
   display: flex;
   align-items: end;
+  justify-content: center;
   min-height: 1.6rem;
   padding-inline: 0.15rem;
+  text-align: center;
 }
 
 .home-program-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 7.35rem;
-  border-top: 1px solid color-mix(in srgb, var(--secondary) 18%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 10%, transparent);
+  text-align: center;
 }
 
 .home-program-route,
@@ -1981,7 +1994,7 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-visual {
   position: absolute;
   z-index: 0;
-  inset: 2.25rem 0.6rem 0.55rem 26%;
+  inset: 0;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -1989,6 +2002,14 @@ body[data-slug="index"] .right.sidebar .toc {
   color: color-mix(in srgb, var(--secondary) 82%, var(--darkgray));
   opacity: var(--home-program-visual-opacity);
   pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, black 2%, black 98%, transparent),
+    linear-gradient(to bottom, transparent, black 4.5%, black 95.5%, transparent);
+  mask-image:
+    linear-gradient(to right, transparent, black 2%, black 98%, transparent),
+    linear-gradient(to bottom, transparent, black 4.5%, black 95.5%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
   transition:
     opacity 180ms ease,
     filter 180ms ease;
@@ -2015,8 +2036,8 @@ body[data-slug="index"] .right.sidebar .toc {
   width: 100%;
   height: 100%;
   background: currentColor;
-  -webkit-mask: var(--home-program-image) center bottom / contain no-repeat;
-  mask: var(--home-program-image) center bottom / contain no-repeat;
+  -webkit-mask: var(--home-program-image) center / 100% 100% no-repeat;
+  mask: var(--home-program-image) center / 100% 100% no-repeat;
 }
 
 .home-program-code {
@@ -2069,15 +2090,6 @@ body[data-slug="index"] .right.sidebar .toc {
   color: color-mix(in srgb, var(--dark) 82%, var(--darkgray));
 }
 
-.home-program-math .home-program-visual {
-  inset: 0;
-}
-
-.home-program-math .home-program-image-visual::before {
-  -webkit-mask: var(--home-program-image) center / 100% 100% no-repeat;
-  mask: var(--home-program-image) center / 100% 100% no-repeat;
-}
-
 .home-program-math .home-program-code {
   color: color-mix(in srgb, var(--tertiary) 70%, var(--secondary));
 }
@@ -2094,9 +2106,9 @@ body[data-slug="index"] .right.sidebar .toc {
 
 .home-python-sandbox {
   display: grid;
-  grid-template-columns: 2.55rem minmax(0, 1fr) auto;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
   align-items: center;
-  column-gap: 0.2rem;
+  column-gap: 0;
   row-gap: 0.9rem;
   min-height: 5.45rem;
   background: color-mix(in srgb, var(--site-panel) 90%, var(--tertiary));
@@ -2107,7 +2119,7 @@ body[data-slug="index"] .right.sidebar .toc {
   z-index: 0;
   display: block;
   align-self: center;
-  width: 2.55rem;
+  width: 2.2rem;
   color: var(--secondary);
   font-family: var(--codeFont);
   font-size: 2.25rem;
@@ -2118,6 +2130,7 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-python-sandbox strong {
   position: relative;
   z-index: 1;
+  margin-left: -0.4rem;
   font-family: var(--codeFont);
   font-weight: 600;
   letter-spacing: 0;
@@ -2229,7 +2242,7 @@ body[data-slug="index"] .right.sidebar .toc {
   }
 
   .home-python-sandbox {
-    grid-template-columns: 2.55rem minmax(0, 1fr);
+    grid-template-columns: 2.2rem minmax(0, 1fr);
   }
 
   .home-python-sandbox .home-program-arrow {
@@ -2259,7 +2272,7 @@ body[data-slug="index"] .right.sidebar .toc {
   }
 
   .home-python-sandbox {
-    grid-template-columns: 2.55rem minmax(0, 1fr);
+    grid-template-columns: 2.2rem minmax(0, 1fr);
   }
 
   .home-python-sandbox .home-program-arrow {
