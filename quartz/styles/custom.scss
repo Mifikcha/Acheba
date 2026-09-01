@@ -1421,133 +1421,141 @@ button.darkmode,
   pointer-events: none;
 }
 
+.home-nebula,
 .home-star-field,
+.home-constellations,
 .home-orbit-system {
   position: absolute;
   inset: 0;
 }
 
-.home-star-field > i {
-  position: absolute;
-  width: var(--star-size, 2px);
-  height: var(--star-size, 2px);
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--tertiary) 72%, white);
-  opacity: var(--star-opacity, 0.16);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--tertiary) 20%, transparent);
-  animation: home-star-twinkle var(--star-duration, 19s) ease-in-out infinite alternate;
-  animation-delay: var(--star-delay, -3s);
+.home-nebula {
+  opacity: 0.74;
+  background:
+    radial-gradient(
+      ellipse 46% 74% at 84% 47%,
+      color-mix(in srgb, var(--secondary) 10%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 38% 58% at 48% 92%,
+      color-mix(in srgb, var(--tertiary) 6%, transparent),
+      transparent 72%
+    );
+  filter: blur(18px);
+  transform: scale(1.06) translate3d(-0.5%, 0, 0);
+  animation: home-nebula-drift 96s ease-in-out infinite alternate;
   animation-play-state: paused;
 }
 
-.home-star-field > i:nth-child(1) {
-  top: 17%;
-  left: 13%;
-  --star-opacity: 0.12;
+.home-star-field,
+.home-constellations {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
-.home-star-field > i:nth-child(2) {
-  top: 27%;
-  left: 31%;
-  --star-size: 1px;
-  --star-delay: -11s;
+
+.home-star-field circle {
+  fill: color-mix(in srgb, var(--tertiary) 74%, white);
 }
-.home-star-field > i:nth-child(3) {
-  top: 12%;
-  left: 58%;
-  --star-size: 3px;
-  --star-opacity: 0.22;
-  --star-duration: 27s;
+
+.home-star-mid {
+  fill: color-mix(in srgb, var(--dark) 42%, var(--tertiary)) !important;
 }
-.home-star-field > i:nth-child(4) {
-  top: 36%;
-  left: 74%;
-  --star-delay: -17s;
+
+.home-star-twinkle {
+  animation: home-star-twinkle var(--star-duration) ease-in-out var(--star-delay) infinite alternate;
+  animation-play-state: paused;
 }
-.home-star-field > i:nth-child(5) {
-  top: 21%;
-  right: 7%;
-  --star-size: 1px;
-  --star-opacity: 0.1;
+
+.home-star-bright {
+  color: color-mix(in srgb, var(--tertiary) 74%, white);
+  opacity: 0.46;
 }
-.home-star-field > i:nth-child(6) {
-  top: 51%;
-  left: 7%;
-  --star-size: 1px;
-  --star-delay: -7s;
+
+.home-star-bright circle:not(.home-star-ring) {
+  fill: currentColor;
 }
-.home-star-field > i:nth-child(7) {
-  top: 58%;
-  left: 25%;
-  --star-opacity: 0.11;
-  --star-duration: 23s;
+
+.home-star-bright path,
+.home-star-ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
 }
-.home-star-field > i:nth-child(8) {
-  top: 69%;
-  left: 43%;
-  --star-size: 3px;
-  --star-opacity: 0.2;
-  --star-delay: -14s;
+
+.home-star-bright-1,
+.home-star-bright-4 {
+  filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--tertiary) 34%, transparent));
 }
-.home-star-field > i:nth-child(9) {
-  top: 53%;
-  left: 57%;
-  --star-size: 1px;
-  --star-opacity: 0.09;
+
+.home-star-bright-2,
+.home-star-bright-5 {
+  opacity: 0.3;
 }
-.home-star-field > i:nth-child(10) {
-  top: 77%;
-  left: 67%;
-  --star-delay: -9s;
-  --star-duration: 29s;
+
+.home-star-bright-3,
+.home-star-bright-6,
+.home-star-bright-7 {
+  opacity: 0.38;
 }
-.home-star-field > i:nth-child(11) {
-  top: 62%;
-  right: 13%;
-  --star-size: 1px;
-  --star-opacity: 0.1;
+
+.home-constellation {
+  fill: none;
+  stroke: color-mix(in srgb, var(--tertiary) 28%, transparent);
+  stroke-width: 0.62;
+  vector-effect: non-scaling-stroke;
 }
-.home-star-field > i:nth-child(12) {
-  bottom: 11%;
-  right: 4%;
-  --star-opacity: 0.13;
-  --star-delay: -19s;
+
+.home-constellation circle {
+  fill: color-mix(in srgb, var(--tertiary) 44%, var(--light));
+  stroke: none;
 }
-.home-star-field > i:nth-child(13) {
-  top: 8%;
-  left: 42%;
-  --star-size: 1px;
-  --star-opacity: 0.08;
+
+.home-constellation-1 {
+  opacity: 0.24;
 }
-.home-star-field > i:nth-child(14) {
-  bottom: 18%;
-  left: 17%;
-  --star-size: 1px;
-  --star-delay: -5s;
+
+.home-constellation-2 {
+  opacity: 0.32;
 }
-.home-star-field > i:nth-child(15) {
-  top: 42%;
-  left: 48%;
-  --star-opacity: 0.1;
-  --star-duration: 31s;
+
+.home-constellation-3 {
+  opacity: 0.38;
 }
-.home-star-field > i:nth-child(16) {
-  top: 14%;
-  right: 24%;
-  --star-size: 1px;
-  --star-opacity: 0.12;
+
+.home-comet {
+  --comet-x: 78%;
+  --comet-y: 20%;
+  --comet-angle: -24deg;
+  position: absolute;
+  top: var(--comet-y);
+  left: var(--comet-x);
+  width: clamp(2.4rem, 5vw, 4.2rem);
+  height: 1px;
+  opacity: 0;
+  color: color-mix(in srgb, var(--tertiary) 64%, white);
+  background: linear-gradient(90deg, transparent, currentColor);
+  transform: rotate(var(--comet-angle));
+  transform-origin: 100% 50%;
 }
-.home-star-field > i:nth-child(17) {
-  bottom: 7%;
-  left: 52%;
-  --star-size: 1px;
-  --star-delay: -23s;
+
+.home-comet::after {
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 2px 7px color-mix(in srgb, var(--tertiary) 48%, transparent);
+  content: "";
+  transform: translateY(-50%);
 }
-.home-star-field > i:nth-child(18) {
-  top: 45%;
-  right: 2%;
-  --star-size: 3px;
-  --star-opacity: 0.18;
-  --star-duration: 25s;
+
+.home-comet.is-flying {
+  animation: home-comet-flight 0.9s cubic-bezier(0.2, 0.75, 0.26, 1) both;
 }
 
 .home-orbit-system {
@@ -1568,7 +1576,7 @@ button.darkmode,
   transform: translate(-50%, -50%) rotate(var(--orbit-angle));
 }
 
-.home-orbit > b {
+.home-orbit-body {
   position: absolute;
   top: 0;
   left: 0;
@@ -1583,6 +1591,21 @@ button.darkmode,
   offset-distance: var(--orbit-start, 0%);
   animation: home-orbit-travel var(--orbit-period) linear infinite;
   animation-play-state: paused;
+}
+
+.home-orbit-body-2 {
+  background: var(--site-panel);
+}
+
+.home-orbit-body-3 {
+  border: 0;
+  background: color-mix(in srgb, var(--tertiary) 72%, white);
+}
+
+.home-orbit-body-4 {
+  --body-size: 0.22rem;
+  border-color: color-mix(in srgb, var(--secondary) 44%, var(--tertiary));
+  background: transparent;
 }
 
 .home-orbit-1 {
@@ -1619,6 +1642,8 @@ button.darkmode,
   --orbit-height: min(31rem, 82vh);
   --orbit-angle: 8deg;
   --orbit-strength: 8%;
+  --orbit-period: 131s;
+  --orbit-start: 79%;
 }
 
 .home-orbit-5 {
@@ -1628,47 +1653,127 @@ button.darkmode,
   --orbit-strength: 6%;
 }
 
-.home-orbit-sphere {
+.home-dyson-sphere {
   position: absolute;
   top: var(--orbit-center-y);
   left: var(--orbit-center-x);
-  width: clamp(3.8rem, 6vw, 4.4rem);
-  height: clamp(3.8rem, 6vw, 4.4rem);
+  width: clamp(4.6rem, 7.4vw, 5.7rem);
+  height: clamp(4.6rem, 7.4vw, 5.7rem);
   overflow: visible;
   fill: none;
-  stroke: color-mix(in srgb, var(--tertiary) 36%, var(--secondary));
-  stroke-width: 1.1;
+  stroke: color-mix(in srgb, var(--tertiary) 32%, var(--secondary));
+  stroke-width: 0.9;
   vector-effect: non-scaling-stroke;
-  opacity: 0.74;
-  transform: translate(-50%, -50%) rotate(-5deg);
+  transform: translate(-50%, -50%) rotate(-7deg);
   transform-origin: center;
-  animation: home-sphere-turn 64s ease-in-out infinite alternate;
+}
+
+.home-dyson-shell {
+  opacity: 0.7;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: home-dyson-turn 84s linear infinite;
   animation-play-state: paused;
 }
 
-.home-atmosphere.is-live .home-star-field > i,
-.home-atmosphere.is-live .home-orbit > b,
-.home-atmosphere.is-live .home-orbit-sphere {
+.home-dyson-frame {
+  stroke-dasharray: 21 5 9 11 28 8 6 12;
+}
+
+.home-dyson-segment {
+  stroke: color-mix(in srgb, var(--tertiary) 58%, var(--secondary));
+  stroke-width: 1.5;
+}
+
+.home-dyson-nodes {
+  fill: color-mix(in srgb, var(--tertiary) 64%, white);
+  stroke: var(--site-panel);
+  stroke-width: 0.8;
+}
+
+.home-dyson-star {
+  stroke: none;
+  animation: home-dyson-breathe 7.7s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.home-dyson-halo {
+  fill: color-mix(in srgb, var(--tertiary) 12%, transparent);
+  filter: drop-shadow(0 2px 7px color-mix(in srgb, var(--tertiary) 48%, transparent));
+}
+
+.home-dyson-rays {
+  fill: none;
+  stroke: color-mix(in srgb, var(--tertiary) 70%, white);
+  stroke-width: 1.05;
+}
+
+.home-dyson-core {
+  fill: color-mix(in srgb, var(--tertiary) 36%, white);
+  filter: drop-shadow(0 2px 5px color-mix(in srgb, var(--tertiary) 62%, transparent));
+}
+
+.home-atmosphere.is-live .home-nebula,
+.home-atmosphere.is-live .home-star-twinkle,
+.home-atmosphere.is-live .home-orbit-body,
+.home-atmosphere.is-live .home-dyson-shell,
+.home-atmosphere.is-live .home-dyson-star {
   animation-play-state: running;
 }
 
 @keyframes home-star-twinkle {
   from {
-    opacity: calc(var(--star-opacity, 0.16) * 0.68);
+    opacity: 0.07;
   }
 
   to {
-    opacity: var(--star-opacity, 0.16);
+    opacity: 0.23;
   }
 }
 
-@keyframes home-sphere-turn {
+@keyframes home-nebula-drift {
   from {
-    transform: translate(-50%, -50%) rotate(-7deg) scaleX(0.97);
+    transform: scale(1.06) translate3d(-0.5%, 0, 0);
   }
 
   to {
-    transform: translate(-50%, -50%) rotate(7deg) scaleX(1.03);
+    transform: scale(1.08) translate3d(1.4%, -1%, 0);
+  }
+}
+
+@keyframes home-dyson-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes home-dyson-breathe {
+  from {
+    opacity: 0.84;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes home-comet-flight {
+  0% {
+    opacity: 0;
+    transform: translate3d(-5rem, 3rem, 0) rotate(var(--comet-angle));
+  }
+
+  18% {
+    opacity: 0.72;
+  }
+
+  72% {
+    opacity: 0.62;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(5.5rem, -3.3rem, 0) rotate(var(--comet-angle));
   }
 }
 
@@ -2082,7 +2187,10 @@ body[data-slug="index"] .right.sidebar .toc {
   .home-orbit-3,
   .home-orbit-4,
   .home-orbit-5,
-  .home-star-field > i:nth-child(n + 11) {
+  .home-constellation-2,
+  .home-constellation-3,
+  .home-star-bright-6,
+  .home-star-bright-7 {
     display: none;
   }
 
@@ -3408,9 +3516,12 @@ html[saved-theme="dark"] .python-checker-inline {
     transition-duration: 1ms;
   }
 
-  .home-star-field > i,
-  .home-orbit > b,
-  .home-orbit-sphere,
+  .home-nebula,
+  .home-star-twinkle,
+  .home-orbit-body,
+  .home-dyson-shell,
+  .home-dyson-star,
+  .home-comet,
   html[data-page-enter]
     :where(
       .center > .page-header,

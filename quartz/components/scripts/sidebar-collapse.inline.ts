@@ -263,30 +263,112 @@ const prepareHomeAtmosphere = () => {
   if (!entry || entry.dataset.atmosphereReady === "true") return
   entry.dataset.atmosphereReady = "true"
 
+  let starSeed = 104729
+  const nextStarValue = () => (starSeed = (starSeed * 48271) % 2147483647) / 2147483647
+  const starLayer = (count: number, layer: "far" | "mid") =>
+    Array.from({ length: count }, (_, index) => {
+      const x = (nextStarValue() * 1200).toFixed(1)
+      const y = (nextStarValue() * 360).toFixed(1)
+      const radius =
+        layer === "far"
+          ? (0.28 + nextStarValue() * 0.48).toFixed(2)
+          : (0.65 + nextStarValue() * 0.7).toFixed(2)
+      const opacity =
+        layer === "far"
+          ? (0.03 + nextStarValue() * 0.07).toFixed(2)
+          : (0.1 + nextStarValue() * 0.15).toFixed(2)
+      const twinkle = layer === "mid" && index % 6 === 0 ? " home-star-twinkle" : ""
+      const timing = twinkle
+        ? ` style="--star-duration:${[4.7, 6.3, 8.8, 11.2, 13.5][index % 5]}s;--star-delay:-${(
+            nextStarValue() * 11
+          ).toFixed(1)}s"`
+        : ""
+      return `<circle class="home-star-${layer}${twinkle}" cx="${x}" cy="${y}" r="${radius}" opacity="${opacity}"${timing}/>`
+    }).join("")
+
   const atmosphere = document.createElement("div")
   atmosphere.className = "home-atmosphere"
   atmosphere.setAttribute("aria-hidden", "true")
   atmosphere.innerHTML = `
-    <div class="home-star-field">
-      ${Array.from({ length: 18 }, () => "<i></i>").join("")}
-    </div>
+    <div class="home-nebula"></div>
+    <svg class="home-star-field" viewBox="0 0 1200 360" preserveAspectRatio="none" focusable="false">
+      ${starLayer(160, "far")}
+      ${starLayer(32, "mid")}
+      <g class="home-star-bright home-star-bright-1" transform="translate(660 34)"><circle r="1.8"/><path d="M0-8V8M-8 0H8"/></g>
+      <g class="home-star-bright home-star-bright-2" transform="translate(817 318)"><circle r="2.2"/></g>
+      <g class="home-star-bright home-star-bright-3" transform="translate(955 48)"><circle r="1.4"/><path d="M0-5V5M-5 0H5"/></g>
+      <g class="home-star-bright home-star-bright-4" transform="translate(1065 184)"><circle r="2.6"/></g>
+      <g class="home-star-bright home-star-bright-5" transform="translate(1168 72)"><circle r="1.6"/></g>
+      <g class="home-star-bright home-star-bright-6" transform="translate(278 327)"><circle r="1.3"/></g>
+      <g class="home-star-bright home-star-bright-7" transform="translate(1140 304)"><circle r="2"/><circle class="home-star-ring" r="5"/></g>
+    </svg>
+    <svg class="home-constellations" viewBox="0 0 1200 360" preserveAspectRatio="none" focusable="false">
+      <g class="home-constellation home-constellation-1" transform="translate(44 30)">
+        <path d="M0 21 30 4 61 20 91 7 122 31 89 53 48 45 30 4"/>
+        <circle cx="0" cy="21" r="1.6"/><circle cx="30" cy="4" r="1.3"/><circle cx="61" cy="20" r="1.8"/>
+        <circle cx="91" cy="7" r="1.2"/><circle cx="122" cy="31" r="1.5"/><circle cx="89" cy="53" r="1.3"/><circle cx="48" cy="45" r="1.4"/>
+      </g>
+      <g class="home-constellation home-constellation-2" transform="translate(560 286)">
+        <path d="M0 19 33 2 62 24 93 8 121 31M33 2 31 42 62 24 84 51 121 31"/>
+        <circle cx="0" cy="19" r="1.3"/><circle cx="33" cy="2" r="1.7"/><circle cx="62" cy="24" r="1.4"/>
+        <circle cx="93" cy="8" r="1.2"/><circle cx="121" cy="31" r="1.6"/><circle cx="31" cy="42" r="1.2"/><circle cx="84" cy="51" r="1.3"/>
+      </g>
+      <g class="home-constellation home-constellation-3" transform="translate(1082 92)">
+        <path d="M0 17 27 0 53 23 84 11 113 36 139 17M53 23 63 55 91 66 113 36"/>
+        <circle cx="0" cy="17" r="1.5"/><circle cx="27" cy="0" r="1.2"/><circle cx="53" cy="23" r="1.7"/>
+        <circle cx="84" cy="11" r="1.2"/><circle cx="113" cy="36" r="1.4"/><circle cx="139" cy="17" r="1.2"/><circle cx="63" cy="55" r="1.2"/><circle cx="91" cy="66" r="1.4"/>
+      </g>
+    </svg>
+    <span class="home-comet"></span>
     <div class="home-orbit-system">
       ${[1, 2, 3, 4, 5]
         .map(
           (orbit) =>
-            `<span class="home-orbit home-orbit-${orbit}">${orbit < 4 ? "<b></b>" : ""}</span>`,
+            `<span class="home-orbit home-orbit-${orbit}">${orbit < 5 ? `<b class="home-orbit-body home-orbit-body-${orbit}"></b>` : ""}</span>`,
         )
         .join("")}
-      <svg class="home-orbit-sphere" viewBox="0 0 100 100" focusable="false">
-        <circle cx="50" cy="50" r="33" />
-        <ellipse cx="50" cy="50" rx="33" ry="12" />
-        <ellipse cx="50" cy="50" rx="13" ry="33" />
-        <ellipse cx="50" cy="50" rx="33" ry="12" transform="rotate(38 50 50)" />
-        <ellipse cx="50" cy="50" rx="33" ry="12" transform="rotate(-38 50 50)" />
+      <svg class="home-dyson-sphere" viewBox="0 0 120 120" focusable="false">
+        <g class="home-dyson-shell">
+          <circle class="home-dyson-frame" cx="60" cy="60" r="42" pathLength="100"/>
+          <ellipse cx="60" cy="60" rx="42" ry="16"/>
+          <ellipse cx="60" cy="60" rx="18" ry="42"/>
+          <ellipse cx="60" cy="60" rx="42" ry="16" transform="rotate(43 60 60)"/>
+          <path class="home-dyson-segment" d="M24 39A42 42 0 0 1 52 19M83 25A42 42 0 0 1 101 52M98 78A42 42 0 0 1 75 99M44 99A42 42 0 0 1 20 74"/>
+          <g class="home-dyson-nodes"><circle cx="18" cy="60" r="2"/><circle cx="92" cy="36" r="1.8"/><circle cx="78" cy="96" r="1.6"/><circle cx="38" cy="27" r="1.5"/></g>
+        </g>
+        <g class="home-dyson-star">
+          <circle class="home-dyson-halo" cx="60" cy="60" r="12"/>
+          <path class="home-dyson-rays" d="M60 43V52M60 68V77M43 60H52M68 60H77"/>
+          <circle class="home-dyson-core" cx="60" cy="60" r="3.3"/>
+        </g>
       </svg>
     </div>
   `
   entry.prepend(atmosphere)
+
+  const comet = atmosphere.querySelector<HTMLElement>(".home-comet")!
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+  let cometTimer = 0
+  const scheduleComet = () => {
+    window.clearTimeout(cometTimer)
+    if (reducedMotion.matches) return
+    cometTimer = window.setTimeout(
+      () => {
+        if (atmosphere.classList.contains("is-live")) {
+          comet.style.setProperty("--comet-x", `${58 + Math.random() * 30}%`)
+          comet.style.setProperty("--comet-y", `${10 + Math.random() * 56}%`)
+          comet.style.setProperty("--comet-angle", `${-18 - Math.random() * 14}deg`)
+          comet.classList.remove("is-flying")
+          requestAnimationFrame(() => comet.classList.add("is-flying"))
+        }
+        scheduleComet()
+      },
+      15000 + Math.random() * 25000,
+    )
+  }
+  const handleMotionPreference = () => scheduleComet()
+  reducedMotion.addEventListener("change", handleMotionPreference)
+  scheduleComet()
 
   const observer = new IntersectionObserver(([state]) => {
     atmosphere.classList.toggle("is-live", state.isIntersecting && !document.hidden)
@@ -299,7 +381,9 @@ const prepareHomeAtmosphere = () => {
   document.addEventListener("visibilitychange", handleVisibility)
   observer.observe(entry)
   window.addCleanup?.(() => {
+    window.clearTimeout(cometTimer)
     observer.disconnect()
+    reducedMotion.removeEventListener("change", handleMotionPreference)
     document.removeEventListener("visibilitychange", handleVisibility)
   })
 }
