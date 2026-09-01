@@ -1374,7 +1374,7 @@ button.darkmode,
 }
 
 .home-entry {
-  --home-art-bleed-right: 1.5rem;
+  --home-art-bleed-right: 2rem;
   position: relative;
   isolation: isolate;
   width: calc(100% + var(--home-art-bleed-right));
@@ -1931,7 +1931,7 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-column,
 .home-program-row {
   color: color-mix(in srgb, var(--darkgray) 90%, var(--secondary));
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.015em;
   line-height: 1.1;
