@@ -227,6 +227,18 @@ footer a:hover {
   color: var(--dark);
 }
 
+html[saved-theme]
+  body
+  .markdown-rendered
+  :is(b, strong, em, i, del, .text-highlight):not(
+    a *,
+    .callout.is-collapsed *,
+    .canvas-container *,
+    .excalidraw-container *
+  ) {
+  cursor: text !important;
+}
+
 :where(button, summary, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
   outline: none;
   box-shadow: var(--site-focus-ring);
