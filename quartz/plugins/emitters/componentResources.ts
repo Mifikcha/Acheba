@@ -10,6 +10,8 @@ import popoverScript from "../../components/scripts/popover.inline"
 import sidebarCollapseScript from "../../components/scripts/sidebar-collapse.inline"
 // @ts-ignore
 import pythonCheckerScript from "../../components/scripts/python-checker.inline"
+// @ts-ignore
+import systemConsoleScript from "../../components/scripts/system-console.inline"
 import baseStyles from "../../styles/base.scss"
 import customStyles from "../../styles/custom.scss"
 import popoverStyle from "../../components/styles/popover.scss"
@@ -112,6 +114,7 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
 
   componentResources.afterDOMLoaded.push(sidebarCollapseScript)
   componentResources.afterDOMLoaded.push(pythonCheckerScript)
+  componentResources.afterDOMLoaded.push(systemConsoleScript)
 
   if (cfg.analytics?.provider === "google") {
     const tagId = cfg.analytics.tagId

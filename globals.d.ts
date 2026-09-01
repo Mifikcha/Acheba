@@ -13,5 +13,24 @@ export declare global {
   interface Window {
     spaNavigate(url: URL, isBack: boolean = false)
     addCleanup(fn: (...args: any[]) => void)
+    hopesSystem?: {
+      player?: {
+        snapshot(): {
+          title: string
+          state: "playing" | "paused"
+          volume: number
+          error?: string | null
+        }
+        play(): Promise<void>
+        pause(): void
+        previous(): void
+        next(): void
+        setVolume(value: number): void
+      }
+      focus?: {
+        snapshot(): "on" | "off"
+        set(enabled: boolean): void
+      }
+    }
   }
 }

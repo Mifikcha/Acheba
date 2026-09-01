@@ -217,8 +217,25 @@ function initializeStudyPlayer(): void {
   binding = undefined
 
   const root = document.querySelector<HTMLElement>("[data-study-player]")
-  if (!root) return
+  if (!root) {
+    if (window.hopesSystem) delete window.hopesSystem.player
+    return
+  }
   controller ??= new AudioPlayerController(getAudioTracks())
+  window.hopesSystem ??= {}
+  window.hopesSystem.player = {
+    snapshot: () => ({
+      title: controller!.currentTrack.title,
+      state: controller!.snapshot.isPlaying ? "playing" : "paused",
+      volume: controller!.snapshot.volume,
+      error: controller!.snapshot.error,
+    }),
+    play: () => controller!.play(),
+    pause: () => controller!.pause(),
+    previous: () => controller!.previous(),
+    next: () => controller!.next(),
+    setVolume: (value) => controller!.setVolume(value),
+  }
   binding = bindPlayer(root, controller)
 }
 
