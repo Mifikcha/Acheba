@@ -1374,15 +1374,18 @@ button.darkmode,
 }
 
 .home-entry {
+  --home-art-bleed-right: 1.5rem;
   position: relative;
   isolation: isolate;
-  max-width: 76rem;
+  width: calc(100% + var(--home-art-bleed-right));
+  max-width: none;
   padding: 5.6rem 0 1.2rem;
   overflow: hidden;
 }
 
 .home-hero {
-  max-width: min(100%, 72rem);
+  width: calc(100% - var(--home-art-bleed-right));
+  max-width: 72rem;
   container-type: inline-size;
 }
 
@@ -1418,16 +1421,23 @@ button.darkmode,
   z-index: -1;
   inset: 0;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 68%,
+    rgb(0 0 0 / 0.85) 78%,
+    rgb(0 0 0 / 0.45) 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 68%,
+    rgb(0 0 0 / 0.85) 78%,
+    rgb(0 0 0 / 0.45) 90%,
+    transparent 100%
+  );
   pointer-events: none;
-}
-
-.home-atmosphere::after {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, transparent 70%, var(--light) 100%),
-    linear-gradient(to right, transparent 87%, var(--light) 100%);
-  content: "";
 }
 
 .home-nebula,
@@ -2189,6 +2199,7 @@ body[data-slug="index"] .right.sidebar .toc {
 
 @media all and (max-width: 900px) {
   .home-entry {
+    --home-art-bleed-right: 0rem;
     padding-top: 2.4rem;
   }
 
