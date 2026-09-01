@@ -516,8 +516,7 @@ body:not([data-slug]) .page-header {
 }
 
 body[data-slug="index"] article a[role="anchor"],
-body:not([data-slug]) article a[role="anchor"],
-body[data-slug]:not([data-slug="index"]) .markdown-rendered > h1:first-of-type > a[role="anchor"] {
+body:not([data-slug]) article a[role="anchor"] {
   display: none !important;
 }
 
