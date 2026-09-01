@@ -9,6 +9,32 @@ title: Hopes and Dreams
   </div>
 </section>
 
+<section class="home-system-console" data-hopes-console data-has-output="false" aria-label="Системная консоль Hopes and Dreams">
+  <div class="home-console-shell">
+    <header class="home-console-header">
+      <div class="home-console-ident">
+        <span class="home-console-signal" aria-hidden="true"><i></i><i></i><i></i></span>
+        <strong>H&amp;D / SYSTEM</strong>
+        <span>STUDENT SHELL</span>
+      </div>
+      <span class="home-console-mode"><i aria-hidden="true"></i>GUEST</span>
+    </header>
+    <div class="home-console-body">
+      <div class="home-console-output" data-console-output role="log" aria-live="polite" aria-atomic="false"></div>
+      <form class="home-console-form" data-console-form>
+        <span class="home-console-prompt" aria-hidden="true">&gt;</span>
+        <label class="visually-hidden" for="home-console-input">Команда для Hopes and Dreams</label>
+        <input id="home-console-input" data-console-input type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="home-console-keys" placeholder="type a command" />
+        <span class="home-console-ready" aria-hidden="true">READY</span>
+      </form>
+      <div class="home-console-footer">
+        <div class="home-console-suggestions" data-console-suggestions aria-label="Быстрые команды"></div>
+        <p id="home-console-keys">ENTER execute · TAB complete · ↑↓ history</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="home-resources" aria-labelledby="home-resources-title">
   <div class="home-section-head">
     <h2 id="home-resources-title">Программы обучения</h2>
