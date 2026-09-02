@@ -20,11 +20,15 @@ title: Hopes and Dreams
       <span class="home-console-mode"><i aria-hidden="true"></i>GUEST</span>
     </header>
     <div class="home-console-body">
+      <p class="home-console-session">session: guest <span aria-hidden="true">|</span> shell: ready <span aria-hidden="true">|</span> profile: none</p>
       <div class="home-console-output" data-console-output role="log" aria-live="polite" aria-atomic="false"></div>
       <form class="home-console-form" data-console-form>
         <span class="home-console-prompt" aria-hidden="true">&gt;</span>
         <label class="visually-hidden" for="home-console-input">Команда для Hopes and Dreams</label>
-        <input id="home-console-input" data-console-input type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="home-console-keys" placeholder="type a command" />
+        <span class="home-console-input-line">
+          <input id="home-console-input" data-console-input type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="home-console-keys" placeholder=" " />
+          <span class="home-console-cursor" aria-hidden="true">_</span>
+        </span>
         <span class="home-console-ready" aria-hidden="true">READY</span>
       </form>
       <div class="home-console-footer">
