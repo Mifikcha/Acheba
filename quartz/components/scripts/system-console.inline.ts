@@ -7,6 +7,7 @@ import {
   SessionHistoryStore,
 } from "./system-console.providers"
 import { completeCommand, executeCommand } from "./system-console.registry"
+import { consoleSectionLabel, formatConsoleTimestamp } from "./system-console.presentation"
 import type { ConsoleContext, ConsoleResult } from "./system-console.types"
 
 type ConsoleBinding = { cleanup(): void }
@@ -76,13 +77,14 @@ function renderResult(result: ConsoleResult): HTMLElement {
     const sections = element("div", "home-console-list-sections")
     for (const section of result.sections) {
       const sectionNode = element("section", "home-console-list-section")
-      if (section.title) sectionNode.append(element("h3", undefined, section.title))
+      if (section.title)
+        sectionNode.append(element("h3", undefined, consoleSectionLabel(section.title)))
       const listNode = element("ul")
       for (const item of section.items) {
         const itemNode = element("li")
         const labelNode = item.href
           ? link(item.label, item.href, "home-console-result-link")
-          : element("code", undefined, item.label)
+          : element("span", "home-console-command-name", item.label)
         itemNode.append(labelNode)
         if (item.detail) itemNode.append(element("span", undefined, item.detail))
         if (item.badge) itemNode.append(element("small", undefined, item.badge))
@@ -177,7 +179,14 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
   const appendTranscript = (command: string, result: ConsoleResult) => {
     const transcript = element("article", "home-console-transcript")
     const commandLine = element("div", "home-console-command")
-    commandLine.append(element("span", undefined, ">"), element("code", undefined, command))
+    const now = new Date()
+    const timestamp = element("time", "home-console-timestamp", formatConsoleTimestamp(now))
+    timestamp.dateTime = now.toISOString()
+    commandLine.append(
+      timestamp,
+      element("span", "home-console-history-prompt", ">"),
+      element("code", undefined, command),
+    )
     transcript.append(commandLine, renderResult(result))
     output.append(transcript)
     while (output.children.length > 12) output.firstElementChild?.remove()

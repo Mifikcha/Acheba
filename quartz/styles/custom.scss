@@ -1811,12 +1811,13 @@ button.darkmode,
 }
 
 .home-system-console {
-  --console-edge: color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
+  --console-edge: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
   --console-muted: color-mix(in srgb, var(--darkgray) 82%, var(--secondary));
   width: 100%;
   max-width: 76rem;
   margin: 0.4rem 0 3rem;
   color: var(--dark);
+  container-type: inline-size;
 }
 
 .home-console-shell {
@@ -1831,7 +1832,7 @@ button.darkmode,
       transparent 42%
     ),
     color-mix(in srgb, var(--site-panel) 96%, var(--light));
-  box-shadow: 0 14px 34px color-mix(in srgb, var(--site-shadow) 72%, transparent);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--site-shadow) 44%, transparent);
   transition:
     border-color 180ms ease-out,
     box-shadow 180ms ease-out;
@@ -1851,8 +1852,8 @@ button.darkmode,
 }
 
 .home-system-console:focus-within .home-console-shell {
-  border-color: color-mix(in srgb, var(--secondary) 58%, var(--lightgray));
-  box-shadow: 0 16px 38px color-mix(in srgb, var(--site-shadow) 82%, transparent);
+  border-color: color-mix(in srgb, var(--secondary) 38%, var(--lightgray));
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--site-shadow) 58%, transparent);
 }
 
 .home-console-header {
@@ -1865,7 +1866,7 @@ button.darkmode,
   gap: 1rem;
   padding: 0.42rem 0.75rem;
   border-bottom: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
-  background: color-mix(in srgb, var(--site-panel) 95%, var(--secondary));
+  background: color-mix(in srgb, var(--site-panel) 98%, var(--secondary));
   font-family: var(--codeFont);
   font-size: 0.72rem;
   line-height: 1;
@@ -1878,8 +1879,18 @@ button.darkmode,
 }
 
 .home-console-ident {
+  flex: 1 1 auto;
   min-width: 0;
   gap: 0.62rem;
+}
+
+.home-console-ident::after {
+  height: 1px;
+  min-width: 1.5rem;
+  flex: 1 1 auto;
+  margin-left: 0.15rem;
+  background: color-mix(in srgb, var(--secondary) 18%, transparent);
+  content: "";
 }
 
 .home-console-ident strong {
@@ -1934,12 +1945,29 @@ button.darkmode,
 .home-console-mode {
   flex: 0 0 auto;
   gap: 0.42rem;
+  font-size: 0.61rem;
+  font-weight: 700;
 }
 
 .home-console-body {
   position: relative;
   z-index: 1;
   padding: 0.65rem 0.75rem 0.7rem;
+}
+
+.home-console-session {
+  margin: 0 0 0.3rem;
+  color: color-mix(in srgb, var(--console-muted) 64%, transparent);
+  font-family: var(--codeFont);
+  font-size: 0.59rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+}
+
+.home-console-session span {
+  padding-inline: 0.25rem;
+  color: color-mix(in srgb, var(--secondary) 40%, transparent);
 }
 
 .home-console-output {
@@ -1950,6 +1978,23 @@ button.darkmode,
   font-size: 0.8rem;
   scrollbar-color: color-mix(in srgb, var(--secondary) 48%, transparent) transparent;
   scrollbar-width: thin;
+}
+
+.home-console-output::-webkit-scrollbar {
+  width: 4px;
+}
+
+.home-console-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.home-console-output::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--secondary) 32%, transparent);
+}
+
+.home-console-output:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--secondary) 48%, transparent);
 }
 
 .home-console-output:empty {
@@ -1968,8 +2013,10 @@ button.darkmode,
 }
 
 .home-console-command {
-  display: flex;
-  gap: 0.55rem;
+  display: grid;
+  grid-template-columns: 4.25rem auto minmax(0, 1fr);
+  gap: 0.42rem;
+  align-items: baseline;
   margin-bottom: 0.45rem;
   color: var(--console-muted);
 }
@@ -1978,6 +2025,17 @@ button.darkmode,
 .home-console-prompt {
   color: var(--secondary);
   font-weight: 800;
+}
+
+.home-console-timestamp {
+  color: color-mix(in srgb, var(--console-muted) 54%, transparent);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.015em;
+}
+
+.home-console-history-prompt {
+  font-size: 0.9rem;
 }
 
 .home-console-command code,
@@ -1990,7 +2048,7 @@ button.darkmode,
 }
 
 .home-console-result {
-  padding-left: 1.05rem;
+  padding-left: 0;
 }
 
 .home-console-result p {
@@ -2075,7 +2133,7 @@ button.darkmode,
   color: var(--secondary);
   font-family: var(--codeFont);
   font-size: 0.67rem;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.055em;
 }
 
 .home-console-list-section ul {
@@ -2093,6 +2151,17 @@ button.darkmode,
   line-height: 1.35;
 }
 
+.home-console-command-name {
+  min-width: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--dark);
+  font-family: var(--codeFont);
+}
+
 .home-console-list-section li > span {
   color: var(--console-muted);
 }
@@ -2100,7 +2169,18 @@ button.darkmode,
 .home-console-list-section small {
   color: var(--secondary);
   font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
   white-space: nowrap;
+}
+
+.home-console-list-section small::before {
+  content: "[";
+}
+
+.home-console-list-section small::after {
+  content: "]";
 }
 
 .home-console-result-link {
@@ -2204,25 +2284,55 @@ button.darkmode,
 
 .home-console-prompt {
   font-family: var(--codeFont);
-  font-size: 1rem;
+  font-size: 1.08rem;
+  text-shadow: 0 0 0.55rem color-mix(in srgb, var(--secondary) 28%, transparent);
+}
+
+.home-console-input-line {
+  position: relative;
+  display: block;
+  min-width: 0;
 }
 
 .home-console-form input {
+  appearance: none;
   width: 100%;
   min-width: 0;
-  padding: 0.48rem 0;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  caret-color: var(--secondary);
-  color: var(--dark);
-  font-family: var(--codeFont);
-  font-size: 0.92rem;
+  padding: 0.48rem 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  caret-color: var(--secondary) !important;
+  color: var(--dark) !important;
+  font-family: var(--codeFont) !important;
+  font-size: 0.92rem !important;
 }
 
 .home-console-form input::placeholder {
-  color: color-mix(in srgb, var(--console-muted) 72%, transparent);
-  opacity: 1;
+  color: transparent;
+}
+
+.home-console-form input:placeholder-shown {
+  caret-color: transparent !important;
+}
+
+.home-console-cursor {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  color: var(--secondary);
+  font-family: var(--codeFont);
+  font-size: 0.92rem;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-56%);
+  animation: home-console-cursor 1.05s steps(1, end) infinite;
+}
+
+.home-console-form input:not(:placeholder-shown) + .home-console-cursor {
+  display: none;
 }
 
 .home-console-ready,
@@ -2231,6 +2341,19 @@ button.darkmode,
   font-family: var(--codeFont);
   font-size: 0.61rem;
   letter-spacing: 0.035em;
+}
+
+.home-console-ready {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.home-console-ready::before {
+  content: "[";
+}
+
+.home-console-ready::after {
+  content: "]";
 }
 
 .home-system-console[data-busy="true"] .home-console-ready {
@@ -2296,10 +2419,37 @@ button.darkmode,
   }
 }
 
+@keyframes home-console-cursor {
+  0%,
+  46% {
+    opacity: 1;
+  }
+
+  47%,
+  100% {
+    opacity: 0.18;
+  }
+}
+
+@container (max-width: 44rem) {
+  .home-console-list-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .home-console-list-section li {
+    grid-template-columns: minmax(5.8rem, auto) minmax(0, 1fr);
+  }
+
+  .home-console-list-section small {
+    grid-column: 2;
+  }
+}
+
 html[data-motion="reduce"] {
   .home-console-shell,
   .home-console-suggestions button,
-  .home-console-transcript {
+  .home-console-transcript,
+  .home-console-cursor {
     animation: none !important;
     transition: none !important;
   }
@@ -2722,6 +2872,18 @@ body[data-slug="index"] .right.sidebar .toc {
 
   .home-console-list-section small {
     grid-column: 2;
+  }
+
+  .home-console-timestamp {
+    display: none;
+  }
+
+  .home-console-command {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .home-console-result {
+    padding-left: 0;
   }
 
   .home-console-navigation {
@@ -4066,7 +4228,8 @@ html[saved-theme="dark"] .python-checker-inline {
 @media (prefers-reduced-motion: reduce) {
   .home-console-shell,
   .home-console-suggestions button,
-  .home-console-transcript {
+  .home-console-transcript,
+  .home-console-cursor {
     animation: none !important;
     transition: none !important;
   }
