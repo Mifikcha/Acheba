@@ -20,7 +20,7 @@ title: Hopes and Dreams
         <label class="visually-hidden" for="home-console-input">Команда для Hopes and Dreams</label>
         <span class="home-console-input-line">
           <input id="home-console-input" data-console-input type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="home-console-keys" placeholder=" " />
-          <span class="home-console-cursor" aria-hidden="true">█</span>
+          <span class="home-console-cursor" aria-hidden="true">|</span>
         </span>
       </form>
       <div class="home-console-footer">
