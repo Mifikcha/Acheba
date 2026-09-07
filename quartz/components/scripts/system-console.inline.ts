@@ -7,7 +7,7 @@ import {
   SessionHistoryStore,
 } from "./system-console.providers"
 import { completeCommand, executeCommand } from "./system-console.registry"
-import { createShellIdentity } from "./system-console.presentation"
+import { createShellIdentity, shouldFocusPromptFromSurface } from "./system-console.presentation"
 import type { ConsoleContext, ConsoleResult } from "./system-console.types"
 
 type ConsoleBinding = { cleanup(): void }
@@ -24,6 +24,9 @@ const context: ConsoleContext = {
 }
 
 let binding: ConsoleBinding | undefined
+
+const interactiveSelector =
+  'a, button, input, textarea, select, summary, [contenteditable]:not([contenteditable="false"]), [data-console-interactive], [role="button"], [role="link"], [role="slider"]'
 
 const element = <K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -158,6 +161,16 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
   let commandHistory = historyStore.read()
   let historyIndex = commandHistory.length
   let promptText = ""
+  const focusPrompt = () => input.focus({ preventScroll: true })
+
+  const clickedScrollbar = (event: PointerEvent): boolean => {
+    const target = event.target
+    if (!(target instanceof HTMLElement)) return false
+    return (
+      (target.scrollHeight > target.clientHeight && event.offsetX >= target.clientWidth) ||
+      (target.scrollWidth > target.clientWidth && event.offsetY >= target.clientHeight)
+    )
+  }
 
   const renderIdentity = (user: Awaited<ReturnType<typeof context.profile.getCurrentUser>>) => {
     const identity = createShellIdentity(context.profile.mode, user)
@@ -230,8 +243,27 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
     input.disabled = false
     delete root.dataset.busy
     showQuickCommands()
-    input.focus({ preventScroll: true })
+    focusPrompt()
   }
+
+  root.addEventListener(
+    "pointerup",
+    (event) => {
+      const target = event.target instanceof Element ? event.target : null
+      if (
+        !shouldFocusPromptFromSurface({
+          button: event.button,
+          pointerType: event.pointerType,
+          hasSelection: Boolean(window.getSelection()?.toString().length),
+          clickedInteractive: Boolean(target?.closest(interactiveSelector)),
+          clickedScrollbar: clickedScrollbar(event),
+        })
+      )
+        return
+      focusPrompt()
+    },
+    { signal },
+  )
 
   form.addEventListener(
     "submit",
@@ -281,7 +313,7 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
       } else if (event.key === "Escape") {
         event.preventDefault()
         suggestions.hidden = true
-        input.focus()
+        focusPrompt()
       } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") {
         event.preventDefault()
         output.replaceChildren()
@@ -306,7 +338,7 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
       }
       const parsed = input.value.trim().split(/\s+/u)
       input.value = parsed.length <= 1 ? suggestion : `${parsed[0]} ${suggestion}`
-      input.focus()
+      focusPrompt()
     },
     { signal },
   )

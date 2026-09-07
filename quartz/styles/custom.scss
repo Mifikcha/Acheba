@@ -2200,6 +2200,11 @@ button.darkmode,
   animation: home-console-cursor 1.6s step-end infinite;
 }
 
+.home-console-form:not(:focus-within) .home-console-cursor {
+  opacity: 0.2;
+  animation: none;
+}
+
 .home-console-form input:not(:placeholder-shown) + .home-console-cursor {
   display: none;
 }
