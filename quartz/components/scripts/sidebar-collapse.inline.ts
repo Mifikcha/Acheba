@@ -155,7 +155,7 @@ const ensureMobileToggle = () => {
 const sortInfoTaskCards = () => {
   const slug = document.body.dataset.slug ?? ""
 
-  if (!slug.includes("инфушечка/разбор-задач")) {
+  if (!slug.includes("информатика/разбор-задач")) {
     return
   }
 

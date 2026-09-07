@@ -13,7 +13,6 @@ configuration:
     - templates
     - .obsidian
     - _Шпаргалки/**
-    - Предметы/Матанчик/Теория/**
   theme:
     fontOrigin: googleFonts
     cdnCaching: true

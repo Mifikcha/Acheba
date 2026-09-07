@@ -1046,6 +1046,11 @@ button.darkmode,
   padding-top: 0 !important;
 }
 
+.left.sidebar .folder-container div > a,
+.left.sidebar .folder-container div > button span {
+  color: var(--darkgray) !important;
+}
+
 .left.sidebar .folder-icon {
   display: block !important;
   flex: 0 0 12px;
