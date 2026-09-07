@@ -215,7 +215,7 @@ plugins:
     enabled: true
     options:
       folderDefaultState: open
-      folderClickBehavior: link
+      folderClickBehavior: collapse
       useSavedState: false
     layout:
       position: left
