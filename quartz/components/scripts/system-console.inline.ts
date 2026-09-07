@@ -194,7 +194,7 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
   const showQuickCommands = () => renderSuggestions(quickCommands, true)
 
   const appendTranscript = (command: string, result: ConsoleResult) => {
-    const transcript = element("article", "home-console-transcript")
+    const transcript = element("div", "home-console-transcript")
     const commandLine = element("div", "home-console-command")
     commandLine.append(
       element("span", "home-console-history-prompt", promptText),

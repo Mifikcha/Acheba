@@ -1821,7 +1821,6 @@ button.darkmode,
   --console-muted: #7f86a7;
   --console-accent: #aeb7e8;
   --console-error: #c98798;
-  --console-edge: rgb(151 161 205 / 20%);
   --console-selection: #3a4a70;
   width: 100%;
   max-width: 76rem;
@@ -1829,6 +1828,7 @@ button.darkmode,
   color: var(--console-foreground);
   container-type: inline-size;
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8rem;
 }
 
 .home-system-console,
@@ -1838,15 +1838,18 @@ button.darkmode,
     ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace !important;
 }
 
+.home-system-console * {
+  font-size: inherit !important;
+}
+
 .home-system-console ::selection {
   background: var(--console-selection);
   color: #f2f4ff;
 }
 
 .home-console-shell {
-  overflow: hidden;
-  border: 1px solid var(--console-edge);
-  border-radius: 2px;
+  border: 0;
+  border-radius: 0;
   background: var(--console-surface);
   box-shadow: none;
 }
@@ -1858,14 +1861,12 @@ button.darkmode,
 .home-console-title {
   margin: 0;
   color: var(--console-foreground);
-  font-size: 0.78rem;
   line-height: 1.45;
 }
 
 .home-console-session {
   margin: 0.18rem 0 0.8rem;
   color: var(--console-muted);
-  font-size: 0.66rem;
   font-variant-numeric: tabular-nums;
   line-height: 1.45;
 }
@@ -1876,33 +1877,8 @@ button.darkmode,
 }
 
 .home-console-output {
-  max-height: 22rem;
-  overflow: hidden auto;
   color: var(--console-foreground);
-  font-size: 0.8rem;
   line-height: 1.45;
-  scrollbar-color: rgb(127 134 167 / 42%) transparent !important;
-  scrollbar-width: thin !important;
-}
-
-.home-console-output::-webkit-scrollbar {
-  width: 4px !important;
-}
-
-.home-console-output::-webkit-scrollbar-track {
-  background: transparent !important;
-}
-
-.home-console-output::-webkit-scrollbar-thumb {
-  min-width: 0 !important;
-  min-height: 1.5rem !important;
-  border: 0 !important;
-  border-radius: 2px !important;
-  background: rgb(127 134 167 / 30%) !important;
-}
-
-.home-console-shell:hover .home-console-output::-webkit-scrollbar-thumb {
-  background: rgb(127 134 167 / 48%) !important;
 }
 
 .home-console-output:empty {
@@ -1913,6 +1889,7 @@ button.darkmode,
   margin: 0;
   padding: 0 0 0.9rem;
   border: 0;
+  background: transparent !important;
 }
 
 .home-console-transcript:last-child {
@@ -1949,7 +1926,25 @@ button.darkmode,
 }
 
 .home-console-result {
+  max-height: 80rem;
   padding-left: 0;
+  overflow-y: auto;
+  scrollbar-color: rgb(127 134 167 / 36%) transparent !important;
+  scrollbar-width: thin !important;
+}
+
+.home-console-result::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.home-console-result::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.home-console-result::-webkit-scrollbar-thumb {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: rgb(127 134 167 / 28%) !important;
 }
 
 .home-console-result p {
@@ -2161,7 +2156,6 @@ button.darkmode,
 
 .home-console-prompt {
   flex: 0 0 auto;
-  font-size: 0.8rem;
   text-shadow: none;
   white-space: nowrap;
 }
@@ -2185,7 +2179,6 @@ button.darkmode,
   caret-color: var(--console-accent) !important;
   color: var(--console-foreground) !important;
   font: inherit !important;
-  font-size: 0.8rem !important;
   line-height: 1.45 !important;
 }
 
@@ -2202,10 +2195,9 @@ button.darkmode,
   top: 0;
   left: 0;
   color: var(--console-accent);
-  font-size: 0.78rem;
   line-height: 1.45;
   pointer-events: none;
-  animation: home-console-cursor 780ms steps(1, end) infinite;
+  animation: home-console-cursor 1.6s step-end infinite;
 }
 
 .home-console-form input:not(:placeholder-shown) + .home-console-cursor {
@@ -2214,7 +2206,6 @@ button.darkmode,
 
 .home-console-footer > p {
   color: var(--console-muted);
-  font-size: 0.61rem;
   letter-spacing: 0;
 }
 
@@ -2246,7 +2237,6 @@ button.darkmode,
   background: transparent;
   color: var(--console-accent);
   cursor: pointer;
-  font-size: 0.68rem;
   transition:
     border-color 140ms ease-out,
     color 140ms ease-out;
@@ -2260,7 +2250,6 @@ button.darkmode,
 
 .home-console-suggestions-label {
   color: var(--console-muted);
-  font-size: 0.68rem;
 }
 
 .home-console-footer > p {
@@ -2270,13 +2259,13 @@ button.darkmode,
 
 @keyframes home-console-cursor {
   0%,
-  52% {
-    opacity: 1;
+  64% {
+    opacity: 0.8;
   }
 
-  53%,
+  65%,
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 
