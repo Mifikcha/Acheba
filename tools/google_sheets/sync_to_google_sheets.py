@@ -527,7 +527,7 @@ def generic_entity_rows(notes: list[Note], entity_type: str, id_field: str, head
 
 
 def legacy_student_rows(vault: Path, existing_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    stats_dir = vault / "Репетиторство" / "Шизончик" / "Статистика учеников"
+    stats_dir = vault / "Репетиторство" / "Физика" / "Статистика учеников"
     if not stats_dir.exists():
         return []
 
@@ -582,11 +582,11 @@ def legacy_student_rows(vault: Path, existing_rows: list[dict[str, Any]]) -> lis
 def settings_rows(vault: Path, export_dir: Path) -> list[dict[str, Any]]:
     rows = [
         {"key": "obsidian_vault_path", "value": normalize_path(vault), "description": "Корень Obsidian vault; первичный источник данных."},
-        {"key": "obsidian_students_path", "value": "Репетиторство/Шизончик/Статистика учеников", "description": "Карточки и история учеников по физике."},
-        {"key": "obsidian_curriculum_path", "value": "Репетиторство/Шизончик/Базы", "description": "Markdown-программы и Obsidian Bases."},
-        {"key": "obsidian_topics_path", "value": "Репетиторство/Шизончик/Теория", "description": "Темы учебной программы по физике."},
-        {"key": "obsidian_groups_path", "value": "Репетиторство/Шизончик/Группы", "description": "Будущие заметки групп."},
-        {"key": "obsidian_lessons_path", "value": "Репетиторство/Шизончик/Занятия", "description": "Будущие заметки расписания и проведенных занятий."},
+        {"key": "obsidian_students_path", "value": "Репетиторство/Физика/Статистика учеников", "description": "Карточки и история учеников по физике."},
+        {"key": "obsidian_curriculum_path", "value": "Репетиторство/Физика/Базы", "description": "Markdown-программы и Obsidian Bases."},
+        {"key": "obsidian_topics_path", "value": "Репетиторство/Физика/Теория", "description": "Темы учебной программы по физике."},
+        {"key": "obsidian_groups_path", "value": "Репетиторство/Физика/Группы", "description": "Будущие заметки групп."},
+        {"key": "obsidian_lessons_path", "value": "Репетиторство/Физика/Занятия", "description": "Будущие заметки расписания и проведенных занятий."},
         {"key": "default_subject", "value": "physics", "description": "Предмет по умолчанию для текущего Spreadsheet."},
         {"key": "sync_direction", "value": "obsidian_to_sheets", "description": "При конфликте побеждает Obsidian."},
         {"key": "last_full_sync_at", "value": dt.datetime.now().isoformat(timespec="seconds"), "description": "Время последней полной сборки данных."},
@@ -765,7 +765,7 @@ def parse_args(argv: Iterable[str]) -> argparse.Namespace:
     parser.add_argument("--vault", default=os.environ.get("OBSIDIAN_VAULT_PATH") or ".", help="Path to Obsidian vault.")
     parser.add_argument(
         "--export-dir",
-        default=os.environ.get("SHEETS_EXPORT_DIR") or "Репетиторство/Шизончик/Google Sheets Export",
+        default=os.environ.get("SHEETS_EXPORT_DIR") or "Репетиторство/Физика/Google Sheets Export",
         help="Folder for local CSV previews.",
     )
     parser.add_argument("--spreadsheet-id", default=os.environ.get("GOOGLE_SPREADSHEET_ID"), help="Google Spreadsheet ID.")

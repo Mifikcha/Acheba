@@ -42,3 +42,7 @@ Workspace-local skills are a fallback source. Personal Codex skills in `~/.codex
 ## Public Quartz Explorer
 
 For the public Quartz site, folder names in the left explorer should toggle the folder open or closed, the same as the arrow icon. Keep `folderClickBehavior: collapse` for `@quartz-community/explorer`; do not restore title-click navigation unless the user explicitly asks for it.
+
+## Public Subject Folders
+
+In `Публичный сайт/Предметы`, keep the physical folder names user-facing and formal: `Физика`, `Информатика`, `Математика`. Do not restore the older nickname folders `Шизончик`, `Инфушечка`, or `Матанчик`.
