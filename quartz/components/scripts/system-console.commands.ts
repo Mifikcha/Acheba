@@ -70,7 +70,6 @@ export function createCommandRegistry(): ConsoleCommand[] {
         ]
         return {
           type: "list",
-          title: "H&D STUDENT SHELL",
           sections: categories.map((category) => ({
             title: category,
             items: registry
@@ -78,7 +77,6 @@ export function createCommandRegistry(): ConsoleCommand[] {
               .map((command) => ({
                 label: command.name,
                 detail: command.description,
-                badge: command.requiresProfile ? "requires profile" : undefined,
               })),
           })),
         }

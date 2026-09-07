@@ -1816,190 +1816,93 @@ button.darkmode,
 }
 
 .home-system-console {
-  --console-edge: color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
-  --console-muted: color-mix(in srgb, var(--darkgray) 82%, var(--secondary));
+  --console-surface: #10121d;
+  --console-foreground: #c7cbea;
+  --console-muted: #7f86a7;
+  --console-accent: #aeb7e8;
+  --console-error: #c98798;
+  --console-edge: rgb(151 161 205 / 20%);
+  --console-selection: #3a4a70;
   width: 100%;
   max-width: 76rem;
   margin: 0.4rem 0 3rem;
-  color: var(--dark);
+  color: var(--console-foreground);
   container-type: inline-size;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.home-system-console,
+.home-system-console * {
+  box-sizing: border-box;
+  font-family:
+    ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace !important;
+}
+
+.home-system-console ::selection {
+  background: var(--console-selection);
+  color: #f2f4ff;
 }
 
 .home-console-shell {
-  position: relative;
   overflow: hidden;
   border: 1px solid var(--console-edge);
-  border-radius: 4px;
-  background:
-    radial-gradient(
-      circle at 88% -40%,
-      color-mix(in srgb, var(--tertiary) 9%, transparent),
-      transparent 42%
-    ),
-    color-mix(in srgb, var(--site-panel) 96%, var(--light));
-  box-shadow: 0 10px 28px color-mix(in srgb, var(--site-shadow) 44%, transparent);
-  transition:
-    border-color 180ms ease-out,
-    box-shadow 180ms ease-out;
-}
-
-.home-console-shell::after {
-  position: absolute;
-  right: -4.2rem;
-  bottom: -5.5rem;
-  width: 13rem;
-  height: 9rem;
-  border: 1px solid color-mix(in srgb, var(--tertiary) 12%, transparent);
-  border-radius: 50%;
-  content: "";
-  pointer-events: none;
-  transform: rotate(-14deg);
-}
-
-.home-system-console:focus-within .home-console-shell {
-  border-color: color-mix(in srgb, var(--secondary) 38%, var(--lightgray));
-  box-shadow: 0 12px 32px color-mix(in srgb, var(--site-shadow) 58%, transparent);
-}
-
-.home-console-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  min-height: 2.25rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.42rem 0.75rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
-  background: color-mix(in srgb, var(--site-panel) 98%, var(--secondary));
-  font-family: var(--codeFont);
-  font-size: 0.72rem;
-  line-height: 1;
-}
-
-.home-console-ident,
-.home-console-mode {
-  display: flex;
-  align-items: center;
-}
-
-.home-console-ident {
-  flex: 1 1 auto;
-  min-width: 0;
-  gap: 0.62rem;
-}
-
-.home-console-ident::after {
-  height: 1px;
-  min-width: 1.5rem;
-  flex: 1 1 auto;
-  margin-left: 0.15rem;
-  background: color-mix(in srgb, var(--secondary) 18%, transparent);
-  content: "";
-}
-
-.home-console-ident strong {
-  color: var(--dark);
-  font-size: 0.76rem;
-  letter-spacing: 0.035em;
-}
-
-.home-console-ident > span:last-child,
-.home-console-mode {
-  color: var(--console-muted);
-  letter-spacing: 0.045em;
-}
-
-.home-console-signal {
-  position: relative;
-  display: inline-flex;
-  width: 2.25rem;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.home-console-signal::before {
-  position: absolute;
-  top: 50%;
-  right: 0.2rem;
-  left: 0.2rem;
-  height: 1px;
-  background: color-mix(in srgb, var(--tertiary) 36%, transparent);
-  content: "";
-}
-
-.home-console-signal i,
-.home-console-mode i {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 0.28rem;
-  height: 0.28rem;
-  border: 1px solid color-mix(in srgb, var(--tertiary) 72%, var(--secondary));
-  border-radius: 50%;
-  background: var(--site-panel);
-}
-
-.home-console-signal i:nth-child(2),
-.home-console-mode i {
-  width: 0.2rem;
-  height: 0.2rem;
-  background: color-mix(in srgb, var(--tertiary) 64%, var(--site-panel));
-}
-
-.home-console-mode {
-  flex: 0 0 auto;
-  gap: 0.42rem;
-  font-size: 0.61rem;
-  font-weight: 700;
+  border-radius: 2px;
+  background: var(--console-surface);
+  box-shadow: none;
 }
 
 .home-console-body {
-  position: relative;
-  z-index: 1;
-  padding: 0.65rem 0.75rem 0.7rem;
+  padding: 0.8rem 0.9rem 0.75rem;
+}
+
+.home-console-title {
+  margin: 0;
+  color: var(--console-foreground);
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
 .home-console-session {
-  margin: 0 0 0.3rem;
-  color: color-mix(in srgb, var(--console-muted) 64%, transparent);
-  font-family: var(--codeFont);
-  font-size: 0.59rem;
+  margin: 0.18rem 0 0.8rem;
+  color: var(--console-muted);
+  font-size: 0.66rem;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.025em;
-  line-height: 1.25;
+  line-height: 1.45;
 }
 
-.home-console-session span {
-  padding-inline: 0.25rem;
-  color: color-mix(in srgb, var(--secondary) 40%, transparent);
+.home-console-session-separator {
+  padding-inline: 0.28rem;
+  color: #5f6684;
 }
 
 .home-console-output {
-  max-height: 18rem;
+  max-height: 22rem;
   overflow: hidden auto;
-  color: var(--darkgray);
-  font-family: var(--codeFont);
+  color: var(--console-foreground);
   font-size: 0.8rem;
-  scrollbar-color: color-mix(in srgb, var(--secondary) 48%, transparent) transparent;
-  scrollbar-width: thin;
+  line-height: 1.45;
+  scrollbar-color: rgb(127 134 167 / 42%) transparent !important;
+  scrollbar-width: thin !important;
 }
 
 .home-console-output::-webkit-scrollbar {
-  width: 4px;
+  width: 4px !important;
 }
 
 .home-console-output::-webkit-scrollbar-track {
-  background: transparent;
+  background: transparent !important;
 }
 
 .home-console-output::-webkit-scrollbar-thumb {
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--secondary) 32%, transparent);
+  min-width: 0 !important;
+  min-height: 1.5rem !important;
+  border: 0 !important;
+  border-radius: 2px !important;
+  background: rgb(127 134 167 / 30%) !important;
 }
 
-.home-console-output:hover::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--secondary) 48%, transparent);
+.home-console-shell:hover .home-console-output::-webkit-scrollbar-thumb {
+  background: rgb(127 134 167 / 48%) !important;
 }
 
 .home-console-output:empty {
@@ -2008,47 +1911,40 @@ button.darkmode,
 
 .home-console-transcript {
   margin: 0;
-  padding: 0.45rem 0 0.78rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 12%, transparent);
-  animation: home-console-result-in 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 0 0 0.9rem;
+  border: 0;
 }
 
 .home-console-transcript:last-child {
-  border-bottom: 0;
+  padding-bottom: 0.9rem;
 }
 
 .home-console-command {
-  display: grid;
-  grid-template-columns: 4.25rem auto minmax(0, 1fr);
-  gap: 0.42rem;
+  display: flex;
+  gap: 0.65ch;
   align-items: baseline;
-  margin-bottom: 0.45rem;
-  color: var(--console-muted);
+  margin-bottom: 0.18rem;
+  color: var(--console-foreground);
+  line-height: 1.45;
 }
 
 .home-console-command > span,
 .home-console-prompt {
-  color: var(--secondary);
-  font-weight: 800;
-}
-
-.home-console-timestamp {
-  color: color-mix(in srgb, var(--console-muted) 54%, transparent);
-  font-size: 0.62rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.015em;
+  color: var(--console-accent);
+  font-weight: 400;
 }
 
 .home-console-history-prompt {
-  font-size: 0.9rem;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .home-console-command code,
 .home-console-list-section code {
   padding: 0;
-  background: transparent;
-  color: var(--dark);
-  font-family: var(--codeFont);
+  border: 0;
+  background: transparent !important;
+  color: var(--console-foreground);
   font-size: inherit;
 }
 
@@ -2058,41 +1954,40 @@ button.darkmode,
 
 .home-console-result p {
   max-width: 72ch;
-  margin: 0.2rem 0 0;
+  margin: 0;
   color: var(--console-muted);
   line-height: 1.45;
 }
 
 .home-console-result-title {
   display: block;
-  color: var(--dark);
-  font-size: 0.84rem;
-  line-height: 1.4;
+  color: var(--console-foreground);
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1.45;
 }
 
 .home-console-error {
-  color: var(--dark) !important;
+  color: var(--console-error) !important;
 }
 
-.home-console-error > span,
 .home-console-result-eyebrow {
-  color: var(--secondary);
-  font-size: 0.67rem;
-  font-weight: 800;
-  letter-spacing: 0.065em;
+  color: var(--console-muted);
+  font-size: inherit;
+  font-weight: 400;
 }
 
 .home-console-system-rows {
   display: grid;
   max-width: 33rem;
-  gap: 0.18rem;
-  margin: 0.35rem 0 0;
+  gap: 0;
+  margin: 0.18rem 0 0;
 }
 
 .home-console-system-row {
   display: grid;
   grid-template-columns: minmax(7rem, 0.65fr) minmax(0, 1fr);
-  gap: 1rem;
+  gap: 1ch;
   line-height: 1.45;
 }
 
@@ -2107,38 +2002,26 @@ button.darkmode,
 }
 
 .home-console-system-row dd {
-  color: var(--dark);
+  color: var(--console-foreground);
 }
 
-.home-console-system-row[data-state="ready"] dd::before,
-.home-console-system-row[data-state="unavailable"] dd::before {
-  display: inline-block;
-  width: 0.38rem;
-  height: 0.38rem;
-  margin-right: 0.48rem;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  content: "";
-  vertical-align: 0.06rem;
-}
-
-.home-console-system-row[data-state="ready"] dd::before {
-  background: color-mix(in srgb, var(--tertiary) 56%, var(--site-panel));
+.home-console-system-row[data-state="unavailable"] dd {
+  color: var(--console-error);
 }
 
 .home-console-list-sections {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem 1.8rem;
-  margin-top: 0.55rem;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
 }
 
 .home-console-list-section h3 {
-  margin: 0 0 0.24rem;
-  color: var(--secondary);
-  font-family: var(--codeFont);
-  font-size: 0.67rem;
-  letter-spacing: 0.055em;
+  margin: 0 0 0.08rem;
+  color: var(--console-foreground);
+  font-size: inherit;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 .home-console-list-section ul {
@@ -2149,11 +2032,11 @@ button.darkmode,
 
 .home-console-list-section li {
   display: grid;
-  grid-template-columns: minmax(5.8rem, auto) minmax(0, 1fr) auto;
-  gap: 0.65rem;
+  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  gap: 1ch;
   align-items: baseline;
-  padding: 0.08rem 0;
-  line-height: 1.35;
+  padding: 0;
+  line-height: 1.45;
 }
 
 .home-console-command-name {
@@ -2163,8 +2046,7 @@ button.darkmode,
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-  color: var(--dark);
-  font-family: var(--codeFont);
+  color: var(--console-foreground);
 }
 
 .home-console-list-section li > span {
@@ -2172,52 +2054,41 @@ button.darkmode,
 }
 
 .home-console-list-section small {
-  color: var(--secondary);
-  font-size: 0.64rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  text-transform: uppercase;
+  color: var(--console-muted);
+  font-size: inherit;
+  font-weight: 400;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 
-.home-console-list-section small::before {
-  content: "[";
-}
-
-.home-console-list-section small::after {
-  content: "]";
-}
-
 .home-console-result-link {
-  color: var(--dark);
-  text-decoration-color: color-mix(in srgb, var(--secondary) 44%, transparent);
+  color: var(--console-foreground);
+  text-decoration-color: rgb(174 183 232 / 55%);
   text-underline-offset: 0.2em;
 }
 
 .home-console-result-eyebrow {
   display: block;
-  margin-bottom: 0.22rem;
+  margin-bottom: 0.08rem;
 }
 
 .home-console-navigation {
-  display: flex;
+  display: inline-flex;
   max-width: 34rem;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--dark);
-  font-family: var(--bodyFont);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.35;
-  text-decoration: none;
+  gap: 1ch;
+  color: var(--console-foreground);
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1.45;
+  text-decoration-color: rgb(174 183 232 / 55%);
+  text-underline-offset: 0.2em;
 }
 
 .home-console-navigation > span {
   flex: 0 0 auto;
-  color: var(--secondary);
-  font-family: var(--codeFont);
-  font-size: 0.68rem;
+  color: var(--console-muted);
+  font-size: inherit;
 }
 
 .home-console-table-scroll {
@@ -2234,8 +2105,8 @@ button.darkmode,
 
 .home-console-table-scroll th,
 .home-console-table-scroll td {
-  padding: 0.25rem 1.5rem 0.25rem 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 14%, transparent);
+  padding: 0 1.5rem 0 0;
+  border: 0;
   text-align: left;
 }
 
@@ -2255,25 +2126,26 @@ button.darkmode,
 }
 
 .home-console-progress-meter {
+  position: relative;
   height: 0.25rem;
-  background: linear-gradient(
-    90deg,
-    var(--secondary) var(--console-progress),
-    color-mix(in srgb, var(--secondary) 14%, transparent) var(--console-progress)
-  );
+  background: rgb(127 134 167 / 20%);
+}
+
+.home-console-progress-meter::after {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--console-progress);
+  background: var(--console-accent);
+  content: "";
 }
 
 .home-console-form {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 0.6rem;
-  align-items: center;
-  min-height: 2.6rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 16%, transparent);
-}
-
-.home-system-console[data-has-output="true"] .home-console-form {
-  border-top: 1px solid color-mix(in srgb, var(--secondary) 14%, transparent);
+  display: flex;
+  gap: 0.65ch;
+  align-items: baseline;
+  min-height: 1.45rem;
+  border: 0;
+  line-height: 1.45;
 }
 
 .home-console-form .visually-hidden {
@@ -2288,9 +2160,10 @@ button.darkmode,
 }
 
 .home-console-prompt {
-  font-family: var(--codeFont);
-  font-size: 1.08rem;
-  text-shadow: 0 0 0.55rem color-mix(in srgb, var(--secondary) 28%, transparent);
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  text-shadow: none;
+  white-space: nowrap;
 }
 
 .home-console-input-line {
@@ -2303,16 +2176,17 @@ button.darkmode,
   appearance: none;
   width: 100%;
   min-width: 0;
-  padding: 0.48rem 0 !important;
+  padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
   outline: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-  caret-color: var(--secondary) !important;
-  color: var(--dark) !important;
-  font-family: var(--codeFont) !important;
-  font-size: 0.92rem !important;
+  caret-color: var(--console-accent) !important;
+  color: var(--console-foreground) !important;
+  font: inherit !important;
+  font-size: 0.8rem !important;
+  line-height: 1.45 !important;
 }
 
 .home-console-form input::placeholder {
@@ -2325,60 +2199,38 @@ button.darkmode,
 
 .home-console-cursor {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
-  color: var(--secondary);
-  font-family: var(--codeFont);
-  font-size: 0.92rem;
-  line-height: 1;
+  color: var(--console-accent);
+  font-size: 0.78rem;
+  line-height: 1.45;
   pointer-events: none;
-  transform: translateY(-56%);
-  animation: home-console-cursor 1.05s steps(1, end) infinite;
+  animation: home-console-cursor 780ms steps(1, end) infinite;
 }
 
 .home-console-form input:not(:placeholder-shown) + .home-console-cursor {
   display: none;
 }
 
-.home-console-ready,
 .home-console-footer > p {
   color: var(--console-muted);
-  font-family: var(--codeFont);
   font-size: 0.61rem;
-  letter-spacing: 0.035em;
-}
-
-.home-console-ready {
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.home-console-ready::before {
-  content: "[";
-}
-
-.home-console-ready::after {
-  content: "]";
-}
-
-.home-system-console[data-busy="true"] .home-console-ready {
-  color: var(--secondary);
+  letter-spacing: 0;
 }
 
 .home-console-footer {
   display: flex;
-  min-height: 2rem;
-  align-items: end;
+  align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding-top: 0.45rem;
+  margin-top: 0.75rem;
 }
 
 .home-console-suggestions {
   display: flex;
   min-width: 0;
   flex-wrap: wrap;
-  gap: 0.2rem 0.75rem;
+  gap: 0 1ch;
 }
 
 .home-console-suggestions[hidden] {
@@ -2386,16 +2238,15 @@ button.darkmode,
 }
 
 .home-console-suggestions button {
-  padding: 0.12rem 0;
+  padding: 0;
   border: 0;
   border-bottom: 1px solid transparent;
   border-radius: 0;
   outline: 0;
   background: transparent;
-  color: var(--secondary);
+  color: var(--console-accent);
   cursor: pointer;
-  font-family: var(--codeFont);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   transition:
     border-color 140ms ease-out,
     color 140ms ease-out;
@@ -2404,7 +2255,12 @@ button.darkmode,
 .home-console-suggestions button:hover,
 .home-console-suggestions button:focus-visible {
   border-bottom-color: currentColor;
-  color: var(--dark);
+  color: var(--console-foreground);
+}
+
+.home-console-suggestions-label {
+  color: var(--console-muted);
+  font-size: 0.68rem;
 }
 
 .home-console-footer > p {
@@ -2412,41 +2268,33 @@ button.darkmode,
   margin: 0;
 }
 
-@keyframes home-console-result-in {
-  from {
-    opacity: 0.55;
-    transform: translateY(-0.18rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes home-console-cursor {
   0%,
-  46% {
+  52% {
     opacity: 1;
   }
 
-  47%,
+  53%,
   100% {
-    opacity: 0.18;
+    opacity: 0;
   }
 }
 
-@container (max-width: 44rem) {
-  .home-console-list-sections {
-    grid-template-columns: 1fr;
-  }
-
+@container (max-width: 32rem) {
   .home-console-list-section li {
-    grid-template-columns: minmax(5.8rem, auto) minmax(0, 1fr);
+    grid-template-columns: 6.5rem minmax(0, 1fr);
   }
 
   .home-console-list-section small {
     grid-column: 2;
+  }
+
+  .home-console-footer {
+    display: block;
+  }
+
+  .home-console-footer > p {
+    margin-top: 0.35rem;
   }
 }
 
@@ -2861,38 +2709,24 @@ body[data-slug="index"] .right.sidebar .toc {
     margin-bottom: 2.5rem;
   }
 
-  .home-console-ident > span:last-child,
-  .home-console-footer > p,
-  .home-console-ready {
+  .home-console-footer > p {
     display: none;
   }
 
-  .home-console-list-sections {
-    grid-template-columns: 1fr;
+  .home-console-body {
+    padding: 0.7rem 0.75rem;
   }
 
   .home-console-list-section li {
-    grid-template-columns: minmax(5.8rem, auto) minmax(0, 1fr);
+    grid-template-columns: 6.5rem minmax(0, 1fr);
   }
 
   .home-console-list-section small {
     grid-column: 2;
   }
 
-  .home-console-timestamp {
-    display: none;
-  }
-
-  .home-console-command {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
   .home-console-result {
     padding-left: 0;
-  }
-
-  .home-console-navigation {
-    font-size: 0.92rem;
   }
 
   .home-entry {

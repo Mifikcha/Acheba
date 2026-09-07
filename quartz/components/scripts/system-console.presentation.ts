@@ -1,18 +1,13 @@
-import type { CommandCategory } from "./system-console.types"
+import type { StudentProfileProvider, StudentUser } from "./system-console.types"
 
-const sectionLabels: Record<CommandCategory, string> = {
-  SYSTEM: "[SYS]",
-  INTERFACE: "[UI]",
-  STUDY: "[STUDY]",
-  PROFILE: "[PROFILE]",
-  NAVIGATION: "[NAV]",
-  FUN: "[FUN]",
+export function createShellIdentity(
+  mode: StudentProfileProvider["mode"],
+  user: StudentUser | null,
+): { user: string; prompt: string; profile: "connected" | "none" } {
+  const shellUser = user?.id.trim() || mode
+  return {
+    user: shellUser,
+    prompt: `hnd:\\${shellUser}>`,
+    profile: user ? "connected" : "none",
+  }
 }
-
-export const consoleSectionLabel = (category: string): string =>
-  sectionLabels[category as CommandCategory] ?? `[${category}]`
-
-export const formatConsoleTimestamp = (date: Date): string =>
-  [date.getHours(), date.getMinutes(), date.getSeconds()]
-    .map((part) => String(part).padStart(2, "0"))
-    .join(":")

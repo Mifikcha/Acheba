@@ -7,7 +7,7 @@ import {
   SessionHistoryStore,
 } from "./system-console.providers"
 import { completeCommand, executeCommand } from "./system-console.registry"
-import { consoleSectionLabel, formatConsoleTimestamp } from "./system-console.presentation"
+import { createShellIdentity } from "./system-console.presentation"
 import type { ConsoleContext, ConsoleResult } from "./system-console.types"
 
 type ConsoleBinding = { cleanup(): void }
@@ -55,12 +55,7 @@ function renderResult(result: ConsoleResult): HTMLElement {
     if (result.title) container.append(element("strong", "home-console-result-title", result.title))
     for (const line of result.lines) container.append(element("p", undefined, line))
   } else if (result.type === "error") {
-    const heading = element("p", "home-console-error")
-    heading.append(
-      element("span", undefined, "ERROR"),
-      document.createTextNode(`  ${result.title}`),
-    )
-    container.append(heading)
+    container.append(element("p", "home-console-error", result.title))
     if (result.detail) container.append(element("p", "home-console-result-detail", result.detail))
   } else if (result.type === "system") {
     container.append(element("strong", "home-console-result-title", result.title))
@@ -77,8 +72,7 @@ function renderResult(result: ConsoleResult): HTMLElement {
     const sections = element("div", "home-console-list-sections")
     for (const section of result.sections) {
       const sectionNode = element("section", "home-console-list-section")
-      if (section.title)
-        sectionNode.append(element("h3", undefined, consoleSectionLabel(section.title)))
+      if (section.title) sectionNode.append(element("h3", undefined, section.title))
       const listNode = element("ul")
       for (const item of section.items) {
         const itemNode = element("li")
@@ -158,13 +152,36 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
   const input = root.querySelector<HTMLInputElement>("[data-console-input]")!
   const output = root.querySelector<HTMLElement>("[data-console-output]")!
   const suggestions = root.querySelector<HTMLElement>("[data-console-suggestions]")!
+  const prompt = root.querySelector<HTMLElement>("[data-console-prompt]")!
+  const profileStatus = root.querySelector<HTMLElement>("[data-console-profile]")!
   const quickCommands = ["help", "settings", "random", "whoami"]
   let commandHistory = historyStore.read()
   let historyIndex = commandHistory.length
+  let promptText = ""
+
+  const renderIdentity = (user: Awaited<ReturnType<typeof context.profile.getCurrentUser>>) => {
+    const identity = createShellIdentity(context.profile.mode, user)
+    promptText = identity.prompt
+    prompt.textContent = promptText
+    profileStatus.textContent = identity.profile
+    root
+      .querySelectorAll<HTMLElement>("[data-console-user]")
+      .forEach((node) => (node.textContent = identity.user))
+  }
+
+  renderIdentity(null)
+  void context.profile
+    .getCurrentUser()
+    .then((user) => {
+      if (!signal.aborted) renderIdentity(user)
+    })
+    .catch(() => undefined)
 
   const renderSuggestions = (commands: string[], executeOnClick: boolean) => {
     suggestions.replaceChildren()
     suggestions.hidden = commands.length === 0
+    if (executeOnClick)
+      suggestions.append(element("span", "home-console-suggestions-label", "try:"))
     for (const command of commands.slice(0, 4)) {
       const button = element("button", undefined, command)
       button.type = "button"
@@ -179,12 +196,8 @@ function bindConsole(root: HTMLElement): ConsoleBinding {
   const appendTranscript = (command: string, result: ConsoleResult) => {
     const transcript = element("article", "home-console-transcript")
     const commandLine = element("div", "home-console-command")
-    const now = new Date()
-    const timestamp = element("time", "home-console-timestamp", formatConsoleTimestamp(now))
-    timestamp.dateTime = now.toISOString()
     commandLine.append(
-      timestamp,
-      element("span", "home-console-history-prompt", ">"),
+      element("span", "home-console-history-prompt", promptText),
       element("code", undefined, command),
     )
     transcript.append(commandLine, renderResult(result))

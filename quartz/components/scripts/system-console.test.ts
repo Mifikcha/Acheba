@@ -70,6 +70,17 @@ describe("system console registry", () => {
     )
   })
 
+  test("renders help as plain terminal text without profile badges", async () => {
+    const result = await executeCommand("help", registry, context())
+    assert.equal(result.type, "list")
+    if (result.type !== "list") return
+    assert.equal(result.title, undefined)
+    assert.equal(
+      result.sections.flatMap((section) => section.items).some((item) => item.badge),
+      false,
+    )
+  })
+
   test("guest profile commands never fabricate student data", async () => {
     const result = await executeCommand("progress", registry, context())
 
