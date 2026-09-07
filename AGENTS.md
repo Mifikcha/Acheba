@@ -38,3 +38,7 @@ For the public Quartz site, do not treat a push as complete by itself. After cha
 ## Skill Visibility
 
 Workspace-local skills are a fallback source. Personal Codex skills in `~/.codex/skills` are the preferred always-visible source and require restarting Codex after installation or changes.
+
+## Public Quartz Explorer
+
+For the public Quartz site, folder names in the left explorer should toggle the folder open or closed, the same as the arrow icon. Keep `folderClickBehavior: collapse` for `@quartz-community/explorer`; do not restore title-click navigation unless the user explicitly asks for it.
