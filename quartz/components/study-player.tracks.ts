@@ -16,6 +16,7 @@ const builtinTracks: AudioTrack[] = [
     title: "Rain-2",
     category: "Ambient sound",
     src: "/static/audio/Rain-2.opus",
+    duration: 467.154271,
     source: "builtin",
   },
   {
@@ -23,6 +24,7 @@ const builtinTracks: AudioTrack[] = [
     title: "Cyberpunk",
     category: "Study ambience",
     src: "/static/audio/Cyberpunk.opus",
+    duration: 476.3755,
     source: "builtin",
   },
   {
@@ -30,6 +32,7 @@ const builtinTracks: AudioTrack[] = [
     title: "Quite-Stars",
     category: "Study ambience",
     src: "/static/audio/Quite-Stars.opus",
+    duration: 537.293042,
     source: "builtin",
   },
 ]

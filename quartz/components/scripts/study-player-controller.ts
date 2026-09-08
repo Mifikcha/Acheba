@@ -37,38 +37,52 @@ export function resolveAudioSource(src: string, basePath = ""): string {
 
 export class AudioPlayerController {
   private readonly listeners = new Set<(state: StudyPlayerState) => void>()
-  private readonly audio: HTMLAudioElement
+  private readonly gain: GainNode
+  private readonly fetchAudio: typeof fetch
   private state: StudyPlayerState
-  private pendingTime = 0
+  private source: AudioBufferSourceNode | null = null
+  private buffer: AudioBuffer | null = null
+  private bufferTrackId: string | null = null
+  private loadingBuffer: Promise<AudioBuffer> | null = null
+  private loadingTrackId: string | null = null
+  private loadAbort: AbortController | null = null
+  private loadId = 0
+  private playRequestId = 0
+  private playbackStartedAt = 0
+  private playbackOffset = 0
+  private progressTimer: ReturnType<typeof setInterval> | null = null
   private lastPersistedSecond = -1
 
   constructor(
     private readonly tracks: AudioTrack[],
-    audio: HTMLAudioElement = new Audio(),
+    private readonly context: AudioContext = new AudioContext(),
+    fetchAudio: typeof fetch = fetch,
   ) {
     if (tracks.length === 0) throw new Error("Study player requires at least one track")
+    this.fetchAudio = (...args) => fetchAudio(...args)
 
-    this.audio = audio
     const restored = this.restore()
-    const currentTrackId = tracks.some((track) => track.id === restored?.currentTrackId)
-      ? restored!.currentTrackId
-      : tracks[0].id
+    const currentTrack = tracks.find((track) => track.id === restored?.currentTrackId) ?? tracks[0]
+    const duration = currentTrack.duration ?? 0
+    const currentTime = clamp(
+      Math.max(0, restored?.currentTime ?? 0),
+      0,
+      duration ? Math.max(0, duration - 0.001) : Number.MAX_SAFE_INTEGER,
+    )
 
     this.state = {
-      currentTrackId,
+      currentTrackId: currentTrack.id,
       isPlaying: false,
-      currentTime: Math.max(0, restored?.currentTime ?? 0),
-      duration: 0,
+      currentTime,
+      duration,
       volume: clamp(restored?.volume ?? 0.72, 0, 1),
       repeat: restored?.repeat === "one" ? "one" : "off",
       expanded: false,
       error: null,
     }
-    this.pendingTime = this.state.currentTime
-    this.audio.volume = this.state.volume
-    this.audio.loop = this.state.repeat === "one"
-    this.bindAudioEvents()
-    this.loadCurrentTrack()
+    this.gain = this.context.createGain()
+    this.gain.gain.value = this.state.volume
+    this.gain.connect(this.context.destination)
   }
 
   get tracksList(): readonly AudioTrack[] {
@@ -90,25 +104,39 @@ export class AudioPlayerController {
   }
 
   async toggle(): Promise<void> {
-    if (this.audio.paused) await this.play()
-    else this.audio.pause()
+    if (this.state.isPlaying) this.pause()
+    else await this.play()
   }
 
   async play(): Promise<void> {
+    if (this.state.isPlaying) return
+    const requestId = ++this.playRequestId
+    const trackId = this.state.currentTrackId
+
     try {
-      await this.audio.play()
-      this.update({ isPlaying: true, error: null })
+      const resume = this.context.state === "running" ? Promise.resolve() : this.context.resume()
+      const [buffer] = await Promise.all([this.loadCurrentTrack(), resume])
+      if (requestId !== this.playRequestId || trackId !== this.state.currentTrackId) return
+      this.startSource(buffer, this.state.currentTime)
     } catch {
-      this.update({ isPlaying: false, error: "Track unavailable" })
+      if (requestId === this.playRequestId && trackId === this.state.currentTrackId) {
+        this.update({ isPlaying: false, error: "Track unavailable" })
+      }
     }
   }
 
   pause(): void {
-    this.audio.pause()
+    ++this.playRequestId
+    if (!this.state.isPlaying) return
+    const currentTime = this.currentPlaybackTime()
+    this.stopSource()
+    this.stopProgress()
+    this.update({ isPlaying: false, currentTime })
+    this.persist()
   }
 
   previous(): void {
-    if (Math.max(this.audio.currentTime, this.state.currentTime) > 3) {
+    if (this.currentPlaybackTime() > 3) {
       this.seek(0)
       return
     }
@@ -121,46 +149,35 @@ export class AudioPlayerController {
 
   selectTrack(id: string): void {
     if (!this.tracks.some((track) => track.id === id) || id === this.state.currentTrackId) return
-    const shouldResume = this.state.isPlaying
-    this.audio.pause()
-    this.update({
-      currentTrackId: id,
-      currentTime: 0,
-      duration: 0,
-      isPlaying: false,
-      error: null,
-    })
-    this.pendingTime = 0
-    this.persist()
-    this.loadCurrentTrack()
-    if (shouldResume) void this.play()
+    this.changeTrack(id, this.state.isPlaying)
   }
 
   seek(seconds: number): void {
-    const duration = Number.isFinite(this.audio.duration)
-      ? this.audio.duration
-      : this.state.duration
+    const duration = this.buffer?.duration ?? this.state.duration ?? this.currentTrack.duration ?? 0
     const target = clamp(seconds, 0, duration || 0)
-    try {
-      this.audio.currentTime = target
-    } catch {
-      this.pendingTime = target
-    }
-    this.update({ currentTime: target })
+    if (this.state.isPlaying && this.buffer) this.startSource(this.buffer, target)
+    else this.update({ currentTime: target })
     this.persist()
   }
 
   setVolume(volume: number): void {
     const nextVolume = clamp(volume, 0, 1)
-    this.audio.volume = nextVolume
+    this.gain.gain.value = nextVolume
     this.update({ volume: nextVolume })
     this.persist()
   }
 
   toggleRepeat(): void {
+    const currentTime = this.currentPlaybackTime()
     const repeat = this.state.repeat === "one" ? "off" : "one"
-    this.audio.loop = repeat === "one"
-    this.update({ repeat })
+    if (this.source && this.buffer) {
+      this.source.loop = repeat === "one"
+      this.source.loopStart = 0
+      this.source.loopEnd = this.buffer.duration
+      this.playbackOffset = currentTime
+      this.playbackStartedAt = this.context.currentTime
+    }
+    this.update({ repeat, currentTime })
     this.persist()
   }
 
@@ -168,79 +185,151 @@ export class AudioPlayerController {
     this.update({ expanded })
   }
 
-  private bindAudioEvents(): void {
-    this.audio.addEventListener("loadedmetadata", () => {
-      const duration = Number.isFinite(this.audio.duration) ? this.audio.duration : 0
-      const restoredTime = duration
-        ? clamp(this.pendingTime, 0, Math.max(0, duration - 0.25))
-        : this.pendingTime
-      if (restoredTime > 0) {
-        try {
-          this.audio.currentTime = restoredTime
-        } catch {}
-      }
-      this.update({
-        duration,
-        currentTime: this.audio.currentTime || restoredTime,
-        error: null,
-      })
-    })
+  private startSource(buffer: AudioBuffer, offset: number): void {
+    this.stopSource()
+    this.stopProgress()
 
-    this.audio.addEventListener("durationchange", () => {
-      if (Number.isFinite(this.audio.duration)) this.update({ duration: this.audio.duration })
-    })
+    const source = this.context.createBufferSource()
+    const startOffset = this.normalizeOffset(offset, buffer.duration)
+    source.buffer = buffer
+    source.loop = this.state.repeat === "one"
+    source.loopStart = 0
+    source.loopEnd = buffer.duration
+    source.connect(this.gain)
+    source.onended = () => {
+      if (this.source !== source) return
+      this.source = null
+      this.stopProgress()
+      this.update({ isPlaying: false, currentTime: buffer.duration })
+      this.persist()
+      if (this.state.repeat !== "one") this.selectByOffset(1, true)
+    }
 
-    this.audio.addEventListener("timeupdate", () => {
-      const currentTime = this.audio.currentTime || 0
+    this.source = source
+    this.playbackOffset = startOffset
+    this.playbackStartedAt = this.context.currentTime
+    source.start(0, startOffset)
+    this.update({
+      isPlaying: true,
+      currentTime: startOffset,
+      duration: buffer.duration,
+      error: null,
+    })
+    this.startProgress()
+  }
+
+  private stopSource(): void {
+    if (!this.source) return
+    const source = this.source
+    this.source = null
+    source.onended = null
+    try {
+      source.stop()
+    } catch {}
+    source.disconnect()
+  }
+
+  private currentPlaybackTime(): number {
+    if (!this.state.isPlaying || !this.source || !this.buffer) return this.state.currentTime
+    const elapsed = Math.max(0, this.context.currentTime - this.playbackStartedAt)
+    const currentTime = this.playbackOffset + elapsed
+    return this.state.repeat === "one"
+      ? currentTime % this.buffer.duration
+      : Math.min(currentTime, this.buffer.duration)
+  }
+
+  private normalizeOffset(offset: number, duration: number): number {
+    if (duration <= 0) return 0
+    if (this.state.repeat === "one") return ((offset % duration) + duration) % duration
+    return clamp(offset, 0, Math.max(0, duration - 0.001))
+  }
+
+  private startProgress(): void {
+    this.progressTimer = setInterval(() => {
+      if (!this.state.isPlaying) return
+      const currentTime = this.currentPlaybackTime()
       this.update({ currentTime })
       const second = Math.floor(currentTime)
       if (second !== this.lastPersistedSecond && second % 2 === 0) {
         this.lastPersistedSecond = second
         this.persist()
       }
-    })
+    }, 250)
+  }
 
-    this.audio.addEventListener("play", () => this.update({ isPlaying: true, error: null }))
-    this.audio.addEventListener("pause", () => {
-      this.update({ isPlaying: false })
-      this.persist()
-    })
-    this.audio.addEventListener("error", () =>
-      this.update({ isPlaying: false, error: "Track unavailable" }),
-    )
-    this.audio.addEventListener("ended", () => {
-      if (this.state.repeat === "one") {
-        this.seek(0)
-        void this.play()
-      } else {
-        this.selectByOffset(1, true)
-      }
-    })
+  private stopProgress(): void {
+    if (this.progressTimer === null) return
+    clearInterval(this.progressTimer)
+    this.progressTimer = null
   }
 
   private selectByOffset(offset: number, forcePlay = this.state.isPlaying): void {
     const index = this.tracks.findIndex((track) => track.id === this.state.currentTrackId)
     const nextIndex = (index + offset + this.tracks.length) % this.tracks.length
-    const nextId = this.tracks[nextIndex].id
-    this.audio.pause()
+    this.changeTrack(this.tracks[nextIndex].id, forcePlay)
+  }
+
+  private changeTrack(id: string, shouldPlay: boolean): void {
+    ++this.playRequestId
+    this.stopSource()
+    this.stopProgress()
+    this.cancelLoad()
+    this.buffer = null
+    this.bufferTrackId = null
+    const track = this.tracks.find((candidate) => candidate.id === id)!
     this.update({
-      currentTrackId: nextId,
+      currentTrackId: id,
       currentTime: 0,
-      duration: 0,
+      duration: track.duration ?? 0,
       isPlaying: false,
       error: null,
     })
-    this.pendingTime = 0
     this.persist()
-    this.loadCurrentTrack()
-    if (forcePlay) void this.play()
+    if (shouldPlay) void this.play()
   }
 
-  private loadCurrentTrack(): void {
+  private async loadCurrentTrack(): Promise<AudioBuffer> {
+    const trackId = this.state.currentTrackId
+    if (this.buffer && this.bufferTrackId === trackId) return this.buffer
+    if (this.loadingBuffer && this.loadingTrackId === trackId) return this.loadingBuffer
+
+    this.cancelLoad()
+    const loadId = ++this.loadId
+    const abort = new AbortController()
     const basePath = typeof document === "undefined" ? "" : (document.body?.dataset.basepath ?? "")
-    this.audio.src = resolveAudioSource(this.currentTrack.src, basePath)
-    this.audio.preload = "metadata"
-    this.audio.load()
+    const src = resolveAudioSource(this.currentTrack.src, basePath)
+    this.loadAbort = abort
+    this.loadingTrackId = trackId
+    this.loadingBuffer = (async () => {
+      const response = await this.fetchAudio(src, { signal: abort.signal })
+      if (!response.ok) throw new Error(`Audio request failed: ${response.status}`)
+      const buffer = await this.context.decodeAudioData(await response.arrayBuffer())
+      if (loadId === this.loadId && trackId === this.state.currentTrackId) {
+        this.buffer = buffer
+        this.bufferTrackId = trackId
+        const currentTime = this.normalizeOffset(this.state.currentTime, buffer.duration)
+        this.update({ duration: buffer.duration, currentTime, error: null })
+      }
+      return buffer
+    })()
+
+    try {
+      return await this.loadingBuffer
+    } finally {
+      if (loadId === this.loadId) {
+        this.loadingBuffer = null
+        this.loadingTrackId = null
+        this.loadAbort = null
+      }
+    }
+  }
+
+  private cancelLoad(): void {
+    this.loadAbort?.abort()
+    this.loadAbort = null
+    this.loadingBuffer = null
+    this.loadingTrackId = null
+    ++this.loadId
   }
 
   private update(patch: Partial<StudyPlayerState>): void {
