@@ -123,17 +123,43 @@ describe("AudioPlayerController", () => {
     player.pause()
   })
 
-  test("sets exact AudioBuffer loop boundaries", async () => {
+  test("schedules the next buffer at the exact end of the current buffer", async () => {
     const { context, player } = createPlayer()
     await player.play()
 
     player.toggleRepeat()
 
-    const source = context.sources.at(-1)!
+    const [source, nextSource] = context.sources
     assert.equal(player.snapshot.repeat, "one")
-    assert.equal(source.loop, true)
-    assert.equal(source.loopStart, 0)
-    assert.equal(source.loopEnd, 240)
+    assert.equal(source.loop, false)
+    assert.equal(nextSource.startedAt, source.startedAt + 240 - source.startedOffset)
+
+    context.currentTime = 240
+    source.onended?.()
+
+    assert.equal(player.snapshot.isPlaying, true)
+    assert.equal(player.snapshot.currentTrackId, "one")
+    assert.equal(context.sources.at(-1)?.startedAt, 480)
+    player.pause()
+  })
+
+  test("keeps a near-end seek playing through a scheduled repeat", async () => {
+    const { context, player } = createPlayer()
+    await player.play()
+    player.toggleRepeat()
+
+    player.seek(239)
+
+    const source = context.sources.at(-2)!
+    const nextSource = context.sources.at(-1)!
+    assert.equal(source.startedOffset, 239)
+    assert.equal(nextSource.startedAt, 1)
+
+    context.currentTime = 1
+    source.onended?.()
+
+    assert.equal(player.snapshot.isPlaying, true)
+    assert.equal(context.sources.at(-1)?.startedAt, 241)
     player.pause()
   })
 

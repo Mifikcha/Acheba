@@ -41,6 +41,8 @@ export class AudioPlayerController {
   private readonly fetchAudio: typeof fetch
   private state: StudyPlayerState
   private source: AudioBufferSourceNode | null = null
+  private nextSource: AudioBufferSourceNode | null = null
+  private nextSourceStartedAt = 0
   private buffer: AudioBuffer | null = null
   private bufferTrackId: string | null = null
   private loadingBuffer: Promise<AudioBuffer> | null = null
@@ -171,11 +173,16 @@ export class AudioPlayerController {
     const currentTime = this.currentPlaybackTime()
     const repeat = this.state.repeat === "one" ? "off" : "one"
     if (this.source && this.buffer) {
-      this.source.loop = repeat === "one"
-      this.source.loopStart = 0
-      this.source.loopEnd = this.buffer.duration
       this.playbackOffset = currentTime
       this.playbackStartedAt = this.context.currentTime
+      if (repeat === "one") {
+        this.scheduleNextSource(
+          this.buffer,
+          this.context.currentTime + this.buffer.duration - currentTime,
+        )
+      } else {
+        this.stopNextSource()
+      }
     }
     this.update({ repeat, currentTime })
     this.persist()
@@ -189,26 +196,16 @@ export class AudioPlayerController {
     this.stopSource()
     this.stopProgress()
 
-    const source = this.context.createBufferSource()
     const startOffset = this.normalizeOffset(offset, buffer.duration)
-    source.buffer = buffer
-    source.loop = this.state.repeat === "one"
-    source.loopStart = 0
-    source.loopEnd = buffer.duration
-    source.connect(this.gain)
-    source.onended = () => {
-      if (this.source !== source) return
-      this.source = null
-      this.stopProgress()
-      this.update({ isPlaying: false, currentTime: buffer.duration })
-      this.persist()
-      if (this.state.repeat !== "one") this.selectByOffset(1, true)
-    }
-
+    const source = this.createSource(buffer)
+    const startedAt = this.context.currentTime
     this.source = source
     this.playbackOffset = startOffset
-    this.playbackStartedAt = this.context.currentTime
-    source.start(0, startOffset)
+    this.playbackStartedAt = startedAt
+    source.start(startedAt, startOffset)
+    if (this.state.repeat === "one") {
+      this.scheduleNextSource(buffer, startedAt + buffer.duration - startOffset)
+    }
     this.update({
       isPlaying: true,
       currentTime: startOffset,
@@ -219,6 +216,7 @@ export class AudioPlayerController {
   }
 
   private stopSource(): void {
+    this.stopNextSource()
     if (!this.source) return
     const source = this.source
     this.source = null
@@ -227,6 +225,49 @@ export class AudioPlayerController {
       source.stop()
     } catch {}
     source.disconnect()
+  }
+
+  private createSource(buffer: AudioBuffer): AudioBufferSourceNode {
+    const source = this.context.createBufferSource()
+    source.buffer = buffer
+    source.connect(this.gain)
+    source.onended = () => this.handleSourceEnded(source, buffer)
+    return source
+  }
+
+  private scheduleNextSource(buffer: AudioBuffer, startedAt: number): void {
+    this.stopNextSource()
+    const source = this.createSource(buffer)
+    this.nextSource = source
+    this.nextSourceStartedAt = startedAt
+    source.start(startedAt)
+  }
+
+  private stopNextSource(): void {
+    if (!this.nextSource) return
+    const source = this.nextSource
+    this.nextSource = null
+    source.onended = null
+    try {
+      source.stop()
+    } catch {}
+    source.disconnect()
+  }
+
+  private handleSourceEnded(source: AudioBufferSourceNode, buffer: AudioBuffer): void {
+    if (this.source !== source) return
+    if (this.state.repeat === "one" && this.nextSource) {
+      this.source = this.nextSource
+      this.nextSource = null
+      this.scheduleNextSource(buffer, this.nextSourceStartedAt + buffer.duration)
+      return
+    }
+
+    this.source = null
+    this.stopProgress()
+    this.update({ isPlaying: false, currentTime: buffer.duration })
+    this.persist()
+    this.selectByOffset(1, true)
   }
 
   private currentPlaybackTime(): number {
