@@ -14,6 +14,7 @@ class FakeAudio extends EventTarget {
   currentTime = 0
   duration = 240
   paused = true
+  loop = false
 
   load() {}
 
@@ -74,5 +75,15 @@ describe("AudioPlayerController", () => {
 
     assert.equal(player.snapshot.currentTrackId, "one")
     assert.equal(player.snapshot.currentTime, 0)
+  })
+
+  test("uses native audio looping for gapless repeat", () => {
+    const audio = new FakeAudio()
+    const player = new AudioPlayerController(tracks, audio as unknown as HTMLAudioElement)
+
+    player.toggleRepeat()
+
+    assert.equal(player.snapshot.repeat, "one")
+    assert.equal(audio.loop, true)
   })
 })

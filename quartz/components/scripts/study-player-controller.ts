@@ -66,6 +66,7 @@ export class AudioPlayerController {
     }
     this.pendingTime = this.state.currentTime
     this.audio.volume = this.state.volume
+    this.audio.loop = this.state.repeat === "one"
     this.bindAudioEvents()
     this.loadCurrentTrack()
   }
@@ -157,7 +158,9 @@ export class AudioPlayerController {
   }
 
   toggleRepeat(): void {
-    this.update({ repeat: this.state.repeat === "one" ? "off" : "one" })
+    const repeat = this.state.repeat === "one" ? "off" : "one"
+    this.audio.loop = repeat === "one"
+    this.update({ repeat })
     this.persist()
   }
 

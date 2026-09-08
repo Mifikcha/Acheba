@@ -5,9 +5,8 @@
 
 Текущий manifest ожидает:
 
-- `late-night-orbit.mp3`
-- `quiet-stars.mp3`
-- `rain.mp3`
+- `Rain-2.opus`
+- `Cyberpunk.opus`
+- `Quite-Stars.opus`
 
 Quartz публикует эту папку по адресу `/static/audio/` (с учётом `baseUrl` сайта).
-Музыкальные файлы намеренно не включены в репозиторий.

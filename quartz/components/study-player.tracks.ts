@@ -12,24 +12,24 @@ export type AudioTrack = {
 
 const builtinTracks: AudioTrack[] = [
   {
-    id: "late-night-orbit",
-    title: "Late Night Orbit",
-    category: "Study ambience",
-    src: "/static/audio/late-night-orbit.mp3",
-    source: "builtin",
-  },
-  {
-    id: "quiet-stars",
-    title: "Quiet Stars",
-    category: "Study ambience",
-    src: "/static/audio/quiet-stars.mp3",
-    source: "builtin",
-  },
-  {
-    id: "rain",
-    title: "Rain",
+    id: "rain-2",
+    title: "Rain-2",
     category: "Ambient sound",
-    src: "/static/audio/rain.mp3",
+    src: "/static/audio/Rain-2.opus",
+    source: "builtin",
+  },
+  {
+    id: "cyberpunk",
+    title: "Cyberpunk",
+    category: "Study ambience",
+    src: "/static/audio/Cyberpunk.opus",
+    source: "builtin",
+  },
+  {
+    id: "quite-stars",
+    title: "Quite-Stars",
+    category: "Study ambience",
+    src: "/static/audio/Quite-Stars.opus",
     source: "builtin",
   },
 ]
