@@ -3810,15 +3810,55 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .python-sandbox-checker.python-checker {
   --python-editor-height: clamp(22rem, 54vh, 36rem);
-  --python-sandbox-dot-step: 13px;
-  --python-sandbox-dot-base: rgb(126 130 156 / 16%);
-  --python-sandbox-dot-lit: rgb(187 154 247 / 86%);
   max-width: none;
   position: relative;
   overflow: hidden;
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--python-editor-bg) 92%, #050712), var(--python-editor-bg)),
     var(--python-editor-bg);
+}
+
+.python-sandbox-checker.python-checker::before,
+.python-sandbox-checker.python-checker::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(42px);
+  mix-blend-mode: screen;
+  will-change: opacity, transform;
+}
+
+.python-sandbox-checker.python-checker::before {
+  top: -34%;
+  left: -30%;
+  width: 74%;
+  height: 86%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--tertiary) 22%, transparent) 0%,
+    color-mix(in srgb, var(--secondary) 12%, transparent) 36%,
+    transparent 72%
+  );
+  opacity: 0.4;
+  transform: rotate(-16deg) translate3d(-8%, 3%, 0);
+  animation: python-sandbox-spotlight-a 13s cubic-bezier(0.45, 0, 0.2, 1) infinite alternate;
+}
+
+.python-sandbox-checker.python-checker::after {
+  top: -38%;
+  right: -28%;
+  width: 68%;
+  height: 96%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--tn-blue, #7aa2f7) 20%, transparent) 0%,
+    color-mix(in srgb, var(--secondary) 11%, transparent) 42%,
+    transparent 74%
+  );
+  opacity: 0.3;
+  transform: rotate(21deg) translate3d(9%, -2%, 0);
+  animation: python-sandbox-spotlight-b 16s cubic-bezier(0.4, 0, 0.18, 1) 1.8s infinite alternate;
 }
 
 .python-sandbox-checker > :not(textarea) {
@@ -3846,73 +3886,30 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 
 .python-sandbox-checker .python-editor-stack {
   isolation: isolate;
-  background-color: var(--python-editor-bg);
-  background-image: radial-gradient(
-    circle,
-    var(--python-sandbox-dot-base) 0 0.85px,
-    transparent 1.05px
-  );
-  background-size: var(--python-sandbox-dot-step) var(--python-sandbox-dot-step);
 }
 
-.python-sandbox-checker .python-editor-stack::before,
-.python-sandbox-checker .python-editor-stack::after {
+.python-sandbox-checker .python-editor-stack::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -34% -18%;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    var(--python-sandbox-dot-lit) 0 1px,
-    transparent 1.18px
-  );
-  background-position: 0 0;
-  background-size: var(--python-sandbox-dot-step) var(--python-sandbox-dot-step);
+  background:
+    radial-gradient(
+      ellipse at 26% 4%,
+      color-mix(in srgb, var(--tertiary) 14%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 78% 12%,
+      color-mix(in srgb, var(--secondary) 13%, transparent),
+      transparent 46%
+    );
+  filter: blur(28px);
+  opacity: 0.4;
   mix-blend-mode: screen;
-  opacity: 0.74;
-  -webkit-mask-image: radial-gradient(
-    ellipse 36% 54% at center,
-    black 0 22%,
-    rgb(0 0 0 / 64%) 42%,
-    transparent 72%
-  );
-  mask-image: radial-gradient(
-    ellipse 36% 54% at center,
-    black 0 22%,
-    rgb(0 0 0 / 64%) 42%,
-    transparent 72%
-  );
-  -webkit-mask-position: 8% 16%;
-  mask-position: 8% 16%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 145% 130%;
-  mask-size: 145% 130%;
-  will-change: mask-position, opacity;
-  animation: python-sandbox-spotlight-a 14s cubic-bezier(0.42, 0, 0.18, 1) infinite alternate;
-}
-
-.python-sandbox-checker .python-editor-stack::after {
-  --python-sandbox-dot-lit: rgb(204 172 255 / 72%);
-  opacity: 0.62;
-  -webkit-mask-image: radial-gradient(
-    ellipse 30% 46% at center,
-    black 0 18%,
-    rgb(0 0 0 / 52%) 39%,
-    transparent 70%
-  );
-  mask-image: radial-gradient(
-    ellipse 30% 46% at center,
-    black 0 18%,
-    rgb(0 0 0 / 52%) 39%,
-    transparent 70%
-  );
-  -webkit-mask-position: 82% 4%;
-  mask-position: 82% 4%;
-  -webkit-mask-size: 155% 142%;
-  mask-size: 155% 142%;
-  animation: python-sandbox-spotlight-b 17s cubic-bezier(0.4, 0, 0.2, 1) 1.6s infinite alternate;
+  transform: translate3d(-7%, -2%, 0) rotate(-8deg);
+  animation: python-sandbox-spotlight-c 10s cubic-bezier(0.4, 0, 0.22, 1) 0.6s infinite alternate;
 }
 
 .python-sandbox-checker .python-active-line,
@@ -3929,42 +3926,35 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
 }
 
 @keyframes python-sandbox-spotlight-a {
-  0% {
-    opacity: 0.68;
-    -webkit-mask-position: -18% -8%;
-    mask-position: -18% -8%;
-  }
-
-  43% {
-    opacity: 0.92;
-    -webkit-mask-position: 44% 34%;
-    mask-position: 44% 34%;
+  38% {
+    opacity: 0.27;
   }
 
   100% {
-    opacity: 0.76;
-    -webkit-mask-position: 118% 74%;
-    mask-position: 118% 74%;
+    opacity: 0.46;
+    transform: rotate(11deg) translate3d(58%, 28%, 0) scale(1.08);
   }
 }
 
 @keyframes python-sandbox-spotlight-b {
-  0% {
-    opacity: 0.48;
-    -webkit-mask-position: 114% -14%;
-    mask-position: 114% -14%;
-  }
-
-  48% {
-    opacity: 0.72;
-    -webkit-mask-position: 34% 18%;
-    mask-position: 34% 18%;
+  52% {
+    opacity: 0.38;
   }
 
   100% {
-    opacity: 0.56;
-    -webkit-mask-position: -28% 64%;
-    mask-position: -28% 64%;
+    opacity: 0.23;
+    transform: rotate(-14deg) translate3d(-62%, 32%, 0) scale(1.12);
+  }
+}
+
+@keyframes python-sandbox-spotlight-c {
+  44% {
+    opacity: 0.54;
+  }
+
+  100% {
+    opacity: 0.3;
+    transform: translate3d(9%, 6%, 0) rotate(10deg) scale(1.06);
   }
 }
 
