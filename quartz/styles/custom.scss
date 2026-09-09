@@ -2576,6 +2576,10 @@ body[data-slug="index"] .right.sidebar .toc {
   mask: none;
 }
 
+.home-program-cover-visual::before {
+  background-size: cover;
+}
+
 .home-program-route:has(.home-program-raster-visual) {
   --home-program-visual-opacity: 0.74;
   --home-program-visual-hover-opacity: 0.86;
@@ -2661,7 +2665,7 @@ body[data-slug="index"] .right.sidebar .toc {
     linear-gradient(
       142deg,
       color-mix(in srgb, var(--site-panel) 96%, var(--dark)) 0%,
-      color-mix(in srgb, var(--site-panel) 82%, var(--tertiary)) 62%,
+      color-mix(in srgb, var(--site-panel) 82%, var(--secondary)) 62%,
       color-mix(in srgb, var(--site-panel) 92%, var(--dark)) 120%
     );
 }
