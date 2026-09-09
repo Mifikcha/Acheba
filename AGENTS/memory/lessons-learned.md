@@ -5,6 +5,8 @@
 | ID | Дата | Статус | Цель | Артефакты | Заметки |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 
+| CX-083 | 2026-09-10 | DONE | Откатить spotlight песочницы Python к версии из аннотации | `_quartz/quartz/styles/custom.scss` | Пользователь предпочёл состояние `main d93e144` / `_quartz v5 e0533f79`: мягкие blur-прожекторы поверх прежнего sandbox-фона. Dot-mask версия CX-082 отменена; допустимое изменение — только чуть повысить яркость существующих прожекторов. |
+
 | CX-082 | 2026-09-10 | DONE | Уточнить spotlight-фон песочницы Python по референсам | `_quartz/quartz/styles/custom.scss` | Прожектор `.python-sandbox-checker` переделан из размытых glows в подсветку привязанных к сетке точек: базовая сетка плотнее, тусклая и серая, spotlight-точки фиолетовые и чуть ярче; ordinary code blocks/coding lessons не затронуты. |
 
 | CX-081 | 2026-09-10 | DONE | Переделать песочницу Python по двум visual prompt | `Публичный сайт/index.md`, `_quartz/quartz/styles/custom.scss` | Главная плашка `.home-python-sandbox` стала компактной terminal-like entry в стиле H&D Shell; страница `Песочница Python` получила изолированный spotlight-фон только через `.python-sandbox-checker`, без влияния на обычные code blocks/coding lessons. Сборка, detector и desktop/mobile browser QA пройдены. |
