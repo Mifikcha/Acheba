@@ -2445,6 +2445,7 @@ body[data-slug="index"] .right.sidebar .toc {
   justify-content: center;
   min-height: 1.6rem;
   padding-inline: 0.15rem;
+  font-size: 0.86rem;
   text-align: center;
 }
 
@@ -2467,10 +2468,21 @@ body[data-slug="index"] .right.sidebar .toc {
   isolation: isolate;
   border: 1px solid color-mix(in srgb, var(--secondary) 28%, var(--lightgray));
   border-radius: 6px;
-  background: color-mix(in srgb, var(--site-panel) 91%, var(--secondary));
+  background:
+    radial-gradient(
+      circle at 88% -18%,
+      color-mix(in srgb, var(--secondary) 22%, transparent),
+      transparent 44%
+    ),
+    linear-gradient(
+      144deg,
+      color-mix(in srgb, var(--site-panel) 97%, var(--dark)) 0%,
+      color-mix(in srgb, var(--site-panel) 82%, var(--secondary)) 58%,
+      color-mix(in srgb, var(--site-panel) 92%, var(--dark)) 118%
+    );
   color: var(--dark);
   text-decoration: none;
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--site-shadow) 74%, transparent);
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--site-shadow) 86%, transparent);
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
@@ -2496,8 +2508,8 @@ body[data-slug="index"] .right.sidebar .toc {
   pointer-events: none;
   background: linear-gradient(
     112deg,
-    color-mix(in srgb, var(--site-panel) 86%, transparent) 0%,
-    color-mix(in srgb, var(--site-panel) 48%, transparent) 32%,
+    color-mix(in srgb, var(--site-panel) 94%, transparent) 0%,
+    color-mix(in srgb, var(--site-panel) 70%, transparent) 34%,
     transparent 58%
   );
 }
@@ -2551,6 +2563,24 @@ body[data-slug="index"] .right.sidebar .toc {
   mask: var(--home-program-image) center / 100% 100% no-repeat;
 }
 
+.home-program-raster-visual {
+  color: inherit;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.home-program-raster-visual::before {
+  background: var(--home-program-image) center / contain no-repeat;
+  filter: drop-shadow(0 12px 18px color-mix(in srgb, var(--site-shadow) 34%, transparent));
+  -webkit-mask: none;
+  mask: none;
+}
+
+.home-program-route:has(.home-program-raster-visual) {
+  --home-program-visual-opacity: 0.74;
+  --home-program-visual-hover-opacity: 0.86;
+}
+
 .home-program-code {
   color: var(--secondary);
   font-family: var(--codeFont);
@@ -2588,7 +2618,7 @@ body[data-slug="index"] .right.sidebar .toc {
 .home-program-card a:hover,
 .home-program-card a:focus-visible {
   border-color: color-mix(in srgb, var(--secondary) 54%, transparent);
-  box-shadow: 0 14px 30px color-mix(in srgb, var(--site-shadow) 86%, transparent);
+  box-shadow: 0 18px 38px color-mix(in srgb, var(--site-shadow) 92%, transparent);
 }
 
 .home-program-route:is(a:hover, a:focus-visible) .home-program-visual {
@@ -2622,7 +2652,18 @@ body[data-slug="index"] .right.sidebar .toc {
   column-gap: 0;
   row-gap: 0.9rem;
   min-height: 5.45rem;
-  background: color-mix(in srgb, var(--site-panel) 90%, var(--tertiary));
+  background:
+    radial-gradient(
+      circle at 96% 12%,
+      color-mix(in srgb, var(--secondary) 18%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(
+      142deg,
+      color-mix(in srgb, var(--site-panel) 96%, var(--dark)) 0%,
+      color-mix(in srgb, var(--site-panel) 82%, var(--tertiary)) 62%,
+      color-mix(in srgb, var(--site-panel) 92%, var(--dark)) 120%
+    );
 }
 
 .home-python-prompt {
