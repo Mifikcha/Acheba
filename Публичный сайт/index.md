@@ -49,7 +49,7 @@ title: Hopes and Dreams
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-physics home-program-level-gentleman" href="./_программы-обучения/физика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
-        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/phy-02.png')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual home-program-cover-visual" style="--home-program-image: url('./assets/program-cards/phy-02.png')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
@@ -87,13 +87,13 @@ title: Hopes and Dreams
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-informatics home-program-level-gentleman" href="./_программы-обучения/информатика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
-        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/cs-02.png')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual home-program-cover-visual" style="--home-program-image: url('./assets/program-cards/cs-02.png')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-informatics home-program-level-star" href="./_программы-обучения/информатика/звездный-набор-(11-класс-егэ,-100-баллов)">
-        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/cs-03.png')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual home-program-cover-visual" style="--home-program-image: url('./assets/program-cards/cs-03.png')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 03</span>
         <strong>Звездный набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
