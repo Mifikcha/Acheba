@@ -84,6 +84,18 @@ function fixedShowPopover(
   return positionResult
 }
 
+type FakePopoverHint = { remove: () => void; removed: boolean }
+type FakeFetchedDocument = {
+  querySelector: (selector: string) => unknown
+  querySelectorAll: (selector: string) => FakePopoverHint[]
+}
+
+function removeDuplicatePopoverTitle(html: FakeFetchedDocument) {
+  if (html.querySelector("article.popover-hint .markdown-preview-view > h1:first-child")) {
+    html.querySelectorAll(".page-header .popover-hint").forEach((element) => element.remove())
+  }
+}
+
 describe("showPopover on cache-hit with hash", () => {
   test("does not reference any lexical popoverInner from an outer scope", async () => {
     const heading: FakeHeading = { offsetTop: 200 }
@@ -132,6 +144,52 @@ describe("showPopover on cache-hit with hash", () => {
     await fixedShowPopover(popoverElement, "#a-b", async () => {})
 
     assert.deepStrictEqual(inner._selectorsQueried, ["#popover-internal-a-b"])
+  })
+})
+
+describe("removeDuplicatePopoverTitle", () => {
+  test("removes the fetched page header when the article already starts with an h1", () => {
+    const pageHeaderHint: FakePopoverHint = {
+      removed: false,
+      remove() {
+        this.removed = true
+      },
+    }
+    const html: FakeFetchedDocument = {
+      querySelector(selector) {
+        return selector === "article.popover-hint .markdown-preview-view > h1:first-child"
+          ? { tagName: "H1" }
+          : null
+      },
+      querySelectorAll(selector) {
+        return selector === ".page-header .popover-hint" ? [pageHeaderHint] : []
+      },
+    }
+
+    removeDuplicatePopoverTitle(html)
+
+    assert.equal(pageHeaderHint.removed, true)
+  })
+
+  test("keeps the fetched page header when the article has no body h1", () => {
+    const pageHeaderHint: FakePopoverHint = {
+      removed: false,
+      remove() {
+        this.removed = true
+      },
+    }
+    const html: FakeFetchedDocument = {
+      querySelector() {
+        return null
+      },
+      querySelectorAll(selector) {
+        return selector === ".page-header .popover-hint" ? [pageHeaderHint] : []
+      },
+    }
+
+    removeDuplicatePopoverTitle(html)
+
+    assert.equal(pageHeaderHint.removed, false)
   })
 })
 

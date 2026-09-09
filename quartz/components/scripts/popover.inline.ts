@@ -5,6 +5,12 @@ import { fetchCanonical } from "./util"
 const p = new DOMParser()
 let activeAnchor: HTMLAnchorElement | null = null
 
+function removeDuplicatePopoverTitle(html: Document) {
+  if (html.querySelector("article.popover-hint .markdown-preview-view > h1:first-child")) {
+    html.querySelectorAll(".page-header .popover-hint").forEach((element) => element.remove())
+  }
+}
+
 async function mouseEnterHandler(
   this: HTMLAnchorElement,
   { clientX, clientY }: { clientX: number; clientY: number },
@@ -104,6 +110,7 @@ async function mouseEnterHandler(
         const targetID = `popover-internal-${el.id}`
         el.id = targetID
       })
+      removeDuplicatePopoverTitle(html)
       const elts = [...html.getElementsByClassName("popover-hint")]
       if (elts.length === 0) return
 
