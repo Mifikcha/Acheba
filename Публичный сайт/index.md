@@ -38,24 +38,24 @@ title: Hopes and Dreams
   <div class="home-program-card">
     <div class="home-program-matrix" aria-label="Матрица программ обучения">
       <div class="home-program-axis" aria-hidden="true"></div>
-      <div class="home-program-column">9 класс</div>
-      <div class="home-program-column">11 класс / до 80</div>
-      <div class="home-program-column">11 класс / 100</div>
+      <div class="home-program-column">8-9 класс, ОГЭ</div>
+      <div class="home-program-column">11 класс, ЕГЭ до 80</div>
+      <div class="home-program-column">11 класс, ЕГЭ на 100</div>
       <div class="home-program-row">Физика</div>
       <a class="home-program-route home-program-physics home-program-level-basic" href="./_программы-обучения/физика/базовый-набор-(9-класс,-огэ)">
-        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-basic.svg')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/phy-01.png')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 01</span>
         <strong>Базовый набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-physics home-program-level-gentleman" href="./_программы-обучения/физика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
-        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-gentleman.svg')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/phy-02.png')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-physics home-program-level-star" href="./_программы-обучения/физика/звездный-набор-(11-класс-егэ,-100-баллов)">
-        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-star.svg')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/phy-03.png')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 03</span>
         <strong>Звездный набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
@@ -81,19 +81,19 @@ title: Hopes and Dreams
       </a>
       <div class="home-program-row">Информатика</div>
       <a class="home-program-route home-program-informatics home-program-level-basic" href="./_программы-обучения/информатика/базовый-набор-(9-класс,-огэ)">
-        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-basic.svg')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/cs-01.png')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 01</span>
         <strong>Базовый набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-informatics home-program-level-gentleman" href="./_программы-обучения/информатика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
-        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-gentleman.svg')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/cs-02.png')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="home-program-route home-program-informatics home-program-level-star" href="./_программы-обучения/информатика/звездный-набор-(11-класс-егэ,-100-баллов)">
-        <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-star.svg')" aria-hidden="true"></span>
+        <span class="home-program-visual home-program-image-visual home-program-raster-visual" style="--home-program-image: url('./assets/program-cards/cs-03.png')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 03</span>
         <strong>Звездный набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
