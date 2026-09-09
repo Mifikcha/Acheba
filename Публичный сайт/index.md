@@ -42,52 +42,57 @@ title: Hopes and Dreams
       <div class="home-program-column">11 класс / до 80</div>
       <div class="home-program-column">11 класс / 100</div>
       <div class="home-program-row">Физика</div>
-      <a class="home-program-route home-program-physics home-program-level-basic" href="./_программы-обучения/физика-9-класс-—-программа">
+      <a class="home-program-route home-program-physics home-program-level-basic" href="./_программы-обучения/физика/базовый-набор-(9-класс,-огэ)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-basic.svg')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 01</span>
         <strong>Базовый набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
-      <a class="home-program-route home-program-physics home-program-level-gentleman" href="./_программы-обучения/физика-11-класс-—-программа">
+      <a class="home-program-route home-program-physics home-program-level-gentleman" href="./_программы-обучения/физика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-gentleman.svg')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
-      <div class="home-program-route home-program-physics home-program-level-star" aria-disabled="true">
+      <a class="home-program-route home-program-physics home-program-level-star" href="./_программы-обучения/физика/звездный-набор-(11-класс-егэ,-100-баллов)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/physics-star.svg')" aria-hidden="true"></span>
         <span class="home-program-code">PHY / 03</span>
         <strong>Звездный набор</strong>
-      </div>
+        <span class="home-program-arrow" aria-hidden="true">↗</span>
+      </a>
       <div class="home-program-row">Математика</div>
-      <div class="home-program-route home-program-math home-program-level-basic" aria-disabled="true">
+      <a class="home-program-route home-program-math home-program-level-basic" href="./_программы-обучения/математика/базовый-набор-(9-класс,-огэ)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/math-basic.svg')" aria-hidden="true"></span>
         <span class="home-program-code">MATH / 01</span>
         <strong>Базовый набор</strong>
-      </div>
-      <div class="home-program-route home-program-math home-program-level-gentleman" aria-disabled="true">
+        <span class="home-program-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="home-program-route home-program-math home-program-level-gentleman" href="./_программы-обучения/математика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/math-gentleman.svg')" aria-hidden="true"></span>
         <span class="home-program-code">MATH / 02</span>
         <strong>Джентельменский набор</strong>
-      </div>
-      <div class="home-program-route home-program-math home-program-level-star" aria-disabled="true">
+        <span class="home-program-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="home-program-route home-program-math home-program-level-star" href="./_программы-обучения/математика/звездный-набор-(11-класс-егэ,-100-баллов)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/math-star.svg')" aria-hidden="true"></span>
         <span class="home-program-code">MATH / 03</span>
         <strong>Звездный набор</strong>
-      </div>
+        <span class="home-program-arrow" aria-hidden="true">↗</span>
+      </a>
       <div class="home-program-row">Информатика</div>
-      <div class="home-program-route home-program-informatics home-program-level-basic" aria-disabled="true">
+      <a class="home-program-route home-program-informatics home-program-level-basic" href="./_программы-обучения/информатика/базовый-набор-(9-класс,-огэ)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-basic.svg')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 01</span>
         <strong>Базовый набор</strong>
-      </div>
-      <a class="home-program-route home-program-informatics home-program-level-gentleman" href="./_программы-обучения/информатика-—-программа-до-80">
+        <span class="home-program-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="home-program-route home-program-informatics home-program-level-gentleman" href="./_программы-обучения/информатика/джентельменский-набор-(11-класс-егэ,-до-80-баллов)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-gentleman.svg')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 02</span>
         <strong>Джентельменский набор</strong>
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
-      <a class="home-program-route home-program-informatics home-program-level-star" href="./_программы-обучения/информатика-—-программа-80+">
+      <a class="home-program-route home-program-informatics home-program-level-star" href="./_программы-обучения/информатика/звездный-набор-(11-класс-егэ,-100-баллов)">
         <span class="home-program-visual home-program-image-visual" style="--home-program-image: url('./assets/program-cards/cs-star.svg')" aria-hidden="true"></span>
         <span class="home-program-code">CS / 03</span>
         <strong>Звездный набор</strong>
@@ -130,10 +135,15 @@ title: Hopes and Dreams
 </section>
 
 ## graph-links
-[[_Программы обучения/Физика 9 класс — программа]]
-[[_Программы обучения/Физика 11 класс — программа]]
-[[_Программы обучения/Информатика — программа до 80]]
-[[_Программы обучения/Информатика — программа 80+]]
+[[_Программы обучения/Физика/Базовый набор (9 класс, ОГЭ)]]
+[[_Программы обучения/Физика/Джентельменский набор (11 класс ЕГЭ, до 80 баллов)]]
+[[_Программы обучения/Физика/Звездный набор (11 класс ЕГЭ, 100 баллов)]]
+[[_Программы обучения/Математика/Базовый набор (9 класс, ОГЭ)]]
+[[_Программы обучения/Математика/Джентельменский набор (11 класс ЕГЭ, до 80 баллов)]]
+[[_Программы обучения/Математика/Звездный набор (11 класс ЕГЭ, 100 баллов)]]
+[[_Программы обучения/Информатика/Базовый набор (9 класс, ОГЭ)]]
+[[_Программы обучения/Информатика/Джентельменский набор (11 класс ЕГЭ, до 80 баллов)]]
+[[_Программы обучения/Информатика/Звездный набор (11 класс ЕГЭ, 100 баллов)]]
 [[Песочница Python]]
 [[Предметы/Информатика/Разбор задач/№1 Граф]]
 [[Предметы/Информатика/Разбор задач/№2 Таблица истинности]]
@@ -160,41 +170,41 @@ title: Hopes and Dreams
 [[Предметы/Информатика/Разбор задач/№25 Двуликая]]
 [[Предметы/Информатика/Разбор задач/№26 Сложна 1]]
 [[Предметы/Информатика/Разбор задач/№27 Сложна 2]]
-[[Предметы/Математика/Теория/Базовая арифметика/Выражение величин]]
-[[Предметы/Математика/Теория/Базовая арифметика/Десятичные дроби]]
-[[Предметы/Математика/Теория/Базовая арифметика/Корни]]
-[[Предметы/Математика/Теория/Базовая арифметика/Логарифмы]]
-[[Предметы/Математика/Теория/Базовая арифметика/Неравенства]]
-[[Предметы/Математика/Теория/Базовая арифметика/Обыкновенные дроби]]
-[[Предметы/Математика/Теория/Базовая арифметика/Системы неравенств]]
-[[Предметы/Математика/Теория/Базовая арифметика/Системы уравнений]]
-[[Предметы/Математика/Теория/Базовая арифметика/Степени]]
-[[Предметы/Математика/Теория/Базовая арифметика/Формулы сокращенного умножения]]
-[[Предметы/Математика/Теория/Векторы]]
+[[01.6 Выражение величин]]
+[[01.3 Десятичные дроби]]
+[[01.8 Корни]]
+[[01.9 Логарифмы]]
+[[03.1 Неравенства]]
+[[01.1 Обыкновенные дроби]]
+[[03.2 Системы неравенств]]
+[[03.3 Системы уравнений]]
+[[01.7 Степени]]
+[[01.5 Формулы сокращенного умножения]]
+[[01.11 Векторы]]
 [[Предметы/Математика/Теория/Геометрия/Кхм кхм]]
-[[Предметы/Математика/Теория/Производная/Геометрический смысл производной]]
-[[Предметы/Математика/Теория/Производная/Производная]]
-[[Предметы/Математика/Теория/Производная/Физический смысл производной]]
-[[Предметы/Математика/Теория/Производная/Экстремумы]]
-[[Предметы/Математика/Теория/Теория вероятности/Задачки теорвера]]
-[[Предметы/Математика/Теория/Теория вероятности/Статистика]]
-[[Предметы/Математика/Теория/Теория вероятности/Теория теорвера]]
-[[Предметы/Математика/Теория/Тригонометрия/Основы тригонометрии|Тригонометрия]]
-[[Предметы/Математика/Теория/Уравнения/Иррациональные уравнения]]
-[[Предметы/Математика/Теория/Уравнения/Квадратные уравнения]]
-[[Предметы/Математика/Теория/Уравнения/Линейные уравнения]]
-[[Предметы/Математика/Теория/Уравнения/Логарифмические уравнения]]
-[[Предметы/Математика/Теория/Уравнения/Показательные уравнения]]
-[[Предметы/Математика/Теория/Уравнения/Уравнения старших степеней]]
-[[Предметы/Математика/Теория/Функции/Квадратичная функция]]
-[[Предметы/Математика/Теория/Функции/Кубическая функция]]
-[[Предметы/Математика/Теория/Функции/Линейная функция]]
-[[Предметы/Математика/Теория/Функции/Обратная пропорциональность (гипербола)]]
-[[Предметы/Математика/Теория/Функции/Общая информация]]
-[[Предметы/Математика/Теория/Функции/Показательная функция]]
-[[Предметы/Математика/Теория/Функции/Функция корня]]
-[[Предметы/Математика/Теория/Функции/Функция логарифма]]
-[[Предметы/Математика/Теория/Функции/Экспонента]]
+[[07.2 Геометрический смысл производной]]
+[[07.1 Производная]]
+[[07.3 Физический смысл производной]]
+[[07.4 Экстремумы]]
+[[06.2 Задачки теорвера]]
+[[06.3 Статистика]]
+[[06.1 Теория теорвера]]
+[[Основы тригонометрии|Тригонометрия]]
+[[02.4 Иррациональные уравнения]]
+[[02.2 Квадратные уравнения]]
+[[02.1 Линейные уравнения]]
+[[02.5 Логарифмические уравнения]]
+[[02.6 Показательные уравнения]]
+[[02.3 Уравнения старших степеней]]
+[[04.2 Квадратичная функция]]
+[[04.3 Кубическая функция]]
+[[04.1 Линейная функция]]
+[[04.4 Обратная пропорциональность (гипербола)]]
+[[04.0 Общая информация]]
+[[04.7 Показательная функция]]
+[[04.5 Функция корня]]
+[[04.6 Функция логарифма]]
+[[04.8 Экспонента]]
 [[Предметы/Физика/Теория/Кванты/Квантовая механика]]
 [[Предметы/Физика/Теория/Кванты/Фотоэффект]]
 [[Предметы/Физика/Теория/Кванты/Ядерные реакции]]
