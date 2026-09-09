@@ -99,10 +99,20 @@ title: Hopes and Dreams
         <span class="home-program-arrow" aria-hidden="true">↗</span>
       </a>
     </div>
-    <a class="home-python-sandbox" href="./песочница-python">
-      <span class="home-python-prompt" aria-hidden="true">&gt;</span>
-      <strong><span class="home-python-initial">П</span>есочница Python</strong>
-      <span class="home-program-arrow" aria-hidden="true">OPEN ↗</span>
+    <a class="home-python-sandbox" href="./песочница-python" aria-label="Открыть Песочницу Python">
+      <span class="home-python-topline">
+        <span>H&amp;D Tool 0.2 — python</span>
+        <span class="home-python-status">READY</span>
+      </span>
+      <strong class="home-python-command">
+        <span class="home-python-prompt" aria-hidden="true">hnd:\tools&gt;</span>
+        <span class="home-python-command-text">Песочница Python</span>
+        <span class="home-python-cursor" aria-hidden="true">|</span>
+      </strong>
+      <span class="home-python-bottomline">
+        <span>quick experiments · instant output</span>
+        <span class="home-python-launch">ENTER open ↗</span>
+      </span>
     </a>
   </div>
 </section>

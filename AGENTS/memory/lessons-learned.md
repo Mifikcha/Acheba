@@ -5,6 +5,8 @@
 | ID | Дата | Статус | Цель | Артефакты | Заметки |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 
+| CX-081 | 2026-09-10 | DONE | Переделать песочницу Python по двум visual prompt | `Публичный сайт/index.md`, `_quartz/quartz/styles/custom.scss` | Главная плашка `.home-python-sandbox` стала компактной terminal-like entry в стиле H&D Shell; страница `Песочница Python` получила изолированный spotlight-фон только через `.python-sandbox-checker`, без влияния на обычные code blocks/coding lessons. Сборка, detector и desktop/mobile browser QA пройдены. |
+
 | CX-080 | 2026-09-10 | DONE | Довести PNG-карточки матрицы программ | `Публичный сайт/index.md`, `Публичный сайт/assets/program-cards/cs-03.png`, `_quartz/quartz/styles/custom.scss` | `PHY-02`, `CS-02` и `CS-03` получили raster-cover режим, чтобы иллюстрации занимали всю карточку; `cs-03.png` заменён новым пользовательским PNG. Градиент песочницы Python приведён к общему тёмно-фиолетовому стилю карточек без `tertiary`/зелёного оттенка. |
 
 | CX-079 | 2026-09-10 | DONE | Подключить PNG-иллюстрации к матрице программ на главной | `Публичный сайт/index.md`, `Публичный сайт/assets/program-cards`, `_quartz/quartz/styles/custom.scss` | Физика и информатика в матрице используют прозрачные PNG `phy-01..03` и `cs-01..03`; `PHY-03-alt.png` не подключался. Математика осталась на SVG-масках. Пути к PNG держать в lowercase, потому что Quartz публикует ассеты в нижнем регистре. |
