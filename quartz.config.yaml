@@ -218,12 +218,14 @@ plugins:
       useSavedState: false
       sortFn: |
         (a, b) => {
-          const isExcalidrawCheck = (node) =>
+          const isStudentStats = (node) =>
             node.slugSegments?.length === 1 &&
-            (node.slugSegment === "проверка-excalidraw" || node.displayName === "Проверка Excalidraw")
+            (node.slugSegment === "статистика-учеников" || node.displayName === "Статистика учеников")
 
-          if (isExcalidrawCheck(a) && !isExcalidrawCheck(b)) return 1
-          if (!isExcalidrawCheck(a) && isExcalidrawCheck(b)) return -1
+          if (a.isFolder && b.isFolder) {
+            if (isStudentStats(a) && !isStudentStats(b)) return 1
+            if (!isStudentStats(a) && isStudentStats(b)) return -1
+          }
 
           if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
             return (a.displayName || "").localeCompare(b.displayName || "", undefined, {
