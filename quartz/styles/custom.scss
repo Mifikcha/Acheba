@@ -134,6 +134,7 @@ article
 
 .desmos-embed {
   margin: 1.15rem 0 1.35rem;
+  min-height: clamp(20rem, 54vh, 34rem);
 }
 
 .desmos-shell {
@@ -159,7 +160,14 @@ article
   width: 100%;
   height: clamp(20rem, 54vh, 34rem);
   min-height: 20rem;
-  background: var(--light);
+  background: #11121a;
+}
+
+.desmos-stage.is-loading {
+  display: grid;
+  place-items: center;
+  color: color-mix(in srgb, var(--tn-fg) 75%, white);
+  font-size: 0.9rem;
 }
 
 .desmos-stage-error {
