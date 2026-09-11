@@ -216,6 +216,25 @@ plugins:
       folderDefaultState: open
       folderClickBehavior: collapse
       useSavedState: false
+      sortFn: |
+        (a, b) => {
+          const isExcalidrawCheck = (node) =>
+            node.slugSegments?.length === 1 &&
+            (node.slugSegment === "проверка-excalidraw" || node.displayName === "Проверка Excalidraw")
+
+          if (isExcalidrawCheck(a) && !isExcalidrawCheck(b)) return 1
+          if (!isExcalidrawCheck(a) && isExcalidrawCheck(b)) return -1
+
+          if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
+            return (a.displayName || "").localeCompare(b.displayName || "", undefined, {
+              numeric: true,
+              sensitivity: "base",
+            })
+          }
+
+          if (!a.isFolder && b.isFolder) return 1
+          return -1
+        }
     layout:
       position: left
       priority: 50
