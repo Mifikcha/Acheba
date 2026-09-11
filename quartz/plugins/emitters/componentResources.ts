@@ -9,6 +9,8 @@ import popoverScript from "../../components/scripts/popover.inline"
 // @ts-ignore
 import sidebarCollapseScript from "../../components/scripts/sidebar-collapse.inline"
 // @ts-ignore
+import desmosScript from "../../components/scripts/desmos.inline"
+// @ts-ignore
 import pythonCheckerScript from "../../components/scripts/python-checker.inline"
 // @ts-ignore
 import systemConsoleScript from "../../components/scripts/system-console.inline"
@@ -113,6 +115,7 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
   }
 
   componentResources.afterDOMLoaded.push(sidebarCollapseScript)
+  componentResources.afterDOMLoaded.push(desmosScript)
   componentResources.afterDOMLoaded.push(pythonCheckerScript)
   componentResources.afterDOMLoaded.push(systemConsoleScript)
 

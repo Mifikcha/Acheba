@@ -132,6 +132,45 @@ article
   background: transparent !important;
 }
 
+.desmos-embed {
+  margin: 1.15rem 0 1.35rem;
+}
+
+.desmos-shell {
+  overflow: hidden;
+  margin: 1.15rem 0 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--lightgray) 30%, var(--light));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--site-shadow) 40%, transparent);
+}
+
+.desmos-shell figcaption {
+  margin: 0;
+  padding: 0.52rem 0.72rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--secondary) 18%, var(--lightgray));
+  color: var(--darkgray);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.desmos-stage {
+  width: 100%;
+  height: clamp(20rem, 54vh, 34rem);
+  min-height: 20rem;
+  background: var(--light);
+}
+
+.desmos-stage-error {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: var(--darkgray);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
 html,
 body,
 .page,
@@ -3814,7 +3853,11 @@ html[saved-theme="dark"] .page[data-frame="coding-lesson"] {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--python-editor-bg) 92%, #050712), var(--python-editor-bg)),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--python-editor-bg) 92%, #050712),
+      var(--python-editor-bg)
+    ),
     var(--python-editor-bg);
 }
 
