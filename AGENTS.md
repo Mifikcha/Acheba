@@ -45,4 +45,6 @@ For the public Quartz site, folder names in the left explorer should toggle the 
 
 ## Public Subject Folders
 
-In `Публичный сайт/Предметы`, keep the physical folder names user-facing and formal: `Физика`, `Информатика`, `Математика`. Do not restore the older nickname folders `Шизончик`, `Инфушечка`, or `Матанчик`.
+In `Публичный сайт`, keep the top-level subject folders user-facing and formal: `Физика`, `Информатика`, `Математика`. Do not restore the older nickname folders `Шизончик`, `Инфушечка`, or `Матанчик`.
+
+Inside each subject folder, keep program pages under `Программы обучения` and task-solution folders named `_Разборы задач` so they sort near the top of the explorer.
