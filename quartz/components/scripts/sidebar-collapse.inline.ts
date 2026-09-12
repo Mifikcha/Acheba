@@ -208,10 +208,8 @@ const prepareTableOfContents = () => {
     const entries = [...content.querySelectorAll<HTMLAnchorElement>("a[data-for]")]
       .map((link) => ({ link, heading: document.getElementById(link.dataset.for ?? "") }))
       .filter(({ link, heading }) => {
-        const headingLevel = heading ? Number(heading.tagName.slice(1)) : 0
         const hidden =
           !heading ||
-          headingLevel !== 2 ||
           Boolean(heading.closest(".callout, .transclude")) ||
           lowSignalTocHeading.test(heading.textContent?.trim() ?? "")
         link.closest("li")?.toggleAttribute("hidden", hidden)
