@@ -10,6 +10,14 @@
   src: url("./static/fonts/KalissaRegular.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("./static/fonts/CormorantGaramond-Italic-VariableFont_wght.ttf") format("truetype");
+}
+
 :root {
   --site-sidebar-padding-block: 1rem 2rem;
   --site-sidebar-padding-inline: 1rem;
@@ -1858,7 +1866,10 @@ button.darkmode,
   max-width: 48rem;
   margin: 1.35rem 0 2.4rem;
   color: var(--darkgray);
+  font-family: "Cormorant Garamond", Garamond, Georgia, serif;
   font-size: clamp(1.15rem, 2.1vw, 1.55rem);
+  font-style: italic;
+  font-weight: 450;
   line-height: 1.45;
 }
 
