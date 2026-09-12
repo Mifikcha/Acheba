@@ -99,7 +99,7 @@ plugins:
   - source: "@quartz-community/table-of-contents"
     enabled: true
     options:
-      maxDepth: 3
+      maxDepth: 2
       minEntries: 2
       showByDefault: true
       collapseByDefault: false
