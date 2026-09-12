@@ -5,7 +5,7 @@ title: Hopes and Dreams
 <section class="home-entry">
   <div class="home-hero">
     <h1>Hopes and Dreams</h1>
-    <p class="home-lead">Материалы по физике, математике и информатике: теория, разборы задач, программы занятий и опорные конспекты.</p>
+    <p class="home-lead">Can you hear the music<span class="home-greeting-name" data-home-greeting-name></span>?</p>
   </div>
 </section>
 

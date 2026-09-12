@@ -4,6 +4,7 @@
 
 | ID | Дата | Статус | Цель | Артефакты | Заметки |
 | :-- | :-- | :-- | :-- | :-- | :-- |
+| CX-091 | 2026-09-12 | DONE | Заменить подпись hero на главной и self-host Cormorant Garamond Italic | `Публичный сайт/index.md`, `_quartz/quartz/styles/custom.scss`, `_quartz/quartz/static/fonts/CormorantGaramond-Italic-VariableFont_wght.ttf` | `.home-lead` теперь показывает `Can you hear the music?` в self-hosted `Cormorant Garamond` italic без изменения размера; рядом оставлен пустой `data-home-greeting-name` span для будущего формата `Can you hear the music, {name}?`. |
 | CX-090 | 2026-09-11 | DONE | Интегрировать Desmos в заметки по параметрам | `Публичный сайт/Математика/_Разборы задач/11 класс ЕГЭ/№ 19 Параметр`, `_quartz/quartz/components/scripts/desmos.inline.ts`, `_quartz/quartz/styles/custom.scss` | Графики в параметрах теперь вставляются как `<div class="desmos-embed" data-bounds="..." data-expressions="...">`; выражения разделяются `;`. Desmos API подключен через Quartz component resources; фейковые ключи отдают 403, рабочий публичный v1.12 example-key уже стоит в рантайме. |
 | CX-089 | 2026-09-11 | DONE | Убрать ненормативную лексику из заметок базы | `Публичный сайт/Математика`, `Публичный сайт/Информатика` | Мат в учебных заметках заменен контекстными синонимами; контрольный скан по `.md` вне служебных папок показал `TOTAL=0`. |
 
