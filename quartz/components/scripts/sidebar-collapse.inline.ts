@@ -406,6 +406,21 @@ const prepareGraphScrollContract = () => {
     })
 }
 
+const passWheelToPage = (event: WheelEvent) => {
+  if (event.ctrlKey || event.defaultPrevented) return
+  event.preventDefault()
+  event.stopImmediatePropagation()
+  window.scrollBy({ top: event.deltaY, left: event.deltaX, behavior: "auto" })
+}
+
+const prepareRightSidebarScrollContract = () => {
+  document.querySelectorAll<HTMLElement>(".right.sidebar").forEach((sidebar) => {
+    if (sidebar.dataset.pageWheelReady === "true") return
+    sidebar.dataset.pageWheelReady = "true"
+    sidebar.addEventListener("wheel", passWheelToPage, { capture: true, passive: false })
+  })
+}
+
 const ensureGlobalGraphControls = () => {
   document.querySelectorAll<HTMLElement>(".global-graph-outer").forEach((outer) => {
     if (outer.querySelector(".global-graph-controls")) return
@@ -534,6 +549,7 @@ const prepareSidebar = () => {
   prepareTableOfContents()
   prepareHomeAtmosphere()
   prepareGraphScrollContract()
+  prepareRightSidebarScrollContract()
   ensureGlobalGraphControls()
   applyStoredTheme()
 }

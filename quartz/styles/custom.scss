@@ -171,6 +171,15 @@ article
   background: #11121a;
 }
 
+.desmos-hint {
+  margin: 0;
+  padding: 0.42rem 0.72rem 0.52rem;
+  border-top: 1px solid color-mix(in srgb, var(--secondary) 14%, var(--lightgray));
+  color: color-mix(in srgb, var(--darkgray) 84%, var(--secondary));
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
 .desmos-stage.is-loading {
   display: grid;
   place-items: center;

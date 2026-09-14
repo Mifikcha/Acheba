@@ -48,11 +48,27 @@ const parseBounds = (value: string | undefined) => {
   return { left, right, bottom, top }
 }
 
+const padBounds = (bounds: { left: number; right: number; bottom: number; top: number }) => {
+  const xPadding = (bounds.right - bounds.left) * 0.14
+  const yPadding = (bounds.top - bounds.bottom) * 0.14
+  return {
+    left: bounds.left - xPadding,
+    right: bounds.right + xPadding,
+    bottom: bounds.bottom - yPadding,
+    top: bounds.top + yPadding,
+  }
+}
+
 const parseExpressions = (value: string | undefined) =>
   (value ?? "")
     .split(";")
     .map((latex) => latex.trim())
     .filter(Boolean)
+
+const keepWheelForPageScroll = (event: WheelEvent) => {
+  if (event.ctrlKey && event.shiftKey) return
+  event.stopImmediatePropagation()
+}
 
 const prepareDesmosEmbed = (root: HTMLElement) => {
   if (root.dataset.desmosPrepared === "true") {
@@ -75,6 +91,12 @@ const prepareDesmosEmbed = (root: HTMLElement) => {
   stage.textContent = "Загрузка Desmos..."
   shell.append(stage)
 
+  const hint = document.createElement("p")
+  hint.className = "desmos-hint"
+  hint.textContent =
+    "Колесо прокручивает страницу. Масштаб графика: кнопки +/- в Desmos или Ctrl+Shift+колесо."
+  shell.append(hint)
+
   root.replaceChildren(shell)
   return stage
 }
@@ -88,12 +110,16 @@ const initDesmosEmbed = async (root: HTMLElement) => {
   if (expressions.length === 0 || !stage) return
   stage.textContent = ""
   stage.classList.remove("is-loading", "desmos-stage-error")
+  if (stage.dataset.desmosWheelReady !== "true") {
+    stage.dataset.desmosWheelReady = "true"
+    stage.addEventListener("wheel", keepWheelForPageScroll, { capture: true })
+  }
 
   try {
     await loadDesmos()
     const calculator = window.Desmos!.GraphingCalculator(stage, {
       expressions: true,
-      expressionsCollapsed: true,
+      expressionsCollapsed: false,
       settingsMenu: false,
       keypad: false,
       lockViewport: root.dataset.lockViewport === "true",
@@ -105,7 +131,7 @@ const initDesmosEmbed = async (root: HTMLElement) => {
     activeCalculators.add(calculator)
 
     const bounds = parseBounds(root.dataset.bounds)
-    if (bounds) calculator.setMathBounds(bounds)
+    if (bounds) calculator.setMathBounds(padBounds(bounds))
 
     expressions.forEach((latex, index) => {
       calculator.setExpression({ id: `expr-${index}`, latex })
@@ -149,6 +175,11 @@ document.addEventListener("nav", initDesmosEmbeds)
 window.addCleanup?.(() => {
   desmosObserver?.disconnect()
   desmosObserver = undefined
+  document
+    .querySelectorAll<HTMLElement>(".desmos-stage")
+    .forEach((stage) =>
+      stage.removeEventListener("wheel", keepWheelForPageScroll, { capture: true }),
+    )
   for (const calculator of activeCalculators) calculator.destroy()
   activeCalculators.clear()
 })
