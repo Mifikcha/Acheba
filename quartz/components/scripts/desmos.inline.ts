@@ -66,7 +66,7 @@ const parseExpressions = (value: string | undefined) =>
     .filter(Boolean)
 
 const keepWheelForPageScroll = (event: WheelEvent) => {
-  if (event.ctrlKey && event.shiftKey) return
+  if (event.shiftKey) return
   event.stopImmediatePropagation()
 }
 
@@ -94,7 +94,7 @@ const prepareDesmosEmbed = (root: HTMLElement) => {
   const hint = document.createElement("p")
   hint.className = "desmos-hint"
   hint.textContent =
-    "Колесо прокручивает страницу. Масштаб графика: кнопки +/- в Desmos или Ctrl+Shift+колесо."
+    "Колесо прокручивает страницу. Масштаб графика: кнопки +/- в Desmos или Shift+колесо."
   shell.append(hint)
 
   root.replaceChildren(shell)
